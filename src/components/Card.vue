@@ -4,7 +4,12 @@
        @mousemove="rotate"
        @mouseleave="stopRotation"
   >
+    <!--    <div class="sda"-->
+    <!--         >-->
+
+    <!--    </div>-->
     <q-card class="card flex column  items-center shadow-10"
+            :class="'card' + this.index"
             ref="card"
             @click="flip"
             :style="{
@@ -13,7 +18,9 @@
           }"
     >
       <div class="front_side flex column justify-center items-center">
-        <h4>{{ this.name }}</h4>
+        <h4
+          @mousemove="rotate"
+        >{{ this.name }}</h4>
         <div class="count_wrapper flex justify-center items-center ">
           <h3>{{ count }}</h3>
         </div>
@@ -23,8 +30,8 @@
         <q-btn :unelevated="true" @mousemove="ho">Блог</q-btn>
         <q-btn :unelevated="true" @mousemove="ho">Сбросить</q-btn>
         <q-btn :unelevated="true" @mousemove="ho">Удалить</q-btn>
-
       </div>
+
     </q-card>
   </div>
   <!--  </div>-->
@@ -59,29 +66,39 @@ export default {
 
       width: null,
       height: null,
+
+
+
+      rect: null,
     }
   },
   mounted() {
     this.isMounted = true
+    this.rect = document.getElementsByClassName('card' + this.index)[0].getBoundingClientRect()
+    console.log(this.rect)
     // console.log(this.settingsOpacity)
     // console.log(this.$refs['card'].getBoundingClientRect() , this.index)
   },
   methods: {
     rotate(event) {
-      console.log('rotating')
-      let rect = event.target.getBoundingClientRect()
-      this.xAxis = (event.pageX - rect.x - rect.width / 2) / 6
-      this.yAxis = (event.pageY - rect.y - rect.height / 2) / 6
+      // console.log(event.pageX, event.pageY)
+      this.xAxis = (event.pageX - this.rect.x - this.rect.width / 2) / 6
+      this.yAxis = (event.pageY - this.rect.y - this.rect.height / 2) / 6
+      // this.yAxis = 10
+      console.log(event.pageY, this.rect.y, this.rect.height / 2)
+      console.log(this.rect)
       if (this.isFlipped) {
         this.xAxis -= 180
         this.yAxis *= -1
       }
       this.transform = `perspective(500px) rotateY(${this.xAxis}deg) rotateX(${-this.yAxis}deg)`
     },
-    startRotation() {
+    startRotation(event) {
+      this.rect = event.target.getBoundingClientRect()
       this.transition = 'none'
     },
     stopRotation() {
+      console.log('stopped')
       this.transition = 'all .8s ease'
       this.transform = `perspective(500px) rotateY(0deg) rotateX(0deg)`
       this.isFlipped = false
@@ -97,7 +114,7 @@ export default {
 
       }, 800)
     },
-    ho(){
+    ho() {
       console.log('hovering')
     }
   },
@@ -105,15 +122,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+//.sda{
+//  width: 100%;
+//  height: 100%;
+//  position: absolute;
+//  z-index: 1000;
+//  //background-color: red;
+//}
 body {
   perspective: 1000px;
 }
 
 .card_wrapper {
+  background-color: red;
   position: relative;
   min-width: 25%;
   height: 20vw;
-  z-index: 1000;
+  //z-index: 1000;
   //background-color: red;
   //transform-style: preserve-3d;
 }
