@@ -13,16 +13,16 @@
           }"
     >
       <div class="front_side flex column justify-center items-center">
-        <h4>CardName</h4>
+        <h4>{{ this.name }}</h4>
         <div class="count_wrapper flex justify-center items-center ">
-          <h5>{{ count }}</h5>
+          <h3>{{ count }}</h3>
         </div>
       </div>
       <div class="settings flex column justify-center items-center">
-        <q-btn :unelevated="true">Настройки</q-btn>
-        <q-btn :unelevated="true">Блог</q-btn>
-        <q-btn :unelevated="true">Сбросить</q-btn>
-        <q-btn :unelevated="true">Удалить</q-btn>
+        <q-btn :unelevated="true" @mousemove="ho">Настройки</q-btn>
+        <q-btn :unelevated="true" @mousemove="ho">Блог</q-btn>
+        <q-btn :unelevated="true" @mousemove="ho">Сбросить</q-btn>
+        <q-btn :unelevated="true" @mousemove="ho">Удалить</q-btn>
 
       </div>
     </q-card>
@@ -68,6 +68,7 @@ export default {
   },
   methods: {
     rotate(event) {
+      console.log('rotating')
       let rect = event.target.getBoundingClientRect()
       this.xAxis = (event.pageX - rect.x - rect.width / 2) / 6
       this.yAxis = (event.pageY - rect.y - rect.height / 2) / 6
@@ -96,6 +97,9 @@ export default {
 
       }, 800)
     },
+    ho(){
+      console.log('hovering')
+    }
   },
 }
 </script>
@@ -107,7 +111,7 @@ body {
 
 .card_wrapper {
   position: relative;
-  width: 25%;
+  min-width: 25%;
   height: 20vw;
   z-index: 1000;
   //background-color: red;

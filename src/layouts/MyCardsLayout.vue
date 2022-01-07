@@ -5,7 +5,7 @@
     <div class="layout">
       <h2 class="q-my-xl">My days without <span>Incidents</span></h2>
       <div class="cards flex">
-        <Card v-for="(card, index) in cards" :key="card" :index="index"></Card>
+        <Card v-for="(card, index) in cards" :key="card" :index="index" :name="card.name" :count="card.count"></Card>
       </div>
     </div>
     <Long></Long>
@@ -27,7 +27,26 @@ export default {
   data() {
     return {
       cards: [
-        {}, 2, 3, 4, 5, 5,
+        {
+          name: 'Greeeeeeebs',
+          count: 10,
+        },
+        {
+          name: 'Kou5en9',
+          count: 30,
+        },
+        {
+          name: 'Kou5en9',
+          count: 50,
+        },
+        {
+          name: 'Kou5en9',
+          count: 80,
+        },
+        {
+          name: 'Kou5en9',
+          count: 120,
+        }
       ]
     }
   }
