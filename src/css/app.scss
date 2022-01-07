@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+
+}
+
+a {
+  text-decoration: none;
+}
+
+.layout {
+  max-width: $layout_max_width;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+body{
+  perspective: 1000px;
+}
