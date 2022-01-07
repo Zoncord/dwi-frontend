@@ -2,7 +2,8 @@
   <div class="card_wrapper flex justify-center items-center"
        @mouseenter="startRotation"
        @mousemove="rotate"
-       @mouseleave="stopRotation">
+       @mouseleave="stopRotation"
+  >
     <q-card class="card flex column  items-center shadow-10"
             ref="card"
             @click="flip"
@@ -11,19 +12,19 @@
             transition: this.transition
           }"
     >
-      <!--      <div class="card_side"/>-->
-      <div class="front_side" v-if="!isFlipped">
-        <h4 class="q-mx-lg q-my-md">CardName</h4>
+      <div class="front_side flex column justify-center items-center">
+        <h4>CardName</h4>
         <div class="count_wrapper flex justify-center items-center ">
           <h5>{{ count }}</h5>
         </div>
       </div>
-      <div class="settings flex column justify-center items-center" v-else>
+      <div class="settings flex column justify-center items-center">
+        <q-btn :unelevated="true">Настройки</q-btn>
+        <q-btn :unelevated="true">Блог</q-btn>
         <q-btn :unelevated="true">Сбросить</q-btn>
-        <q-btn  :unelevated="true">Настройки</q-btn>
-        <q-btn  :unelevated="true">Удалить</q-btn>
-      </div>
+        <q-btn :unelevated="true">Удалить</q-btn>
 
+      </div>
     </q-card>
   </div>
   <!--  </div>-->
@@ -94,7 +95,6 @@ export default {
         this.transition = 'none'
 
       }, 800)
-
     },
   },
 }
@@ -106,49 +106,65 @@ body {
 }
 
 .card_wrapper {
+  position: relative;
   width: 25%;
   height: 20vw;
-  transform-style: preserve-3d;
-}
-
-.card_side {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 5%;
+  z-index: 1000;
+  //background-color: red;
+  //transform-style: preserve-3d;
 }
 
 .q-card {
+  position: absolute;
   transform-style: preserve-3d;
   width: 90%;
   height: 90%;
-  transition: opacity .5s;
+  transition: all .5s ease;
   border-radius: 5%;
-  overflow: hidden;
-  backface-visibility: hidden;
+  color: $primary;
+  //overflow: hidden;
 
+  .front_side {
+    border-radius: 5%;
+    backface-visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
 
-
-  .count_wrapper {
-    flex-grow: 10;
-  }
-  &:hover {
-    cursor: pointer;
+    //color: white;
+    //transform: rotateY(180deg);
   }
 
   .settings {
-    transition: .2s;
+    overflow: hidden;
+    border-radius: 5%;
+    //transition: .2s;
     position: absolute;
     background-color: #ffffff;
     width: 100%;
     height: 100%;
-    z-index: 100;
     transform: rotateY(180deg);
+    backface-visibility: hidden;
+
     .q-btn {
       width: 100%;
-      height: 33.3%;
+      height: 25%;
     }
   }
+
+  .count_wrapper {
+    flex-grow: 10;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .front_side {
+
+  }
+
 }
 
 

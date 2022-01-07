@@ -1,14 +1,17 @@
 <template>
   <header class="">
     <div class="layout flex justify-between">
-      <div class="logo">
-        <q-img src="~assets/images/logo.svg"></q-img>
-      </div>
+<!--      <div class="logo ">-->
+        <h3 class="logo">DW<span>I</span></h3>
+<!--        <q-img src="~assets/images/logo.svg"></q-img>-->
+<!--      </div>-->
       <div class="nav_block flex justify-between items-center">
         <a class="user_name" href="#" v-if="isLoggedIn">UserName</a>
         <div class="nav_wrapper" v-else>
-          <a class="log_in" href="#">Log in</a>
-          <a class="sign_up" href="#">Sign up</a>
+          <q-btn :rounded="true" class="login">Log In</q-btn>
+          <q-btn :rounded="true" class="signup">Sign Up</q-btn>
+<!--          <a class="log_in" href="#">Log in</a>-->
+<!--          <a class="sign_up" href="#">Sign up</a>-->
         </div>
       </div>
     </div>
@@ -43,38 +46,29 @@ header {
     //max-height:100%;
 
   }
-  .logo {
-    width: 4vw;
-    height: 4vw;
-    //background-color: mediumpurple;
-    margin-left: 1vw;
-    .q-img{
-      //width: auto;
-      //height: 100%;
-      //max-height: 100%;
-      height:100%;
-      width: 75%;
+  .logo{
+    font-weight: 400;
+    //margin-left: 1vw;
+    span{
+      color: $primary;
     }
   }
-
   .nav_block {
     * {
-      margin-left: 1vw;
-      margin-right: 1vw;
+      margin-left: 0.5vw;
+      margin-right: 0.5vw;
     }
-
     font-size: 18px;
-  }
-
-  a {
-    //color: #73ff9a;
-    color: $theme_color;
+    .login{
+      color: black;
+      background-color: white;
+      //border-radius: 10px;
+    }
+    .signup{
+      color: white;
+      background-color: black;
+      //border-radius: 10px;
+    }
   }
 }
-
-.q-btn {
-  background-color: #70C244;
-  color: white;
-}
-
 </style>
