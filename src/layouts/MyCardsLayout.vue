@@ -1,9 +1,9 @@
 <template>
-  <Header></Header>
 
+  <Header/>
   <div class="main flex justify-center">
     <div class="layout">
-      <h2 class="q-my-xl">My days without <span>Incidents</span></h2>
+      <h2 class="q-my-xl">My days without <span><AnimatedText/></span></h2>
       <div class="cards flex">
         <Card v-for="(card, index) in cards" :key="card" :index="index" :name="card.name" :count="card.count"></Card>
       </div>
@@ -16,6 +16,7 @@
 import Header from "components/Header";
 import Long from "components/Long";
 import Card from "components/Card";
+import AnimatedText from "components/AnimatedText";
 
 export default {
   name: "MyCardsLayout",
@@ -23,11 +24,110 @@ export default {
     Header,
     Long,
     Card,
+    AnimatedText,
   },
   data() {
     return {
       cards: [
         {
+          name: 'Greeeeeeebs',
+          count: 10,
+        },
+        {
+          name: 'Kou5en9',
+          count: 30,
+        },
+        {
+          name: 'Kou5en9',
+          count: 50,
+        },
+        {
+          name: 'Kou5en9',
+          count: 80,
+        },
+        {
+          name: 'Kou5en9',
+          count: 120,
+        },
+        {
+          name: 'Greeeeeeebs',
+          count: 10,
+        },
+        {
+          name: 'Kou5en9',
+          count: 30,
+        },
+        {
+          name: 'Kou5en9',
+          count: 50,
+        },
+        {
+          name: 'Kou5en9',
+          count: 80,
+        },
+        {
+          name: 'Kou5en9',
+          count: 120,
+        },{
+          name: 'Greeeeeeebs',
+          count: 10,
+        },
+        {
+          name: 'Kou5en9',
+          count: 30,
+        },
+        {
+          name: 'Kou5en9',
+          count: 50,
+        },
+        {
+          name: 'Kou5en9',
+          count: 80,
+        },
+        {
+          name: 'Kou5en9',
+          count: 120,
+        },
+        {
+          name: 'Greeeeeeebs',
+          count: 10,
+        },
+        {
+          name: 'Kou5en9',
+          count: 30,
+        },
+        {
+          name: 'Kou5en9',
+          count: 50,
+        },
+        {
+          name: 'Kou5en9',
+          count: 80,
+        },
+        {
+          name: 'Kou5en9',
+          count: 120,
+        },
+        {
+          name: 'Greeeeeeebs',
+          count: 10,
+        },
+        {
+          name: 'Kou5en9',
+          count: 30,
+        },
+        {
+          name: 'Kou5en9',
+          count: 50,
+        },
+        {
+          name: 'Kou5en9',
+          count: 80,
+        },
+        {
+          name: 'Kou5en9',
+          count: 120,
+        },{
           name: 'Greeeeeeebs',
           count: 10,
         },

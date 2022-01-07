@@ -4,10 +4,6 @@
        @mousemove="rotate"
        @mouseleave="stopRotation"
   >
-    <!--    <div class="sda"-->
-    <!--         >-->
-
-    <!--    </div>-->
     <q-card class="card flex column  items-center shadow-10"
             :class="'card' + this.index"
             ref="card"
@@ -26,10 +22,10 @@
         </div>
       </div>
       <div class="settings flex column justify-center items-center">
-        <q-btn :unelevated="true" @mousemove="ho">Настройки</q-btn>
-        <q-btn :unelevated="true" @mousemove="ho">Блог</q-btn>
-        <q-btn :unelevated="true" @mousemove="ho">Сбросить</q-btn>
-        <q-btn :unelevated="true" @mousemove="ho">Удалить</q-btn>
+        <q-btn :unelevated="true">Настройки</q-btn>
+        <q-btn :unelevated="true">Блог</q-btn>
+        <q-btn :unelevated="true">Сбросить</q-btn>
+        <q-btn :unelevated="true">Удалить</q-btn>
       </div>
 
     </q-card>
@@ -68,25 +64,17 @@ export default {
       height: null,
 
 
-
       rect: null,
     }
   },
   mounted() {
     this.isMounted = true
     this.rect = document.getElementsByClassName('card' + this.index)[0].getBoundingClientRect()
-    console.log(this.rect)
-    // console.log(this.settingsOpacity)
-    // console.log(this.$refs['card'].getBoundingClientRect() , this.index)
   },
   methods: {
     rotate(event) {
-      // console.log(event.pageX, event.pageY)
-      this.xAxis = (event.pageX - this.rect.x - this.rect.width / 2) / 6
-      this.yAxis = (event.pageY - this.rect.y - this.rect.height / 2) / 6
-      // this.yAxis = 10
-      console.log(event.pageY, this.rect.y, this.rect.height / 2)
-      console.log(this.rect)
+      this.xAxis = (event.pageX - -window.pageXOffset - this.rect.x - this.rect.width / 2) / 6
+      this.yAxis = (event.pageY - window.pageYOffset - this.rect.y - this.rect.height / 2) / 6
       if (this.isFlipped) {
         this.xAxis -= 180
         this.yAxis *= -1
@@ -98,7 +86,6 @@ export default {
       this.transition = 'none'
     },
     stopRotation() {
-      console.log('stopped')
       this.transition = 'all .8s ease'
       this.transform = `perspective(500px) rotateY(0deg) rotateX(0deg)`
       this.isFlipped = false
@@ -113,31 +100,20 @@ export default {
         this.transition = 'none'
 
       }, 800)
-    },
-    ho() {
-      console.log('hovering')
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-//.sda{
-//  width: 100%;
-//  height: 100%;
-//  position: absolute;
-//  z-index: 1000;
-//  //background-color: red;
-//}
 body {
   perspective: 1000px;
 }
 
 .card_wrapper {
-  background-color: red;
   position: relative;
-  min-width: 25%;
-  height: 20vw;
+  width: 25%;
+  height: 325px;
   //z-index: 1000;
   //background-color: red;
   //transform-style: preserve-3d;
