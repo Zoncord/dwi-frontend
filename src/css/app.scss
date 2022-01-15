@@ -8,12 +8,10 @@ a {
   text-decoration: none;
 }
 
-.layout {
+.limiter {
   max-width: $layout_max_width;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-}
-body{
-  perspective: 1000px;
+  height: 100%;
 }
