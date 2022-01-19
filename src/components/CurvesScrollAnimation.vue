@@ -1,67 +1,26 @@
 <template>
-  <div class="curves curves_top">
-    <img class="curve l_curve" :style="{width: sizes.large + sizeType}" src="../assets/images/SVG/curves4.svg"
+  <div class="curves_top">
+    <img class="curve l_curve" :style="{width: sizes.large + 'px'}" src="../assets/images/SVG/curves1.svg"
          alt="curves">
-    <img class="curve md_curve" :style="{width: sizes.medium + sizeType}" src="../assets/images/SVG/curves5.svg"
+    <img class="curve md_curve" :style="{width: sizes.medium + 'px'}" src="../assets/images/SVG/curves2.svg"
          alt="curves">
-    <img class="curve sm_curve" :style="{width: sizes.small + sizeType}" src="../assets/images/SVG/curves6.svg"
+    <img class="curve sm_curve" :style="{width: sizes.small + 'px'}" src="../assets/images/SVG/curves3.svg"
          alt="curves">
   </div>
-  <div class="curves curves_bottom">
-    <img class="curve l_curve" :style="{width: sizes.large + sizeType}" src="../assets/images/SVG/curves1.svg"
+  <div class="curves_bottom">
+    <img class="curve l_curve" :style="{width: sizes.large + 'px'}" src="../assets/images/SVG/curves1.svg"
          alt="curves">
-    <img class="curve md_curve" :style="{width: sizes.medium + sizeType}" src="../assets/images/SVG/curves2.svg"
+    <img class="curve md_curve" :style="{width: sizes.medium + 'px'}" src="../assets/images/SVG/curves2.svg"
          alt="curves">
-    <img class="curve sm_curve" :style="{width: sizes.small + sizeType}" src="../assets/images/SVG/curves3.svg"
+    <img class="curve sm_curve" :style="{width: sizes.small + 'px'}" src="../assets/images/SVG/curves3.svg"
          alt="curves">
   </div>
 </template>
 
 <script>
+// import {map}
 export default {
   name: "CurvesScrollAnimation",
-  props: {
-    mouseScroll: {
-      type: Number,
-      default: 0,
-    }
-  },
-  data() {
-    return {
-      sizeType: 'px',
-      scroll: 0,
-    }
-  },
-  mounted() {
-    let page = document.getElementsByClassName('start')[0]
-    if (page.addEventListener) {
-      if ('onwheel' in document) {
-        // IE9+, FF17+, Ch31+
-        page.addEventListener("wheel", this.onScroll);
-      } else if ('onmousewheel' in document) {
-        // устаревший вариант события
-        page.addEventListener("mousewheel", this.onScroll);
-      } else {
-        // Firefox < 17
-        page.addEventListener("MozMousePixelScroll", this.onScroll);
-      }
-    } else { // IE8-
-      page.attachEvent("onmousewheel", this.onScroll);
-    }
-
-    // window.onscroll= function() {
-    //   console.log('scrolling')
-    // }
-  },
-  methods: {
-    onScroll(e) {
-      let delta = e.deltaY || e.detail || e.wheelDelta;
-      if (this.scroll + delta > 0 && this.scroll + delta < 2000) {
-        this.scroll += delta
-      }
-      // console.log(this.scale)
-    }
-  },
   computed: {
     defaultSizes(){
       return {
@@ -71,10 +30,10 @@ export default {
       }
     },
     scale() {
-      if (this.scroll / 150 < 1) {
+      if (this.$store.getters["mainPageStore/scroll"] / 150 < 1) {
         return 1.2
       }
-      return this.scroll / 150
+      return this.$store.getters["mainPageStore/scroll"] / 150
     },
     sizes() {
       return {
@@ -90,7 +49,7 @@ export default {
 <style lang="scss" scoped>
 .curve {
   position: absolute;
-  transition: 3s ease-out;
+  transition: 1s ease-out;
   -moz-transition: 1s ease-out;
   -o-transition: 1s ease-out;
   -webkit-transition: 1s ease-out;
@@ -104,6 +63,7 @@ export default {
   * {
     top: 0;
     left: 0;
+    transform: rotate(180deg);
   }
 }
 
@@ -127,8 +87,5 @@ export default {
 .sm_curve {
   width: 16vw;
   z-index: 300;
-  //background-color: red;
-  //opacity: .5;
 }
-
 </style>

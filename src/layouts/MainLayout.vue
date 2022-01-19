@@ -1,94 +1,84 @@
 <template>
-  <div class="start">
-    <div class="description" v-if="isScrolled">asdfasf</div>
-    <div class="curves absolute">
-      <CurvesScrollAnimation/>
-    </div>
-    <div class="limiter flex column justify-between">
-
-      <div class="introduction_wrapper flex justify-between items-center">
-        <div class="introduction text-center">
-          <h2>Days Without <br/> Incidents</h2>
-          <h5>Service that attracts you <br/> to try something new </h5>
-        </div>
-        <div class="header_nav_buttons self-start q-mt-lg">
-            <HeaderNavButtons/>
-
-        </div>
-      </div>
-      <AnimatedArrowDown class="arrow"/>
-    </div>
-  </div>
-<!--  <div class="about window-height" v-if="isScrolled">-->
-<!--    HelloWorld-->
-<!--  </div>-->
-  <div class="main flex justify-center items-center">
-  </div>
+  <GreetingLayout v-if="currentScreen === 'greeting'"/>
+  <AboutCardsLayout v-else-if="currentScreen === 'aboutCards'"/>
 </template>
 
 <script>
-import HeaderNavButtons from "components/HeaderNavButtons";
-import Long from "components/Long";
-import CurvesScrollAnimation from "components/CurvesScrollAnimation";
-import AnimatedArrowDown from "components/AnimatedArrowDown";
+
+import GreetingLayout from "layouts/subMain/GreetingLayout";
+import AboutCardsLayout from "layouts/subMain/AboutCardsLayout";
+import {connectMouseScrollEvent} from "src/js/Functions";
+import {mapGetters, mapMutations} from 'vuex'
+import {debounce} from "quasar";
 
 export default {
   name: 'MainLayout',
   components: {
-    HeaderNavButtons,
-    CurvesScrollAnimation,
-    AnimatedArrowDown
-    // Long,
+    GreetingLayout,
+    AboutCardsLayout,
   },
   data() {
     return {
-      long: true,
-      isScrolled: false,
+
     }
   },
   mounted() {
-    // let aboutPage = document.getElementsByClassName('about')[0]
-    // let curves = document.getElementsByClassName('sm_curve')
-    // setInterval(() => {
-    //   let rects = [curves[0].getBoundingClientRect(), curves[1].getBoundingClientRect()]
-    //   if (window.innerWidth - rects[0].width < -200) {
-    //     this.isScrolled = true
-    //   }
-    //   // if (this.isScrolled && aboutPage)
-    // }, 100)
-
-
+    connectMouseScrollEvent(this.onScroll.bind(this))
+    setInterval(() => {
+      if (this.currentScreen === 'greeting') {
+        if (this.scroll > 1750) {
+          this.changeScreen('aboutCards')
+        }
+      } else if (this.currentScreen === 'aboutCards') {
+        if (this.scroll - this.startScrollVal < 0) {
+          this.changeScreen('greeting')
+        }
+      }
+    }, 100)
+  },
+  methods: {
+    ...mapMutations('mainPageStore', ['changeScroll', 'changeScreen']),
+    onScroll(e) {
+      console.log(this.counter)
+      let delta = e.deltaY || e.detail || e.wheelDelta
+      if (this.currentScreen === 'greeting') {
+        if (this.scroll + delta >= 0) {
+          this.changeScroll(delta)
+        }
+      } else {
+        this.changeScroll(delta)
+      }
+    },
+  },
+  computed: {
+    ...mapGetters('mainPageStore', ['scroll', 'currentScreen', 'startScrollVal'])
   }
 }
 </script>
 
-<style lang="scss">
-.arrow{
+<style lang="scss" scoped>
+.about_content {
+  color: white;
+  transition: top 1.5s, opacity 2.5s;
+}
+
+.arrow {
   margin-bottom: 5px;
-
 }
-.login {
-  background-color: white !important;
-}
-
-.signup {
-  background-color: #2941AB !important;
-}
-
 .curves {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.start {
+.greeting_screen {
   height: 100vh;
-  background-color: #1ED760;
+  background-color: white;
   overflow: hidden;
 }
 
 .about {
-  background-color: #73EC9B;
+  background-color: #0B132B;
 }
 
 .introduction_wrapper {
@@ -96,18 +86,17 @@ export default {
 }
 
 .introduction {
-  //background-color: red;
-  //width: 50%;
   h2 {
     font-size: 6.7vw;
-    font-weight: 400 !important;
+    font-weight: 700 !important;
+    font-family: 'Poppins', sans-serif;
     line-height: 6vw;
-    color: white;
+    color: #0B132B;
     margin-bottom: 30px;
   }
 
   h5 {
-    color: #2941AB;
+    color: #0B132B;
     font-size: 2.5vw;
     line-height: 2.5vw;
   }

@@ -26,15 +26,10 @@
         </div>
       </div>
       <div class="settings flex column justify-center items-center">
-<!--        <q-btn flat >Изменить название</q-btn>-->
-<!--        <q-btn flat unelevated>Блог</q-btn>-->
-<!--        <q-btn flat unelevated>Сбросить</q-btn>-->
-<!--        <q-btn flat unelevated>Удалить</q-btn>-->
-      </div>
 
+      </div>
     </q-card>
   </div>
-  <!--  </div>-->
 </template>
 <script>
 export default {
@@ -50,14 +45,13 @@ export default {
     },
     index: {
       type: Number,
-      required: true,
+      default: 0,
     }
   },
   data() {
     return {
       transform: "none",
       transition: "none",
-      isMounted: false,
       xAxis: null,
       yAxis: null,
       isFlipped: false,
@@ -71,7 +65,6 @@ export default {
     }
   },
   mounted() {
-    this.isMounted = true
     this.rect = document.getElementsByClassName('card' + this.index)[0].getBoundingClientRect()
   },
   methods: {
@@ -95,7 +88,6 @@ export default {
       this.transition = 'all .8s ease'
       this.transform = `perspective(500px) rotateY(0deg) rotateX(0deg)`
       this.isFlipped = false
-
     },
     flip() {
       this.rotateLock = true
@@ -121,10 +113,6 @@ body {
   position: relative;
   width: 25%;
   height: 325px;
-  //z-index: 1000;
-  //background-color: red;
-  //transform-style: preserve-3d;
-
 }
 
 .q-card {
@@ -135,11 +123,6 @@ body {
   transition: all .5s ease;
   border-radius: 15px;
   color: $primary;
-  //overflow: hidden;
-  h4 {
-    //color: $primary;
-
-  }
 
   h3 {
     color: black;
@@ -152,6 +135,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: white;
+
     .nav_bar {
       transition: .5s;
       width: 100%;
@@ -160,16 +144,18 @@ body {
       border-radius: 15px;
       background-color: $additional;
       color: white;
-      .q-btn{
+
+      .q-btn {
         z-index: 10000000;
-        //background-color: red;
-        &:hover{
+
+        &:hover {
           background-color: red !important;
         }
       }
     }
+
     &:hover {
-      .nav_bar{
+      .nav_bar {
         height: 40px;
       }
     }
@@ -178,7 +164,6 @@ body {
   .settings {
     overflow: hidden;
     border-radius: 15px;
-    //transition: .2s;
     position: absolute;
     background-color: #ffffff;
     width: 100%;
@@ -199,11 +184,6 @@ body {
   &:hover {
     cursor: pointer;
   }
-
-  .front_side {
-
-  }
-
 }
 
 

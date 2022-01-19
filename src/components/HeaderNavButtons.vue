@@ -1,13 +1,30 @@
 <template>
   <div class="nav_buttons flex justify-between">
-    <q-btn class="login">Log In</q-btn>
-    <q-btn class="signup">Sign Up</q-btn>
+    <q-btn class="" :style="{'background-color': colors.login.bg, color: colors.login.text}">Log In</q-btn>
+    <q-btn class="" :style="{'background-color': colors.signup.bg, color: colors.signup.text}">Sign Up</q-btn>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HeaderNavButtons"
+  name: "HeaderNavButtons",
+  props: {
+    colors: {
+      type: Object,
+      default(){
+        return {
+          login: {
+            bg: 'white',
+            text: '#0B132B',
+          },
+          signup: {
+            bg: '#0B132B',
+            text: 'white',
+          }
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -19,21 +36,5 @@ export default {
   width: 48%;
   border-radius: 10px;
   font-size: 12px;
-}
-.login {
-  color: black;
-  background-color: white;
-
-  //border-radius: 10px;
-  //width: 75px;
-
-}
-
-.signup {
-  color: white;
-  background-color: black;
-
-  //width: 75px;
-
 }
 </style>
