@@ -1,11 +1,15 @@
 <template>
-  <header class="flex justify-center items-center">
+  <header
+    class="flex justify-center items-center"
+    :style="colors[colorScheme]"
+  >
     <div class="limiter flex justify-between">
-      <Logo class="flex items-center">DAYS WITHOUT INCIDENTS</Logo>
-      <div class="nav_bar flex justify-between items-center">
-        <a class="user_name" href="#" v-if="isLoggedIn">UserName</a>
-        <HeaderNavButtons v-else/>
+      <Logo class="flex items-center" v-if="logo">DAYS WITHOUT INCIDENTS</Logo>
 
+
+      <div class="nav_bar flex justify-between items-center" v-if="nav_buttons">
+        <a class="user_name" href="#" v-if="isLoggedIn">UserName</a>
+        <HeaderNavButtons  v-else/>
       </div>
     </div>
   </header>
@@ -20,9 +24,35 @@ export default {
     Logo,
     HeaderNavButtons,
   },
+  props: {
+    colorScheme: {
+      type: String,
+      default: 'light'
+    },
+    logo: {
+      type: Boolean,
+      default: false,
+    },
+    nav_buttons: {
+      type: Boolean,
+      default: false,
+    },
+    navigation: {
+      type: Boolean,
+      default: false,
+    }
+  },
   data() {
     return {
       isLoggedIn: false,
+      colors: {
+        light: {
+          'background-color': 'rgba(241, 242, 244, 0.8)'
+        },
+        dark: {
+          // 'background-color': 'rgb(0,0,0)'
+        }
+      }
     }
   }
 }
@@ -31,23 +61,11 @@ export default {
 <style lang="scss" scoped>
 header {
   height: 4.5vw;
-  background-color: rgba(241, 242, 244, 0.8);
+  //background-color: rgba(241, 242, 244, 0.8);
   backdrop-filter: blur(4px);
   position: sticky;
   top: 0;
   z-index: 10000;
-  .q-img{
-  }
-  //.logo{
-  //  font-weight: 400;
-  //  //margin-left: 1vw;
-  //  span{
-  //    color: $primary;
-  //  }
-  //  &:hover{
-  //    cursor: pointer;
-  //  }
-  //}
   .nav_bar {
     font-size: 18px;
   }

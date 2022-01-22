@@ -22,7 +22,7 @@
 <script>
 import Header from "components/Header";
 import Long from "components/Long";
-import Card from "components/Card";
+import Card from "components/CardOld";
 import AnimatedText from "components/AnimatedText";
 import Up from "components/Up";
 import Search from "components/Search";

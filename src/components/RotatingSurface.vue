@@ -1,5 +1,5 @@
 <template>
-  <div class="rotating_surface flex justify-center items-center"
+  <div class="rotating_surface  flex justify-center items-center"
        @mouseenter="startRotation"
        @mousemove="rotate"
        @mouseleave="stopRotation"
@@ -8,11 +8,9 @@
     <div class="rotating_content text-center"
          :style="{
             transform: this.transform,
-            transition: this.transition
+            transition: this.transition,
          }"
     >
-      Hello World
-      {{this.index}}
       <slot/>
     </div>
   </div>
@@ -33,9 +31,6 @@ export default {
       transition: 'none',
       rect: null,
     }
-  },
-  mounted() {
-    this.rect = this.$refs['rotating_surface_' + this.index].getBoundingClientRect()
   },
   methods: {
     startRotation(event) {
@@ -63,15 +58,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .rotating_surface{
+  //width: max-content;
   flex-grow: 1;
-  height: 200px;
-  background-color: red;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 .rotating_content{
-  width: 80%;
-  height: 80%;
-  background-color: blue;
+  margin-top: 12.5%;
+  margin-bottom: 12.5%;
+  width: 85%;
+  //width: max-content;
+  //padding-left: 10%;
+  //padding-right: 10%;
+  *{
+
+  }
 }
 </style>

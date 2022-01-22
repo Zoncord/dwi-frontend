@@ -1,7 +1,3 @@
-export function shuffle(array) {
-  return array.sort(() => Math.round(Math.random() * 100) - 50);
-}
-
 export function connectMouseScrollEvent(func) {
   if (window.addEventListener) {
     if ('onwheel' in document) {
