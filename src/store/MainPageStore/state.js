@@ -3,5 +3,6 @@ export default function () {
     scroll: 0,
     startScrollVal: 0,
     currentScreen: 'greeting',
+    canShowAdditionalContent: false,
   }
 }

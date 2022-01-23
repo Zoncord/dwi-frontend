@@ -5,11 +5,11 @@
   >
     <div class="limiter flex justify-between">
       <Logo class="flex items-center" v-if="logo">DAYS WITHOUT INCIDENTS</Logo>
-
+      <HeaderNavigation/>
 
       <div class="nav_bar flex justify-between items-center" v-if="nav_buttons">
         <a class="user_name" href="#" v-if="isLoggedIn">UserName</a>
-        <HeaderNavButtons  v-else/>
+        <HeaderNavButtons v-else/>
       </div>
     </div>
   </header>
@@ -18,11 +18,14 @@
 <script>
 import HeaderNavButtons from "components/HeaderNavButtons";
 import Logo from "components/Logo";
+import HeaderNavigation from "components/HeaderNavigation";
+
 export default {
   name: "Header",
-  components:{
+  components: {
     Logo,
     HeaderNavButtons,
+    HeaderNavigation,
   },
   props: {
     colorScheme: {
@@ -40,7 +43,12 @@ export default {
     navigation: {
       type: Boolean,
       default: false,
-    }
+    },
+    limited: {
+      type: Boolean,
+      default: false,
+    },
+
   },
   data() {
     return {
@@ -61,7 +69,6 @@ export default {
 <style lang="scss" scoped>
 header {
   height: 4.5vw;
-  //background-color: rgba(241, 242, 244, 0.8);
   backdrop-filter: blur(4px);
   position: sticky;
   top: 0;

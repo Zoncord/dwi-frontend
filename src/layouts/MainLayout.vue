@@ -1,6 +1,12 @@
 <template>
+
   <GreetingLayout v-if="currentScreen === 'greeting'"/>
-  <AboutCardsLayout v-else-if="currentScreen === 'aboutCards'"/>
+  <AboutCardsLayout v-if="currentScreen === 'aboutCards'"/>
+<!--  <Long v-if="canShowAdditionalContent"/>-->
+<!--  <div class="content">-->
+<!--    <Long v-if="currentScreen === 'aboutCards'"/>-->
+<!--  </div>-->
+
 </template>
 
 <script>
@@ -10,12 +16,16 @@ import AboutCardsLayout from "layouts/subMain/AboutCardsLayout";
 import {connectMouseScrollEvent} from "src/js/Functions";
 import {mapGetters, mapMutations} from 'vuex'
 import {debounce} from "quasar";
+import Long from "components/Long";
+import Header from "components/Header";
 
 export default {
   name: 'MainLayout',
   components: {
+    // Header,
     GreetingLayout,
     AboutCardsLayout,
+    // Long,
   },
   data() {
     return {
@@ -33,13 +43,16 @@ export default {
         if (this.scroll - this.startScrollVal < 0) {
           this.changeScreen('greeting')
         }
+        // if (this.scroll > 5500){
+        //   alert('change')
+        // }
       }
     }, 100)
   },
   methods: {
-    ...mapMutations('mainPageStore', ['changeScroll', 'changeScreen']),
+    ...mapMutations('mainPageStore', ['changeScroll', 'changeScreen', 'showAdditionalContent']),
     onScroll(e) {
-      console.log(this.counter)
+      // console.log(this.counter)
       let delta = e.deltaY || e.detail || e.wheelDelta
       if (this.currentScreen === 'greeting') {
         if (this.scroll + delta >= 0) {
@@ -51,7 +64,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('mainPageStore', ['scroll', 'currentScreen', 'startScrollVal'])
+    ...mapGetters('mainPageStore', ['scroll', 'currentScreen', 'startScrollVal', 'canShowAdditionalContent'])
   }
 }
 </script>

@@ -7,3 +7,6 @@ export function startScrollVal(state){
 export function currentScreen(state){
   return state.currentScreen
 }
+export function canShowAdditionalContent(state){
+  return state.canShowAdditionalContent
+}

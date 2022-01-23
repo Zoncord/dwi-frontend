@@ -39,8 +39,8 @@ export default {
   methods: {
     startAnimation(){
       let interval = setInterval(() => {
-        this.number++
-        if (this.number === this.endNumber) {
+        this.number += 1
+        if (this.number >= this.endNumber) {
           clearInterval(interval)
         }
       }, this.animationTime / (this.endNumber - this.startNumber))

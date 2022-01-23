@@ -1,40 +1,55 @@
 <template>
+  <!--  <div class="flex column ">-->
+
   <div class="content">
-    <div class="about window-height" :style="{overflow: 'hidden'}">
-      <Header color-scheme="dark" navigation />
+    <Header color-scheme="dark" nav_buttons navigation/>
+    <div class="about " :style="{overflow: 'hidden'}">
+
+
       <div class="about_content limiter relative-position flex justify-center"
            :style="{
               top: top + '%',
               opacity: opacity,
            }"
       >
+
         <div class="card_description flex justify-between items-center">
-          <div class="">
-            <Card class="example_card q-pa-md">
-              <h3>Working for you</h3>
-              <h3>
-                <NumberCountUpAnimation :animation-time="3000"/>
-              </h3>
-              <h4>days</h4>
-            </Card>
-          </div>
+          <Card class="example_card q-pa-md">
+
+            <h3>Working for you</h3>
+            <h3>
+              <AnimatedNumberCountUp :animation-time="100" :end-number="10000"/>
+            </h3>
+            <h4>days</h4>
+          </Card>
           <div class="text-center">
-            <h3 class="q-mt-md">Create your own cards</h3>
-            <p>Track your progress by creating flashcards. It has never been so easy.</p>
+            <h2 class="q-mt-md">Create your own cards</h2>
+            <h5>Track your progress by creating flashcards.<br/> It has never been so easy.</h5>
           </div>
         </div>
+
       </div>
     </div>
+    <div class="" v-if="canShowAdditionalContent">
+      HelloWorld
+      <Long/>
+    </div>
+    <!--    </div>-->
   </div>
+
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 import Card from "components/Card";
 import DateCard from "components/DateCard";
-import NumberCountUpAnimation from "components/NumberCountUpAnimation";
+// import NumberCountUpAnimation from "components/AnimatedNumberCountUp";
 import Header from "components/Header";
+import AnimatedNumberCountUp from 'components/AnimatedNumberCountUp'
+import Long from "components/Long";
+import AnimatedText from "components/AnimatedText";
+import {showAdditionalContent} from "src/store/MainPageStore/mutations";
 
 export default {
   name: "AboutCards",
@@ -42,13 +57,29 @@ export default {
     // DateCard,
     Header,
     Card,
-    NumberCountUpAnimation
+    AnimatedNumberCountUp,
+    // AnimatedText,
+    Long,
   },
   data() {
     return {}
   },
+  mounted() {
+    setInterval(() => {
+      if (this.top === 0){
+        setTimeout(() => {
+          this.showAdditionalContent()
+        }, 1000)
+      }
+      else{
+        if (this.canShowAdditionalContent) {
+          this.hideAdditionalContent()
+        }
+      }
+    }, 100)
+  },
   computed: {
-    ...mapGetters('mainPageStore', ['scroll', 'startScrollVal']),
+    ...mapGetters('mainPageStore', ['scroll', 'startScrollVal', 'canShowAdditionalContent']),
     top() {
       if (250 - (this.scroll - this.startScrollVal) / 15 > 0) {
         return 250 - (this.scroll - this.startScrollVal) / 15
@@ -58,22 +89,34 @@ export default {
     opacity() {
       return ((this.scroll - this.startScrollVal) / 125 - 20) * 15 / 100
     }
+  },
+  methods:{
+    ...mapMutations('mainPageStore', ['showAdditionalContent', 'hideAdditionalContent'])
   }
 }
 </script>
 
 <style lang="scss" scoped>
+header {
+  opacity: 0;
+  animation: show 1s 1;
+  animation-fill-mode: forwards;
+}
+
 .example_card {
-  width: clamp(25vw, 300px, 350px);
-  height: clamp(35vw, 400px, 450px);
+  min-width: 300px;
+  width: 25vw;
+  max-width: 380px;
+  min-height: 400px;
+  height: 35vw;
+  max-height: 500px;
+  //height: clamp(35vw, 400px, 450px);
+  position: sticky;
+  top: 0;
 }
 
 .content {
-  height: 200%;
-
-  img {
-    width: 100%;
-  }
+  background-color: #0B132B;
 }
 
 .greeting_screen {
@@ -88,6 +131,8 @@ export default {
 
 .about {
   background-color: #0B132B;
+  flex-grow: 1;
+  height: calc(100vh - 4.5vw);
 }
 
 .about_content {
@@ -100,4 +145,14 @@ export default {
   height: 32vw;
 }
 
+@keyframes show {
+  0% {
+    //top: 100px;
+    opacity: 0;
+  }
+  100% {
+    //top: 0;
+    opacity: 1;
+  }
+}
 </style>
