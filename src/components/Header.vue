@@ -30,7 +30,7 @@ export default {
   props: {
     colorScheme: {
       type: String,
-      default: 'light'
+      default: 'dark'
     },
     logo: {
       type: Boolean,
@@ -48,9 +48,22 @@ export default {
       type: Boolean,
       default: false,
     },
-
+    light: {
+      type: Boolean,
+      default: true,
+    },
+    dark: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
+    let colors
+    if (this.light) {
+      colors = {
+        // 'background-color': 'rgba()'
+      }
+    }
     return {
       isLoggedIn: false,
       colors: {
@@ -58,7 +71,7 @@ export default {
           'background-color': 'rgba(241, 242, 244, 0.8)'
         },
         dark: {
-          // 'background-color': 'rgb(0,0,0)'
+          'background-color': 'rgb(0, 0, 0, 0)'
         }
       }
     }
@@ -68,11 +81,12 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  height: 4.5vw;
+  height: $header-height;
   backdrop-filter: blur(4px);
   position: sticky;
   top: 0;
   z-index: 10000;
+
   .nav_bar {
     font-size: 18px;
   }

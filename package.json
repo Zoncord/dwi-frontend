@@ -1,7 +1,7 @@
 {
   "name": "days_without_incidents",
   "version": "0.0.1",
-  "description": "Beautiful and useless service for counting days without some activity",
+  "description": "Beautiful and useless service for counting days without some thing",
   "productName": "Days Without Incidents",
   "author": "Yaroslav Filippov <yaroslav_filippov_2017@mail.ru>",
   "private": true,

@@ -18,6 +18,14 @@ export default {
   height: 0;
   transition: .5s;
   overflow: hidden;
+  width: 100%;
   //background-color: red;
+  border-radius: 10px !important;
+
+  //background-color: red;
+  *{
+    flex-grow: 1;
+    border-radius: 0;
+  }
 }
 </style>

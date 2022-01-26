@@ -9,12 +9,12 @@
       <div class="about_content limiter relative-position flex justify-center"
            :style="{
               top: top + '%',
-              opacity: opacity,
+              // opacity: opacity,
            }"
       >
 
         <div class="card_description flex justify-between items-center">
-          <Card class="example_card q-pa-md">
+          <Card class="example-card q-pa-md">
 
             <h3>Working for you</h3>
             <h3>
@@ -103,7 +103,7 @@ header {
   animation-fill-mode: forwards;
 }
 
-.example_card {
+.example-card {
   min-width: 300px;
   width: 25vw;
   max-width: 380px;
