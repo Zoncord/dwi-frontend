@@ -1,125 +1,185 @@
 <template>
+  <div class="container">
+    <div class="sections flex">
+      <!--      <section class="">-->
+      <!--        <CurvesScrollAnimation>-->
+      <!--          <div class="limiter flex justify-center items-center full-height">-->
+      <!--            <h1>Hello world</h1>-->
+      <!--          </div>-->
+      <!--        </CurvesScrollAnimation>-->
+      <!--      </section>-->
 
-  <GreetingLayout v-if="currentScreen === 'greeting'"/>
-  <AboutCardsLayout v-if="currentScreen === 'aboutCards'"/>
-<!--  <Long v-if="canShowAdditionalContent"/>-->
-<!--  <div class="content">-->
-<!--    <Long v-if="currentScreen === 'aboutCards'"/>-->
-<!--  </div>-->
-
+      <section class="about">
+        <div class="about__content flex column justify-between">
+          <Header/>
+          <div class="limiter">
+            <div class="card-container float-left flex justify-center items-center">
+              <Card class="example-card">
+                <div class="example-card__descr flex column justify-between items-center q-pa-md">
+                  <h3>Working for you</h3>
+                  <h3>
+                    175
+                  </h3>
+                  <h4>days</h4>
+                </div>
+                <DateCardMenu/>
+              </Card>
+            </div>
+            <!--            <div class="texts-container float-right">-->
+            <!--              <div class="text-container__discr">-->
+            <!--                <h2 class="q-mb-md">Create your own cards</h2>-->
+            <!--                <h5>Track your progress by creating flashcards.<br/> It has never been so easy.</h5>-->
+            <!--              </div>-->
+            <!--              <div class="text-container__discr">-->
+            <!--                <h2 class="q-mb-md">Inspire by your achievements</h2>-->
+            <!--                <h5>Every day you can see, that's goal is so close</h5>-->
+            <!--              </div>-->
+            <!--              <div class="text-container__discr">-->
+            <!--                <h2 class="q-mb-md">And if you wouldn't succeed</h2>-->
+            <!--                <h5>Don't be upset and start again</h5>-->
+            <!--              </div>-->
+            <!--            </div>-->
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!--  <Long/>-->
 </template>
 
 <script>
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
-import GreetingLayout from "layouts/subMain/GreetingLayout";
-import AboutCardsLayout from "layouts/subMain/AboutCardsLayout";
-import {connectMouseScrollEvent} from "src/js/Functions";
-import {mapGetters, mapMutations} from 'vuex'
-import {debounce} from "quasar";
+gsap.registerPlugin(ScrollTrigger);
+
+
 import Long from "components/Long";
+import CurvesScrollAnimation from "components/CurvesScrollAnimation";
+import Card from "components/Card";
 import Header from "components/Header";
+import DateCardMenu from "components/DateCardMenu";
 
 export default {
-  name: 'MainLayout',
+  name: "TestLayout",
   components: {
-    // Header,
-    GreetingLayout,
-    AboutCardsLayout,
     // Long,
+    // CurvesScrollAnimation,
+    Card,
+    Header,
+    DateCardMenu,
   },
   data() {
     return {
-
+      showCardMenu: false,
     }
   },
   mounted() {
-    connectMouseScrollEvent(this.onScroll.bind(this))
-    setInterval(() => {
-      if (this.currentScreen === 'greeting') {
-        if (this.scroll > 1750) {
-          this.changeScreen('aboutCards')
-        }
-      } else if (this.currentScreen === 'aboutCards') {
-        if (this.scroll - this.startScrollVal < 0) {
-          this.changeScreen('greeting')
-        }
-        // if (this.scroll > 5500){
-        //   alert('change')
-        // }
+    let tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.container',
+        // start: 'top top',
+        // end: '+=5000',
+        scrub: true,
+        pin: true,
+        // markers: true,
       }
-    }, 100)
-  },
-  methods: {
-    ...mapMutations('mainPageStore', ['changeScroll', 'changeScreen', 'showAdditionalContent']),
-    onScroll(e) {
-      // console.log(this.counter)
-      let delta = e.deltaY || e.detail || e.wheelDelta
-      if (this.currentScreen === 'greeting') {
-        if (this.scroll + delta >= 0) {
-          this.changeScroll(delta)
-        }
-      } else {
-        this.changeScroll(delta)
+    })
+    let elems = ['.l_curve', '.md_curve', '.sm_curve']
+    for (let i in elems) {
+      tl.add(gsap.effects.increaseCurves(elems[i]), i * 3)
+    }
+
+    tl.fromTo('.about', {
+        xPercent: -100,
+        yPercent: 100
+      },
+      {
+        xPercent: -100,
+        yPercent: 0
+      }, 8)
+
+    // gsap.timeline({
+    //   scrollTrigger: {
+    //     trigger: '.card-container',
+    //     start: 'center center',
+    //     end: 'bottom bottom',
+    //     scrub: 1,
+    //     // end: 'bottom',
+    //     pin: '.card-container',
+    //     markers: true
+    //   }
+    // })
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.card-container',
+        markers: true,
+        scrub: true,
+        pin: '.card-container'
       }
-    },
+    })
+
   },
-  computed: {
-    ...mapGetters('mainPageStore', ['scroll', 'currentScreen', 'startScrollVal', 'canShowAdditionalContent'])
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-.about_content {
-  color: white;
-  transition: top 1.5s, opacity 2.5s;
+.example-card__descr {
+  flex-grow: 1;
 }
 
-.arrow {
-  margin-bottom: 5px;
-}
-.curves {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+.limiter {
+  flex-grow: 1;
 }
 
-.greeting_screen {
-  height: 100vh;
-  background-color: white;
-  overflow: hidden;
+.card-container {
+  width: 40%;
+  height: calc(100vh - #{$header-height});
+  z-index: 1000000000000000;
+  //position: relative;
+  //top: 0;
+}
+
+.example-card {
+  color: $oB;
+  width: 90%;
+  height: 80%;
+  z-index: 1000000000000000;
+  //position: sticky;
+  //top: 0;
+}
+
+.texts-container {
+  width: 60%;
+
+  .text-container__discr {
+    height: calc(100vh - #{$header-height});
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+  }
+}
+
+.container {
+  //overflow: hidden;
+  //width: 200vw;
+}
+
+.sections {
+  //overflow: hidden;
+  width: 200vw;
 }
 
 .about {
-  background-color: #0B132B;
+  //width: 100%;
+  height: 300vh;
+  background-color: $oB;
+  //position: absolute;
+  top: 0;
+  z-index: 400;
+  width: 100vw;
 }
 
-.introduction_wrapper {
-  flex-grow: 2;
-}
-
-.introduction {
-  h2 {
-    font-size: 6.7vw;
-    font-weight: 700 !important;
-    font-family: 'Poppins', sans-serif;
-    line-height: 6vw;
-    color: #0B132B;
-    margin-bottom: 30px;
-  }
-
-  h5 {
-    color: #0B132B;
-    font-size: 2.5vw;
-    line-height: 2.5vw;
-  }
-
-  .header_nav_buttons {
-    .nav_buttons {
-      .q-btn {
-        margin: 0 !important;
-      }
-    }
-  }
-}
 </style>

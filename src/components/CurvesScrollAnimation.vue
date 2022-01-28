@@ -36,27 +36,28 @@ export default {
       l_width: 30
     }
   },
-  mounted(){
-    // let tl = gsap.timeline()
-    //
-    // ScrollTrigger.create(
-    //   {
-    //     animation: tl,
-    //     trigger: '.curves',
-    //     start: 'top top',
-    //     scrub: true,
-    //   }
-    // )
+  mounted() {
+    gsap.registerEffect({
+      name: 'increaseCurves',
+      effect: (targets, config) => {
+        return gsap.to(targets, {
+          width: window.innerWidth,
+        })
+      }
+    })
+    // gsap.effects.increaseCurves('.')
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .curves {
+  position: relative;
   overflow: hidden;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
 }
+
 .curve {
   position: absolute;
   transition: 1s ease-out;
