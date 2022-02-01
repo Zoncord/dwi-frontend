@@ -2,7 +2,7 @@
   <!--  <div class="flex column ">-->
 
   <div class="content">
-    <Header color-scheme="dark" nav_buttons navigation/>
+    <Header color-scheme="dark" navButtons navigation/>
     <div class="about " :style="{overflow: 'hidden'}">
 
 

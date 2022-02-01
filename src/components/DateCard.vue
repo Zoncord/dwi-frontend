@@ -39,7 +39,7 @@ export default {
   color: black;
 
   &:hover {
-    .date_card_menu {
+    .date-card-menu {
       height: 30px !important;
     }
   }
@@ -49,7 +49,7 @@ export default {
   flex-grow: 1;
 }
 
-.date_card_menu {
+.date-card-menu {
   height: 0;
   transition: .3s;
   overflow: hidden;

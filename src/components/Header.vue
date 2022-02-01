@@ -1,13 +1,13 @@
 <template>
   <header
-    class="flex justify-center items-center"
+    class="flex justify-center items-center full-width"
     :style="colors[colorScheme]"
   >
     <div class="limiter flex justify-between">
       <Logo class="flex items-center" v-if="logo">DAYS WITHOUT INCIDENTS</Logo>
-      <HeaderNavigation/>
+      <HeaderNavigation v-if="navigation"/>
 
-      <div class="nav_bar flex justify-between items-center" v-if="nav_buttons">
+      <div class="nav_bar flex justify-between items-center" v-if="navButtons">
         <a class="user_name" href="#" v-if="isLoggedIn">UserName</a>
         <HeaderNavButtons v-else/>
       </div>
@@ -30,13 +30,13 @@ export default {
   props: {
     colorScheme: {
       type: String,
-      default: 'dark'
+      default: 'light'
     },
     logo: {
       type: Boolean,
       default: false,
     },
-    nav_buttons: {
+    navButtons: {
       type: Boolean,
       default: false,
     },
@@ -48,14 +48,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    light: {
-      type: Boolean,
-      default: true,
-    },
-    dark: {
-      type: Boolean,
-      default: false,
-    }
   },
   data() {
     let colors
@@ -68,10 +60,10 @@ export default {
       isLoggedIn: false,
       colors: {
         light: {
-          'background-color': 'rgba(241, 242, 244, 0.8)'
+          'background-color': 'rgba(241, 242, 244, 0.8)',
+          'background-filter': 'blur(4px)',
         },
         dark: {
-          'background-color': 'rgb(0, 0, 0, 0)'
         }
       }
     }
@@ -82,13 +74,15 @@ export default {
 <style lang="scss" scoped>
 header {
   height: $header-height;
-  backdrop-filter: blur(4px);
+  //backdrop-filter: blur(4px);
   position: sticky;
   top: 0;
   z-index: 10000;
 
   .nav_bar {
     font-size: 18px;
+    justify-self: start;
+    //margin:auto;
   }
 }
 </style>

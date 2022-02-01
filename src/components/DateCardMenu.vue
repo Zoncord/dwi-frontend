@@ -1,9 +1,9 @@
 <template>
-  <div class="date_card_menu flex full-width">
-    <q-btn class="btn_refresh" icon="cached" unelevated></q-btn>
-    <q-btn class="btn_wysiwyg" icon="wysiwyg" unelevated></q-btn>
-    <q-btn class="btn_settings" icon="settings" unelevated></q-btn>
-    <q-btn class="btn_close" icon="close" unelevated></q-btn>
+  <div class="date-card-menu flex full-width">
+    <q-btn class="btn-refresh" icon="cached" unelevated></q-btn>
+    <q-btn class="btn-wysiwyg" icon="wysiwyg" unelevated></q-btn>
+    <q-btn class="btn-settings" icon="settings" unelevated></q-btn>
+    <q-btn class="btn-close" icon="close" unelevated></q-btn>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.date_card_menu {
+.date-card-menu {
   height: 0;
   transition: .5s;
   overflow: hidden;

@@ -1,22 +1,19 @@
 <template>
   <div class="curves">
-    <div class="curves_top">
-      <img class="curve l_curve" src="../assets/images/SVG/curves1.svg"
+      <img class="curve l_curve top_curve" src="../assets/images/SVG/curves1.svg"
            alt="curves">
-      <img class="curve md_curve" src="../assets/images/SVG/curves2.svg"
+      <img class="curve md_curve top_curve" src="../assets/images/SVG/curves2.svg"
            alt="curves">
-      <img class="curve sm_curve" src="../assets/images/SVG/curves3.svg"
+      <img class="curve sm_curve top_curve" src="../assets/images/SVG/curves3.svg"
            alt="curves">
-    </div>
-    <div class="curves_bottom">
-      <img class="curve l_curve" src="../assets/images/SVG/curves1.svg"
+
+      <img class="curve l_curve bottom_curve" src="../assets/images/SVG/curves1.svg"
            alt="curves">
-      <img class="curve md_curve" src="../assets/images/SVG/curves2.svg"
+      <img class="curve md_curve bottom_curve" src="../assets/images/SVG/curves2.svg"
            alt="curves">
-      <img class="curve sm_curve" src="../assets/images/SVG/curves3.svg"
+      <img class="curve sm_curve bottom_curve" src="../assets/images/SVG/curves3.svg"
            alt="curves">
-    </div>
-    <div class="curves__content full-height">
+    <div class="full-height full-width">
       <slot/>
     </div>
   </div>
@@ -65,7 +62,16 @@ export default {
   -o-transition: 1s ease-out;
   -webkit-transition: 1s ease-out;
 }
+.top_curve{
+  top: 0;
+  left: 0;
+  transform: rotate(180deg);
+}
+.bottom_curve{
+  bottom: 0;
+  right: 0;
 
+}
 .curves_top {
   * {
     top: 0;
@@ -83,16 +89,16 @@ export default {
 
 .l_curve {
   width: 30vw;
-  z-index: 100;
+  z-index: 10000000;
 }
 
 .md_curve {
   width: 22vw;
-  z-index: 200;
+  z-index: 10000001;
 }
 
 .sm_curve {
   width: 16vw;
-  z-index: 300;
+  z-index: 10000002;
 }
 </style>

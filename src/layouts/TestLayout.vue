@@ -1,67 +1,70 @@
 <template>
-  <!--  <div class="main-container">-->
-  <!--    <div class="sections">-->
-  <!--      &lt;!&ndash;      <section class="first-screen">first-screen</section>&ndash;&gt;-->
-  <!--      <div class="second-screen-wrapper">-->
-  <!--        <section class="second-screen">-->
-  <!--          <div class="card-wrapper flex justify-center items-center">-->
-  <!--            <div class="card">card</div>-->
-  <!--          </div>-->
-  <!--          <div class="text text-white">-->
-  <!--            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab consequatur dolor dolore eaque expedita-->
-  <!--              molestiae nemo numquam odit recusandae veritatis! Assumenda atque ducimus expedita fugiat id optio sit-->
-  <!--              soluta. Quibusdam.-->
-  <!--            </div>-->
-  <!--            <div>Accusamus aspernatur atque beatae consequuntur dicta, excepturi exercitationem id ipsum, iste iure-->
-  <!--              libero-->
-  <!--              minus modi nemo nulla odit quas qui, quidem quisquam quod recusandae rem sit totam ullam ut vero.-->
-  <!--            </div>-->
-  <!--            <div>Accusantium aspernatur assumenda dolor eos esse excepturi iure mollitia, omnis quae quo ratione-->
-  <!--              reiciendis temporibus totam vel voluptatem? A amet assumenda consectetur et inventore maiores non quaerat-->
-  <!--              sequi temporibus unde.-->
-  <!--            </div>-->
-  <!--            <div>Aperiam consectetur dolor dolore dolorem facilis id ipsum iure modi nobis voluptas! Eius eos et-->
-  <!--              expedita-->
-  <!--              impedit natus nisi nostrum omnis quasi repellendus, sit tempora tempore unde ut vel vitae.-->
-  <!--            </div>-->
-  <!--            <div>A, accusantium aliquam aperiam aspernatur atque blanditiis dignissimos dolor et eum ex incidunt magni-->
-  <!--              maiores maxime mollitia placeat, porro provident quam quasi quibusdam quis sapiente sunt veritatis vitae.-->
-  <!--              Deserunt, sint.-->
-  <!--            </div>-->
-  <!--            <div>Ducimus est inventore libero quod ullam? Dignissimos labore minus sint tempora, ut velit. Consectetur-->
-  <!--              cumque eligendi inventore minima minus nam nemo nobis odit, pariatur possimus praesentium, rerum vel-->
-  <!--              voluptates voluptatum.-->
-  <!--            </div>-->
-  <!--            <div>Accusamus consectetur fugit obcaecati perspiciatis sequi? Doloremque fuga illum incidunt molestiae-->
-  <!--              optio-->
-  <!--              porro quae saepe vel voluptatibus, voluptatum. A earum eum exercitationem maiores mollitia nemo-->
-  <!--              praesentium-->
-  <!--              saepe sunt veniam voluptates.-->
-  <!--            </div>-->
-  <!--            <div>Ad asperiores consequatur, cumque deserunt dignissimos dolores dolorum earum eligendi esse et hic id in-->
-  <!--              ipsa iusto laboriosam maxime minima molestiae, nemo non nostrum optio perferendis quisquam, reiciendis-->
-  <!--              tempora vel.-->
-  <!--            </div>-->
-  <!--            <div>Animi aperiam autem dolor dolorem fugit illum laboriosam vitae. Beatae consequuntur doloribus maiores-->
-  <!--              reprehenderit unde vel. A, ad commodi cum cumque debitis eaque error eveniet fugit, iure nemo omnis quae.-->
-  <!--            </div>-->
-  <!--            <div>Ad aliquid asperiores aspernatur dolorem doloribus eos eveniet fuga fugiat in incidunt maiores nemo,-->
-  <!--              nihil nisi perferendis praesentium quaerat quam quasi quia quibusdam quis repellendus reprehenderit ullam-->
-  <!--              voluptate voluptates voluptatum!-->
-  <!--            </div>-->
-  <!--          </div>-->
-  <!--        </section>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
   <div class="main-container">
-    <section class="first-section">
-      <div class="sticky-block">Stisky Block</div>
-      <div class="long-block">Long Block with some text</div>
-    </section>
+    <div class="sections">
+      <Header color-scheme="dark" nav-buttons/>
+      <section class="first-section">
+        <CurvesScrollAnimation>
+          <div class="full-height flex column justify-between items-center">
+<!--            <Header color-scheme="dark" nav-buttons/>-->
+            <div class="limiter text-center">
+              <h1>Days Without Incidents</h1>
+              <h3>Service that attracts you <br/>to try something new</h3>
+              <q-btn>Join to us</q-btn>
+            </div>
+            <AnimatedArrowDown/>
+          </div>
+        </CurvesScrollAnimation>
+      </section>
+      <div class="">
+<!--      <Header color-scheme="dark" navigation nav-buttons></Header>-->
+      <section class="second-section flex column">
+
+        <div class="limiter flex">
+          <div class="card-wrapper">
+            <Card class="q-pt-md">
+              <h3>Text</h3>
+              <h3>{{ currentWorkingDays }}</h3>
+              <h3>days</h3>
+              <DateCardMenu/>
+            </Card>
+          </div>
+          <div class="text-wrapper">
+            <div class="text-wrapper__discr flex justify-center items-center">
+              <div class="text-center">
+                <h2 class="q-mb-md">Create your own cards</h2>
+                <h5>Track your progress by creating flashcards. <br/> It has never been so easy.</h5>
+              </div>
+            </div>
+            <div class="text-wrapper__discr text-wrapper__discr-second flex justify-center items-center">
+              <div class="text-center">
+                <h2 class="q-mb-md">Inspire by your achievements</h2>
+                <h5>Every day you can see, that's goal is so close.</h5>
+              </div>
+            </div>
+            <div class="text-wrapper__discr text-wrapper__discr-third flex justify-center items-center">
+              <div class="text-center">
+                <h2 class="q-mb-md">And if you wouldn't succeed.</h2>
+                <h5>Don't be upset and start again.</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="curve-wrapper">
+        <img src="../assets/images/SVG/layerCurves.svg" class='layer-curves' alt="curve">
+      </div>
+      <section class="third-section">
+
+        <div class="limiter flex justify-between items-center">
+          <Card>Helloworld</Card>
+          <Card>Helloworld</Card>
+          <Card>Helloworld</Card>
+        </div>
+      </section>
+    </div>
+  </div>
   </div>
 </template>
-
 <script>
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
@@ -74,109 +77,162 @@ import CurvesScrollAnimation from "components/CurvesScrollAnimation";
 import Card from "components/Card";
 import Header from "components/Header";
 import DateCardMenu from "components/DateCardMenu";
+import AnimatedArrowDown from "components/AnimatedArrowDown";
+
 
 export default {
   name: "TestLayout",
-  components: {},
+  components: {
+    // Long,
+    CurvesScrollAnimation,
+    Card,
+    Header,
+    DateCardMenu,
+    AnimatedArrowDown,
+  },
   data() {
     return {
       showCardMenu: false,
+      currentWorkingDays: null,
+      workingDays: 175,
     }
   },
   mounted() {
-    gsap.from('.first-section', {
-      // opacity: 0,  // Works with changing opacity
-      yPercent: 100, // But dont works with changing positon
-      scrollTrigger: '.main-container',
-    }).startTime()
+    this.currentWorkingDays = this.workingDays
 
-// ScrollTrigger.refresh() // Tried to use refresh(), but it doesn't helps
-    ScrollTrigger.create({
-      trigger: '.main-container',
-      start: 'top+=10 top',
-      end: '300 top',
-      markers: true,
-      pin: '.sticky-block',
+    let curvesTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.first-section',
+        start: 'top top',
+        end: `bottom+=${window.innerHeight * 5} bottom`,
+        pin: true,
+        scrub: true,
+      }
     })
+      .to('.l_curve', {
+        width: window.innerWidth * 2,
+      })
+      .to('.md_curve', {
+        width: window.innerWidth * 2,
+      })
+      .to('.sm_curve', {
+        width: window.innerWidth * 2,
+      })
 
-    // ScrollTrigger.create({
-    //   trigger: '.sticky-block',
-    //   start: 'top top',
-    //   endTrigger: '.long-block',
-    //   end: 'bottom bottom',
-    //   pin: true,
-    //   scrub: true,
-    //   // markers: true,
-    // })
+
+    let cardMenuTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.text-wrapper__discr-third',
+        start: 'center center',
+        end: '+=1000',
+        toggleActions: 'play none reverse reset',
+        // scrub: true,
+        markers: true,
+        pin: true,
+        fastScrollEnd: true,
+        onLeaveBack: () => {
+          this.currentWorkingDays = this.workingDays
+        },
+        onLeave: () => {
+          this.currentWorkingDays = 0
+        }
+      }
+    })
+      .to('.date-card-menu', {
+        height: 50,
+        duration: .3,
+        // duration: .5,
+        ease: 'none'
+      }).call(() => {
+        this.currentWorkingDays = this.workingDays
+      })
+      .to('.btn-refresh', {
+        backgroundColor: 'red',
+        duration: .1,
+      })
+      .to('.btn-refresh', {
+        backgroundColor: 'white',
+        duration: .1,
+      })
+      .call(() => {
+        this.currentWorkingDays = 0
+      })
+
+    // cardMenuTl.to()
+
   },
+  methods: {}
 }
 </script>
 
 <style lang="scss" scoped>
-.first-section {
-  width: 100vw;
+header{
+  position: fixed;
+}
+.main-container {
+  width: 100%;
+  height: 100vh;
+  //overflow: hidden;
+}
+
+.sections {
+  width: 100%;
   height: 200vh;
+  //display: flex;
+}
+
+section {
+  width: 100%;
+  height: 100vh;
+}
+
+.first-section {
+  color: $oB;
+}
+
+.second-section {
+  background-color: $oB;
+  height: auto;
   display: flex;
-
+  color: white;
 }
 
-.sticky-block {
-  height: 200px;
-  width: 50%;
-  background-color: #00FFBAFF;
+.card {
+  color: $oB;
+  width: 70%;
+  height: calc(40vw * 90 / 100)
 }
 
-.long-block {
-  width: 50%;
-  height: 100%;
-  background-color: #FF6A0093;
+.card-wrapper {
+  width: 40%;
+  height: calc(100vh - #{$header-height});
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: $header-height;
 }
 
-//
-//.main-container {
-//  width: 100vw;
-//  height: 100vh;
-//  //overflow-x: hidden;
-//}
-//
-//.sections {
-//  width: 200vw;
-//  display: flex;
-//  //overflow-y: hidden;
-//}
-//
-//.first-screen {
-//  width: 100vw;
-//  height: 100vh;
-//  background-color: lightseagreen;
-//}
-//
-//.second-screen-wrapper {
-//  width: 100vw;
-//  height: 200vh;
-//}
-//
-//.second-screen {
-//  width: 100%;
-//  height: 100%;
-//  background-color: #3A506B;
-//  display: flex;
-//}
-//
-//.card-wrapper {
-//  width: 50%;
-//  height: 100vh;
-//}
-//
-//.card {
-//  width: 80%;
-//  height: 10vh;
-//  background-color: rgba(0, 255, 186, 0.58);
-//  //margin-top: 100px;
-//}
-//
-//.text {
-//  width: 50%;
-//  background-color: blue;
-//}
+.text-wrapper {
+  width: 60%;
+  //display: flex;
+  //flex-direction: column;
+}
+
+.text-wrapper__discr {
+  height: 100vh;
+}
+.curve-wrapper{
+  background-color: $ind;
+}
+.third-section {
+  background-color: $ind;
+  .limiter{
+    height: 100%;
+  }
+  .card {
+    width: 20%;
+  }
+}
+
 </style>
