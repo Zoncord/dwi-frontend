@@ -46,7 +46,6 @@ export default {
       }, this.animationTime / (this.endNumber - this.startNumber))
     }
   }
-
 }
 </script>
 

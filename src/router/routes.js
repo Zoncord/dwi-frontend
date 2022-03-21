@@ -22,8 +22,15 @@ const routes = [
     ]
   },
   {
-    path: '/img',
-    component: () => import('layouts/PhoneLayout.vue'),
+    path: '/account/:user_id',
+    component: () => import('layouts/UserAccountLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Index.vue') }
+    ]
+  },
+  {
+    path: '/curve-test',
+    component: () => import('layouts/CurveTestLayout.vue'),
     children: [
       { path: '', component: () => import('pages/PhoneAnimation.vue') }
     ]

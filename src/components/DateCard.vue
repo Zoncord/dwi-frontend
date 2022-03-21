@@ -1,11 +1,11 @@
 <template>
-  <Card class="date_card">
+  <Card class="date_card" @mouseover="hover? menuHeight = 50 : null" @mouseleave="hover ? menuHeight = 0: null">
     <div class="date_card_wrapper q-ma-md flex column justify-between">
-      <h5>{{ title }}</h5>
-      <h4>{{ days }}</h4>
-      <h6>Days</h6>
+      <h3>{{ title }}</h3>
+      <h3>{{ days }}</h3>
+      <h3>Days</h3>
     </div>
-    <DateCardMenu v-if="hasMenu"/>
+    <DateCardMenu v-if="hasMenu" :style="{height: menuHeight + 'px'}"/>
   </Card>
 </template>
 
@@ -19,6 +19,18 @@ export default {
     hasMenu: {
       type: Boolean,
       default: true,
+    },
+    title: {
+      default: 'CardTitle'
+    },
+    customDate: {
+      default: false,
+    },
+    hover: {
+      default: true,
+    },
+    nulled: {
+      default: false,
     }
   },
   components: {
@@ -26,23 +38,33 @@ export default {
     DateCardMenu,
   },
   data() {
-    return {
-      days: 175,
-      title: 'DateCardTitle'
+    let days = 175
+    if (this.customDate){
+      days = this.customDate
     }
-  }
+    return {
+      // days: days,
+      defaultDays: 175,
+      menuHeight: 0,
+    }
+  },
+  computed: {
+    days(){
+      if (this.nulled){
+        return 0
+      }
+      else{
+        return this.customDate ? this.customDate : this.defaultDays
+      }
+    }
+  },
 }
 </script>
 
 <style lang="scss">
 .q-card {
   color: black;
-
-  &:hover {
-    .date-card-menu {
-      height: 30px !important;
-    }
-  }
+  overflow: hidden;
 }
 
 .date_card_wrapper {
@@ -63,4 +85,5 @@ export default {
 h6 {
   font-weight: 400;
 }
+
 </style>

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import HeaderNavButtons from "components/HeaderNavButtons";
+import HeaderNavButtons from "components/NavigationButtons";
 import CurvesScrollAnimation from "components/CurvesScrollAnimation";
 import AnimatedArrowDown from "components/AnimatedArrowDown";
 

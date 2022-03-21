@@ -12,8 +12,8 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  height: 270px;
-  border-radius: 10px;
+  //height: 270px;
+  border-radius: 20px;
 
   h6 {
     font-weight: 400;

@@ -1,9 +1,6 @@
-export function scroll(state) {
-  return state.scroll
+export function theme(state){
+  return state.theme
 }
-export function startScrollVal(state){
-  return state.startScrollVal
-}
-export function currentScreen(state){
-  return state.currentScreen
+export function navigation(state){
+  return state.navigation
 }

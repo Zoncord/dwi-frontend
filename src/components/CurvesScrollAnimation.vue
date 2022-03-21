@@ -1,5 +1,6 @@
 <template>
   <div class="curves">
+    <div class="curves-wrapper">
       <img class="curve l_curve top_curve" src="../assets/images/SVG/curves1.svg"
            alt="curves">
       <img class="curve md_curve top_curve" src="../assets/images/SVG/curves2.svg"
@@ -13,6 +14,7 @@
            alt="curves">
       <img class="curve sm_curve bottom_curve" src="../assets/images/SVG/curves3.svg"
            alt="curves">
+    </div>
     <div class="full-height full-width">
       <slot/>
     </div>
@@ -20,11 +22,9 @@
 </template>
 
 <script>
-// import {map}
+
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default {
   name: "CurvesScrollAnimation",
@@ -33,25 +33,19 @@ export default {
       l_width: 30
     }
   },
-  mounted() {
-    gsap.registerEffect({
-      name: 'increaseCurves',
-      effect: (targets, config) => {
-        return gsap.to(targets, {
-          width: window.innerWidth,
-        })
-      }
-    })
-    // gsap.effects.increaseCurves('.')
-  }
 }
 </script>
 
 <style lang="scss" scoped>
+@media (max-width: 1024px){
+  .curves-wrapper{
+    display: none;
+  }
+}
 .curves {
   position: relative;
   overflow: hidden;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 }
 
