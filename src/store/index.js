@@ -1,7 +1,7 @@
 import {store} from 'quasar/wrappers'
 import createPersistedState from "vuex-persistedstate"
 import {createStore} from 'vuex'
-import mainPageStore from './MainPageStore'
+import mainPageStore from './StartPageStore'
 import HeaderStore from './HeaderStore'
 import GridStore from './GridStore'
 

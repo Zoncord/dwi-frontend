@@ -125,7 +125,7 @@ gsap.registerPlugin(ScrollTrigger);
 import Long from "components/Long";
 import CurvesScrollAnimation from "components/CurvesScrollAnimation";
 import Card from "components/Card";
-import Header from "components/Header";
+import Header from "components/MainPageHeader";
 import DateCardMenu from "components/DateCardMenu";
 import AnimatedArrowDown from "components/AnimatedArrowDown";
 import Footer from "components/Footer";

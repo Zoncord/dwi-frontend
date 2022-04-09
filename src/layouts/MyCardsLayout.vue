@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Header from "components/Header";
+import Header from "components/MainPageHeader";
 import Long from "components/Long";
 import Card from "components/CardOld";
 import AnimatedText from "components/AnimatedText";

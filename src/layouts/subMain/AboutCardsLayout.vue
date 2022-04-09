@@ -45,11 +45,11 @@ import {mapGetters, mapMutations} from "vuex";
 import Card from "components/Card";
 import DateCard from "components/DateCard";
 // import NumberCountUpAnimation from "components/AnimatedNumberCountUp";
-import Header from "components/Header";
+import Header from "components/MainPageHeader";
 import AnimatedNumberCountUp from 'components/AnimatedNumberCountUp'
 import Long from "components/Long";
 import AnimatedText from "components/AnimatedText";
-import {showAdditionalContent} from "src/store/MainPageStore/mutations";
+import {showAdditionalContent} from "src/store/StartPageStore/mutations";
 
 export default {
   name: "AboutCards",

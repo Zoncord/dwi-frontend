@@ -1,6 +1,12 @@
 <template>
-  <div class="logo text-center flex items-center justify-center" :style="color ? color : this.styles[this.theme]">
-      <slot/>
+
+  <a v-if="link" href="/" class="logo text-center flex items-center justify-center"
+     :style="color ?  this.styles[this.color] : null">
+    <slot/>
+  </a>
+  <div v-else class="logo text-center flex items-center justify-center"
+       :style="color ?  this.styles[this.color] : null">
+    <slot/>
   </div>
 </template>
 
@@ -13,16 +19,23 @@ export default {
     color: {
       default: null,
     },
+    link: {
+      default: false,
+    }
   },
   computed: {
     ...mapGetters('HeaderStore', ['theme']),
   },
   data() {
+    // TODO переделать styles на нормальные названия
     let styles = {
       light: {
         color: 'black'
       },
       dark: {
+        color: '#9DACFFFF',
+      },
+      purple: {
         color: '#9DACFFFF',
       }
     }
@@ -41,7 +54,8 @@ export default {
   font-size: calc(13px + 0.7vw);
   vertical-align: middle;
 }
-p{
+
+p {
   display: block;
 }
 </style>

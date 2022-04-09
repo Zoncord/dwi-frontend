@@ -1,84 +1,47 @@
 <template>
-  <header
-    class="flex justify-center items-center full-width"
-    :style="bgStyle"
-  >
-    <div class="limiter flex row reverse justify-between">
-      <PhoneMenu/>
-      <div class="nav_bar flex justify-between items-center" v-if="navButtons">
-        <a class="user_name" href="#" v-if="isLoggedIn">UserName</a>
-        <NavigationButtons v-else/>
-      </div>
-      <HeaderNavigation v-if="navigation"/>
-      <Logo class="flex items-center" :theme="theme" v-if="logo">DAYS WITHOUT INCIDENTS</Logo>
-    </div>
+  <header class="items-center">
+    <Logo :link="true"  color="purple" class="header__elem">DWI</Logo>
+    <q-tabs
+      v-model="tab"
+      class="white"
+    >
+      <q-tab name="news" label="News" no-caps class="header__elem header__news-tab"></q-tab>
+      <q-tab name="liked" label="Liked" no-caps class="header__elem header__liked-tab"/>
+      <q-tab name="account" label="Account" no-caps class="header__elem header__account-tab"/>
+    </q-tabs>
+    <q-btn icon="search" color="white" text-color="black"></q-btn>
   </header>
+  <q-tab-panels v-model="tab" animated>
+    <q-tab-panel name="news">
+      <div class="text-h6">Mails</div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    </q-tab-panel>
+
+    <q-tab-panel name="liked">
+      <div class="text-h6">Alarms</div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    </q-tab-panel>
+
+    <q-tab-panel name="account">
+      <div class="text-h6">Movies</div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    </q-tab-panel>
+  </q-tab-panels>
+
 </template>
 
 <script>
-import NavigationButtons from "components/NavigationButtons";
 import Logo from "components/Logo";
-import HeaderNavigation from "components/HeaderNavigation";
-import {mapGetters, mapMutations} from "vuex";
-import PhoneMenu from "components/PhoneMenu";
+import {ref} from "vue";
 
 export default {
   name: "Header",
   components: {
     Logo,
-    NavigationButtons,
-    HeaderNavigation,
-    PhoneMenu,
-  },
-  props: {
-    color: {
-      type: String,
-      default: 'light',
-    },
-    bg: {
-      type: Boolean,
-      default: false,
-    },
-    logo: {
-      type: Boolean,
-      default: false,
-    },
-    navButtons: {
-      type: Boolean,
-      default: false,
-    },
-    navigation: {
-      type: Boolean,
-      default: false,
-    },
-
   },
   data() {
-    let colors
-    let bgStyle
-    if (this.color === 'light') {
-      if (this.bg) {
-        bgStyle = {
-          'background-color': 'rgba(241, 242, 244, 0.8)',
-          'background-filter': 'blur(4px)',
-        }
-      }
-    }
     return {
-      isLoggedIn: false,
-      colors: colors,
-      bgStyle: bgStyle,
-    }
-  },
-  methods: {
-    ...mapMutations('HeaderStore', ['changeTheme'])
-  },
-  computed: {
-    ...mapGetters('HeaderStore', ['theme'])
-  },
-  watch: {
-    color() {
-      this.changeTheme(this.color)
+      tab: ref('news')
     }
   }
 }
@@ -86,36 +49,52 @@ export default {
 
 <style lang="scss">
 header {
-  height: $header-height;
-  //backdrop-filter: blur(4px);
-  position: sticky;
-  top: 0;
-  z-index: 10000;
-  color: $oB;
+  width: 100%;
+  height: 50px;
+  display: flex;
+}
 
-  .nav_bar {
-    font-size: 18px;
-    justify-self: start;
-    //margin:auto;
+.header__elem {
+  background-color: white !important;
+  color: black;
+  border-radius: 10px;
+  height: 40px;
+  cursor: pointer;
+  .q-icon{
+    font-size: 2em;
   }
 }
-@media (min-width: 768px){
-  .menu-burger-btn{
-    display: none !important;
-  }
+.header__liked-tab{
+  background-color: red;
+  margin-left: 10px;
+  margin-right: 10px;
 }
-@media (max-width: 768px){
-  .nav_bar{
-    display: none;
-  }
-  .header_navigation{
-    display: none;
-  }
-  header{
-    background-color: white;
-  }
-  .logo{
-    line-height: 40px;
-  }
+.q-tab {
+  //margin-right: 15px;
+  min-height: auto;
+  height: 40px;
+  width: 33%;
 }
+
+.q-tab__content {
+  z-index: 2;
+}
+
+.q-tab--active {
+  background-color: #9DACFF !important;
+  color: white;
+}
+
+.q-tab__indicator {
+  border-radius: 10px;
+  background-color: #9DACFF !important;
+  height: 100%;
+  z-index: 1
+}
+.q-btn .header__elem{
+  &:before{
+     box-shadow: none;
+   }
+}
+
 </style>

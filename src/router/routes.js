@@ -1,9 +1,9 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/StartLayout.vue'),
     children: [
-      // { path: '', component: () => import('components/Header.vue') },
+      // { path: '', component: () => import('components/MainPageHeader.vue') },
       { path: '', component: () => import('pages/Index.vue') }
     ]
   },
@@ -22,8 +22,8 @@ const routes = [
     ]
   },
   {
-    path: '/account/:user_id',
-    component: () => import('layouts/UserAccountLayout.vue'),
+    path: '/app',
+    component: () => import('layouts/Main.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]

@@ -72,15 +72,19 @@ export default {
   right: 0;
   left: 0;
   position: fixed;
-  grid-column-gap: 16px;
+  grid-column-gap: 10px;
   display: grid;
   z-index: 100000000;
   opacity: .5;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .grid-column {
   height: 100%;
   background-color: red;
   margin-bottom: 10px;
+
+
 }
 </style>
