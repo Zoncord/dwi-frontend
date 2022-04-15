@@ -22,7 +22,7 @@ const routes = [
     ]
   },
   {
-    path: '/app',
+    path: '/app/:id',
     component: () => import('layouts/Main.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') }
