@@ -1,56 +1,94 @@
 <template>
-  <Grid/>
-
-  <q-layout class="wrapper">
-    <div class="limiter">
-      <header class="items-center">
-        <Logo :link="true" color="purple" class="header__elem">DWI</Logo>
+  <q-layout>
+    <header>
+      <div class="limiter">
         <q-tabs
           v-model="tab"
-          class="white"
+          dense
+          class=""
+          active-color="additional"
+          indicator-color="additional"
+          align="justify"
+          narrow-indicator
         >
-          <q-tab name="news" label="News" no-caps class="header__elem header__news-tab"></q-tab>
-          <q-tab name="liked" label="Liked" no-caps class="header__elem header__liked-tab"/>
-          <q-tab name="account" label="Account" no-caps class="header__elem header__account-tab"/>
+          <Logo>DWI</Logo>
 
+          <q-tab name="mails" label="Главная"/>
+          <q-tab name="alarms" label="Лучшие"/>
+          <q-input class="search" outlined v-model="query" :model-value="query" label="Поиск">
+            <template v-slot:prepend>
+              <q-icon name="search" color="black"></q-icon>
+            </template>
+
+          </q-input>
+          <div class="flex items-center">
+            <UserName/>
+            <UserIcon></UserIcon>
+            <q-menu>
+              <q-list style="min-width: 100px">
+                <div class="flex">
+                  <UserIcon/>
+                  <div class="">
+                    <UserName/>
+                  </div>
+                </div>
+                <q-item clickable v-close-popup>
+                  <q-item-section>New tab</q-item-section>
+                </q-item>
+
+              </q-list>
+            </q-menu>
+          </div>
         </q-tabs>
-        <FindButton class="header__elem"/>
-      </header>
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="news">
-          <News/>
-        </q-tab-panel>
+      </div>
+    </header>
+    <q-tab-panels
+      v-model="tab"
+      animated
+      swipeable
+      vertical
+      transition-prev="jump-up"
+      transition-next="jump-up"
+    >
+      <q-tab-panel name="mails">
+        <div class="text-h4 q-mb-md">Mails</div>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+      </q-tab-panel>
 
-        <q-tab-panel name="liked">
+      <q-tab-panel name="alarms">
+        <div class="text-h4 q-mb-md">Alarms</div>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+      </q-tab-panel>
 
-        </q-tab-panel>
-
-        <q-tab-panel name="account">
-
-        </q-tab-panel>
-      </q-tab-panels>
-    </div>
+      <q-tab-panel name="movies">
+        <div class="text-h4 q-mb-md">Movies</div>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+      </q-tab-panel>
+    </q-tab-panels>
   </q-layout>
 </template>
 
 <script>
-import Grid from "components/Grid";
-import {ref} from "vue";
 import Logo from "components/Logo";
-import News from "layouts/News";
-import FindButton from "components/FindButton";
+import {ref} from "vue";
+import UserName from "components/UserName";
+import UserIcon from "components/UserIcon";
 
 export default {
   name: "Main",
   components: {
-    Grid,
     Logo,
-    News,
-    FindButton,
+    UserName,
+    UserIcon,
   },
   data() {
     return {
-      tab: ref('news')
+      tab: ref('mails'),
+      query: '',
     }
   }
 
@@ -58,91 +96,42 @@ export default {
 </script>
 
 <style lang="scss">
-$columnSize: 7.56%;
-$spaceSize: 0.82644%;
-
-.wrapper {
-  background-color: $gray;
+header {
+  height: 80px;
 }
 
 .limiter {
-  height: 100px;
-}
-
-header {
-  width: 100%;
-  display: flex;
-  padding-top: $spaceSize;
-  padding-bottom: $spaceSize;
-}
-
-.header__elem {
-  background-color: white !important;
-  color: $oB;
-  border-radius: 10px;
-  height: 40px;
-  cursor: pointer;
-
-
-  .q-icon {
-    font-size: 2em;
-  }
+  //height: 100%;
+  //height: 40px;
+  //padding-top: 10px;
+  //padding-bottom: 10px;
 }
 
 .logo {
-  width: calc(#{ $columnSize} * 2 + #{$spaceSize});
-  margin-right: $spaceSize;
+  font-size: 30px !important;
 }
 
 .q-tabs {
-  flex-grow: 2;
-  margin-right: $spaceSize;
-
-  .header__liked-tab {
-    margin-right: $spaceSize;
-    margin-left: $spaceSize;
-  }
-}
-
-.find-wrapper{
-  width: $columnSize;
+  height: 100%;
 }
 
 .q-tab {
-  min-height: auto;
-  height: 40px;
-  flex-grow: 2;
-  width: calc(#{$columnSize} * 2 + #{$spaceSize}) !important;
-}
+  padding: 0;
 
-.q-tab__content {
-  z-index: 2;
-}
-
-.q-tab--active {
-  background-color: #9DACFF !important;
-  color: white;
-}
-
-.q-tab__indicator {
-  border-radius: 10px;
-  background-color: #9DACFF !important;
-  height: 100%;
-  z-index: 1
-}
-
-.q-btn .header__elem {
-  &:before {
-    box-shadow: none;
+  * {
+    font-size: 14px;
   }
 }
-
-.q-tab-panels {
-  background-color: $gray;
+.q-tab__indicator{
+  height: 3px !important  ;
 }
 
-.q-tab-panel {
-  padding: 0;
+.search {
+  flex-grow: 4;
+}
+
+.q-input {
+  height: 20px;
 }
 
 </style>
