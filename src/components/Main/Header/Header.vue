@@ -1,18 +1,17 @@
 <template>
   <header class="flex items-center">
     <div class="limiter">
-      <q-tabs class="flex justify-between items-center" active-color="additional">
-        <Logo class="header-elem">DWI</Logo>
+      <q-tabs class="flex justify-between items-center" active-color="highlight" narrow-indicator>
+        <Logo class="header-elem" color="highlight">DWI</Logo>
 
-        <q-route-tab class="header-elem" :label="$t('header.tabs[0]')" to="/app/feed" no-caps :ripple="false"></q-route-tab>
-        <q-route-tab class="header-elem" :label="$t('header.tabs[1]')" to="/app/recommendations" no-caps :ripple="false"></q-route-tab>
+        <q-route-tab class="header-elem"  content-class="tab" :label="$t('header.tabs.feed')" to="/app/feed" no-caps :ripple="false"></q-route-tab>
+        <q-route-tab class="header-elem" content-class="tab" :label="$t('header.tabs.explore')" to="/app/explore" no-caps :ripple="false"></q-route-tab>
 
         <Search class="header-elem"/>
         <UserEntry class="header-elem"/>
       </q-tabs>
     </div>
   </header>
-
 </template>
 
 <script>
@@ -46,24 +45,31 @@ export default {
 
 <style lang="scss">
 header {
-  height: 80px;
+  height: 55px;
+  border-bottom: 1px solid #B8B8B8;
 }
 .logo {
   font-size: 30px !important;
 }
 .q-tab {
+  height: 55px;
   .q-focus-helper{
     display: none;
   }
-  * {
-    font-size: 14px;
+  .tab{
+    height: 100%;
+    *{
+      font-weight: 400;
+      font-size: 16px;
+    }
+
   }
   .q-tab__label{
     color: black;
   }
   &:hover{
       .q-tab__label{
-        color: $additional;
+        color: $highlight;
       }
   }
 }
@@ -86,4 +92,11 @@ header {
 .search-wrapper{
   flex-grow: 10;
 }
+.q-tab__indicator{
+  height: 3px !important  ;
+}
+.user-name{
+  font-size: 15px;
+}
+
 </style>

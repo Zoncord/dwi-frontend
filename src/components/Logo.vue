@@ -1,11 +1,17 @@
 <template>
 
-  <a v-if="link" href="/" class="logo text-center flex items-center justify-center"
-     :style="color ?  this.styles[this.color] : null">
+  <a v-if="link" href="/"
+     class="logo text-center flex items-center justify-center"
+     :class="additionalClasses ? additionalClasses: null"
+     :style="logoColor ?  logoColor : null"
+  >
     <slot/>
   </a>
-  <div v-else class="logo text-center flex items-center justify-center"
-       :style="color ?  this.styles[this.color] : null">
+  <div v-else
+       class="logo text-center flex items-center justify-center"
+       :class="additionalClasses ? additionalClasses: null"
+       :style="logoColor ?  logoColor : null"
+  >
     <slot/>
   </div>
 </template>
@@ -27,20 +33,18 @@ export default {
     ...mapGetters('HeaderStore', ['theme']),
   },
   data() {
-    // TODO переделать styles на нормальные названия
-    let styles = {
-      light: {
-        color: 'black'
-      },
-      dark: {
-        color: '#9DACFFFF',
-      },
-      purple: {
-        color: '#9DACFFFF',
-      }
+    let additionalClasses, logoColor
+    if (this.color.includes('#')) {
+      logoColor = this.color
+    } else {
+      additionalClasses = [
+        `text-${this.color}`,
+        // `bg-${this.color}`
+      ]
     }
     return {
-      styles
+      additionalClasses: additionalClasses,
+      logoColor: logoColor,
     }
   },
 

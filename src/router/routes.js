@@ -22,6 +22,10 @@ const routes = [
     ]
   },
   {
+    path: '/app',
+    redirect: '/app/feed'
+  },
+  {
     path: '/app/:id',
     component: () => import('layouts/Main.vue'),
     children: [

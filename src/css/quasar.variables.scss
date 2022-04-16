@@ -1,5 +1,6 @@
 $primary: #437BD4;
 $additional: #00B0AD;
+$highlight: #00B0AD;
 
 
 //$primary   : #34D0B6;
@@ -31,23 +32,18 @@ $columnSize: 7.56%;
 $spaceSize: 0.82644%;
 
 
+//.text-additional {
+//  color: #00B0AD !important;
+//}
+//
+//.bg-additional {
+//  background: #00B0AD !important;
+//}
 
-//$device:0;
-////@debug $device;
-//@media (min-width: 991px) {
-//  $device: 1;
-//}
-//
-//@media (max-width: 991px) {
-//  $device: 'tablet';
-//}
-//
-//@media (max-width: 479px) {
-//  $device: 'mobile';
-//}
-.text-additional {
+.text-highlight {
   color: #00B0AD !important;
 }
-.bg-additional {
+
+.bg-highlight {
   background: #00B0AD !important;
 }

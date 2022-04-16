@@ -4,12 +4,18 @@
 export default {
   header: {
     search: {
-      label: 'Find'
+      label: 'Search'
     },
-    tabs: [
-      'Feed',
-      'Explore'
-    ]
+    tabs: {
+      feed: 'Feed',
+      explore: 'Explore',
+    },
+    userEntryMenu: {
+      profile: 'Profile',
+      addAccount: 'Add account',
+      help: 'Help',
+      settings: 'Settings',
+      exit: 'Exit',
+    }
   },
-
 }

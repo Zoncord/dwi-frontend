@@ -3,11 +3,13 @@
     <Header></Header>
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="feed">
+        <A></A>
         <div class="text-h6">Mails</div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </q-tab-panel>
 
-      <q-tab-panel name="recommendations">
+      <q-tab-panel name="explore">
+        <B></B>
         <div class="text-h6">Alarms</div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </q-tab-panel>
@@ -19,7 +21,7 @@
 import Logo from "components/Logo";
 import {ref} from "vue";
 import UserName from "components/UserName";
-import UserIcon from "components/UserIcon";
+import UserIcon from "components/UserImage";
 import Header from "components/Main/Header/Header";
 
 export default {
@@ -45,31 +47,7 @@ export default {
 </script>
 
 <style lang="scss">
-
-//.limiter {
-//  //height: 100%;
-//  //height: 40px;
-//  //padding-top: 10px;
-//  //padding-bottom: 10px;
-//}
-//
-
-//
-//.q-tabs {
-//  height: 100%;
-//}
-//
-
-//.q-tab__indicator{
-//  height: 3px !important  ;
-//}
-//
-//.search {
-//  flex-grow: 4;
-//}
-//
-//.q-input {
-//  height: 40px;
-//}
-
+.q-tab-panels{
+  position: static;
+}
 </style>
