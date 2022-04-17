@@ -6,4 +6,12 @@
   background: #00B0AD !important;
 }
 
+.text-border-color {
+  color: #B8B8B8 !important;
+}
+
+.bg-border-color {
+  background: #B8B8B8 !important;
+}
+
 /*# sourceMappingURL=quasar.variables.css.map */

@@ -1,62 +1,55 @@
 <template>
-  <div class="user-entry flex items-center">
-    <p class="user-name">{{ userName }}</p>
+  <div class="user-entry flex items-center justify-center">
+    <p class="user-entry__user-name">{{ userName }}</p>
     <UserImage class="user-entry__user-image"/>
-    <q-menu class="user-entry__menu" anchor="bottom right" self="top right">
+    <q-menu class="user-entry__menu flex column justify-center items-center" anchor="bottom right" self="top right">
       <div class="q-pa-md">
-        <div class="column">
-          <div class="row justify-between">
-            <UserImage class="user-entry__menu__user-image col-4"/>
-            <div class="flex column justify-center col-7">
-              <p class="user-name">{{ userName }}</p>
+        <div class="flex">
+          <UserImage class="user-entry__menu__user-image q-mr-md"/>
+          <div class="flex column">
+            <div class="user-entry__menu__user-information flex column justify-center">
+              <p class="user-entry__menu__user-name">{{ userName }}</p>
               <OnlineDisplay/>
             </div>
+            <q-list class="user-entry__menu-list flex column">
+              <q-item clickable v-close-popup dense>
+                <q-item-section class="flex items-center ">
+                  <q-icon name="person" class="user-entry__menu-list__icon"></q-icon>
+                  <p>{{ $t('header.userEntryMenu.profile') }}</p>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup dense>
+                <q-item-section class="flex items-center ">
+                  <q-icon name="add" class="user-entry__menu-list__icon"></q-icon>
+                  <p>{{ $t('header.userEntryMenu.addAccount') }}</p>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup dense>
+                <q-item-section class="flex items-center ">
+                  <q-icon name="info" class="user-entry__menu-list__icon"></q-icon>
+                  <p>{{ $t('header.userEntryMenu.help') }}</p>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup dense>
+                <q-item-section class="flex items-center ">
+                  <q-icon name="settings" class="user-entry__menu-list__icon"></q-icon>
+                  <p>{{ $t('header.userEntryMenu.settings') }}</p>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup dense>
+                <q-item-section class="flex items-center ">
+                  <q-icon name="logout" class="user-entry__menu-list__icon"></q-icon>
+                  <p>{{ $t('header.userEntryMenu.exit') }}</p>
+                </q-item-section>
+              </q-item>
+            </q-list>
           </div>
-        </div>
 
-        <div class="row justify-between">
-            <div class="col-4"></div>
-          <div class="col-7"><q-list class="user-entry__menu-list flex column">
-            <q-item clickable v-close-popup dense>
-              <q-item-section class="flex items-center ">
-                <q-icon name="person" class="q-mr-sm"></q-icon>
-                <p>{{ $t('header.userEntryMenu.profile') }}</p>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup dense>
-              <q-item-section class="flex items-center ">
-                <q-icon name="add" class="q-mr-sm"></q-icon>
-                <p>{{ $t('header.userEntryMenu.addAccount') }}</p>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup dense>
-              <q-item-section class="flex items-center ">
-                <q-icon name="info" class="q-mr-sm"></q-icon>
-                <p>{{ $t('header.userEntryMenu.help') }}</p>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup dense>
-              <q-item-section class="flex items-center ">
-                <q-icon name="settings" class="q-mr-sm"></q-icon>
-                <p>{{ $t('header.userEntryMenu.settings') }}</p>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup dense>
-              <q-item-section class="flex items-center ">
-                <q-icon name="logout" class="q-mr-sm"></q-icon>
-                <p>{{ $t('header.userEntryMenu.exit') }}</p>
-              </q-item-section>
-            </q-item>
-          </q-list></div>
         </div>
       </div>
 
-      <q-separator/>
-      <p class="q-ma-md">
-        Zoncord LLC all rights reserved© 2022
-      </p>
-
-
+      <q-separator class="user-entry__content-separator"/>
+      <p class="user-entry__copyright q-ma-md">Zoncord LLC all rights reserved© 2022</p>
     </q-menu>
   </div>
 </template>
@@ -88,6 +81,13 @@ export default {
 .q-menu.q-position-engine {
   max-width: none !important;
 }
+
+.user-entry__menu {
+  margin-top: 7px !important;
+  border-radius: 0 0 10px 10px;
+  box-shadow: none;
+  border: 1px solid $border_color;
+}
 </style>
 
 <style scoped>
@@ -95,9 +95,17 @@ export default {
   cursor: pointer;
 }
 
-.user-name {
+.user-entry__user-name {
   margin-right: 10px;
+  font-size: 17px;
 }
+
+.user-entry__menu__user-name {
+  font-size: 23px;
+  font-weight: 400;
+  white-space: nowrap
+}
+
 
 .user-entry__menu-list {
   align-items: start;
@@ -123,5 +131,21 @@ export default {
   }
 
   padding: 0;
+}
+
+.user-entry__menu-list__icon {
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+.user-entry__copyright {
+  display: block;
+}
+
+.user-entry__content-separator {
+  width: 100%;
+}
+.user-entry__menu__user-information{
+  height: 80px;
 }
 </style>
