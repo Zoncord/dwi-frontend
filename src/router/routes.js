@@ -1,6 +1,6 @@
 const routes = [
   {
-    path: '/',
+    path: '/greeting',
     component: () => import('layouts/StartLayout.vue'),
     children: [
       // { path: '', component: () => import('components/MainPageHeader.vue') },
@@ -22,11 +22,11 @@ const routes = [
     ]
   },
   {
-    path: '/app',
-    redirect: '/app/feed'
+    path: '/',
+    redirect: '/feed'
   },
   {
-    path: '/app/:id',
+    path: '/:id',
     component: () => import('layouts/Main.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') }

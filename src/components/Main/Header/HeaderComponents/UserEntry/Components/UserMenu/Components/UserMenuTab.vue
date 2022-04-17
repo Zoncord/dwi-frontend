@@ -24,6 +24,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.q-router-link--exact-active{
+  color: $highlight;
+}
 </style>

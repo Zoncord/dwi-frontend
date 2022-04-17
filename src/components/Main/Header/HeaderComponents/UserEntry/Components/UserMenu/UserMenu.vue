@@ -8,7 +8,7 @@
             <p class="user-entry__menu__user-name">{{ userName }}</p>
             <OnlineDisplay/>
           </div>
-          <q-list class="user-entry__menu-list flex column">
+          <q-list class="user-entry__menu-list flex column" >
             <UserMenuTab
               v-for="(tab, tabName) in menuTabs"
               :key="tab"
@@ -48,7 +48,7 @@ export default {
       menuTabs: {
         profile: {
           icon: 'person',
-          to: '/a'
+          to: '/profile'
         },
         addAccount: {
           icon: 'add',
@@ -56,7 +56,7 @@ export default {
         },
         help: {
           icon: 'help',
-          to: '/a'
+          to: '/help'
         },
         settings: {
           icon: 'settings',

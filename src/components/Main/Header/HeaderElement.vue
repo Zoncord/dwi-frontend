@@ -11,7 +11,7 @@
           class="header-elem"
           content-class="tab"
           :label="$t('header.tabs.feed')"
-          to="/app/feed"
+          to="/feed"
           no-caps
           :ripple="false"
         />
@@ -19,7 +19,7 @@
           class="header-elem"
           content-class="tab"
           :label="$t('header.tabs.explore')"
-          to="/app/explore"
+          to="/explore"
           no-caps
           :ripple="false"
         />

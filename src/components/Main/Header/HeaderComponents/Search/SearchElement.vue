@@ -43,8 +43,11 @@
       transform: searchFocused? 'scaleY(1)' : 'scaleY(0)',
     }"
     >
-      <div v-for="(resp) in responses" :key="resp">
+      <div
+        v-for="(resp, id) in responses" :key="resp"
+      >
         <SearchRecommendsElement
+          v-if="id < 6"
           :days="resp.data.days"
           :owner="resp.owner"
           :title="resp.title"
@@ -58,7 +61,8 @@
 
 <script>
 import axios from "axios";
-import SearchRecommendsElement from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
+import SearchRecommendsElement
+  from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
 
 export default {
   name: "Search",
@@ -66,8 +70,7 @@ export default {
     SearchRecommendsElement,
   },
   mounted() {
-
-    console.log()
+    this.getResponses()
   },
   data() {
     return {
@@ -80,6 +83,11 @@ export default {
   },
   watch: {
     query() {
+      this.getResponses()
+    }
+  },
+  methods: {
+    getResponses() {
       axios.get(' http://192.168.43.79:8000/api/days_without_incidents/days_without_incidents_page/', {
         params: {
           search: this.query
