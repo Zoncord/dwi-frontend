@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Logo from "components/OldComponents/Logo";
+import Logo from "components/Core/Logo";
 
 export default {
   name: "Footer",

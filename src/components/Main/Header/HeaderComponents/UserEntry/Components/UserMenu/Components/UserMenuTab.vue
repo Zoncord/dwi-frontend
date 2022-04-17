@@ -1,6 +1,6 @@
 <template>
   <q-item clickable v-close-popup dense :to="to">
-    <q-item-section class="flex items-center ">
+    <q-item-section class="flex items-center">
       <q-icon :name="icon" class="user-entry__menu-list__icon"></q-icon>
       <p>{{ text }}</p>
     </q-item-section>
@@ -28,4 +28,8 @@ export default {
 .q-router-link--exact-active{
   color: $highlight;
 }
+.user-entry__menu-list__icon {
+  margin-right: 3px;
+}
+
 </style>

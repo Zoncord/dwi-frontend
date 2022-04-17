@@ -14,7 +14,6 @@ export default {
   name: "UserEntry",
   components: {
     UserImage,
-    // OnlineDisplay,
     UserMenu
   },
   data() {
@@ -69,10 +68,6 @@ export default {
   padding: 0;
 }
 
-.user-entry__menu-list__icon {
-  margin-right: 3px;
-  margin-left: 3px;
-}
 
 .user-entry__copyright {
   display: block;

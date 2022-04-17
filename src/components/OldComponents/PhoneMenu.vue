@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Logo from "components/OldComponents/Logo";
+import Logo from "components/Core/Logo";
 import HeaderNavButtons from "components/OldComponents/NavigationButtons";
 import {mapGetters} from "vuex";
 

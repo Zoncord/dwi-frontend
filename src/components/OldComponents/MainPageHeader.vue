@@ -17,7 +17,7 @@
 
 <script>
 import NavigationButtons from "components/OldComponents/NavigationButtons";
-import Logo from "components/OldComponents/Logo";
+import Logo from "components/Core/Logo";
 import HeaderNavigation from "components/OldComponents/HeaderNavigation";
 import {mapGetters, mapMutations} from "vuex";
 import PhoneMenu from "components/OldComponents/PhoneMenu";

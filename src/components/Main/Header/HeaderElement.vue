@@ -5,7 +5,9 @@
       <q-tabs
         class="flex items-center"
         active-color="highlight"
+        indicator-color="highlight"
         narrow-indicator
+        align="justify"
       >
         <q-route-tab
           class="header-elem"
@@ -31,7 +33,7 @@
 </template>
 
 <script>
-import Logo from "components/OldComponents/Logo";
+import Logo from "components/Core/Logo";
 import Search from "components/Main/Header/HeaderComponents/Search/SearchElement";
 import UserEntry from "components/Main/Header/HeaderComponents/UserEntry/UserEntry";
 
@@ -84,7 +86,7 @@ header {
 }
 
 .header-elem {
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 .q-tabs {
@@ -110,5 +112,8 @@ header {
 
 .user-name {
   font-size: 15px;
+}
+.q-tab__content{
+  min-width: auto;
 }
 </style>
