@@ -2,11 +2,27 @@
   <header class="flex items-center">
     <div class="limiter flex justify-between items-center">
       <Logo class="header-elem" color="highlight">DWI</Logo>
-      <q-tabs class="flex items-center" active-color="highlight" narrow-indicator>
-        <q-route-tab class="header-elem" content-class="tab" :label="$t('header.tabs.feed')" to="/app/feed" no-caps
-                     :ripple="false"></q-route-tab>
-        <q-route-tab class="header-elem" content-class="tab" :label="$t('header.tabs.explore')" to="/app/explore"
-                     no-caps :ripple="false"></q-route-tab>
+      <q-tabs
+        class="flex items-center"
+        active-color="highlight"
+        narrow-indicator
+      >
+        <q-route-tab
+          class="header-elem"
+          content-class="tab"
+          :label="$t('header.tabs.feed')"
+          to="/app/feed"
+          no-caps
+          :ripple="false"
+        />
+        <q-route-tab
+          class="header-elem"
+          content-class="tab"
+          :label="$t('header.tabs.explore')"
+          to="/app/explore"
+          no-caps
+          :ripple="false"
+        />
       </q-tabs>
       <Search class="header-elem"/>
       <UserEntry class="header-elem"/>
@@ -16,8 +32,8 @@
 
 <script>
 import Logo from "components/Logo";
-import Search from "components/Main/Header/HeaderComponents/Search/Search";
-import UserEntry from "components/Main/Header/HeaderComponents/UserEntry";
+import Search from "components/Main/Header/HeaderComponents/Search/SearchItem";
+import UserEntry from "components/Main/Header/HeaderComponents/UserEntry/UserEntry";
 
 export default {
   name: "Header",
@@ -26,20 +42,6 @@ export default {
     Search,
     UserEntry
   },
-  created() {
-    this.$watch(
-      () => this.$route.params,
-      (toParams, previousParams) => {
-        this.tab = toParams.id
-      }
-    )
-  },
-  data() {
-    return {
-      tab: null,
-    }
-  },
-  watch: {}
 }
 </script>
 
@@ -63,7 +65,6 @@ header {
 
   .tab {
     height: 100%;
-
     * {
       font-weight: 400;
       font-size: 16px;
@@ -81,12 +82,12 @@ header {
     }
   }
 }
+
 .header-elem {
   margin-right: 20px;
 }
+
 .q-tabs {
-
-
   .user-entry {
     margin-right: 0;
   }
@@ -110,5 +111,4 @@ header {
 .user-name {
   font-size: 15px;
 }
-
 </style>

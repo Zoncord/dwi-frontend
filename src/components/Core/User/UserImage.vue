@@ -8,10 +8,8 @@
 
 export default {
   name: "UserImage",
-  mounted() {
-    return {
-      // imageLink:
-    }
+  props: {
+
   }
 }
 </script>

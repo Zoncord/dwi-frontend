@@ -25,7 +25,7 @@ import Long from "components/Long";
 import Card from "components/CardOld";
 import AnimatedText from "components/AnimatedText";
 import Up from "components/Up";
-import Search from "components/Search";
+import Search from "components/Main/Header/HeaderComponents/Search/OldSearch";
 
 export default {
   name: "MyCardsLayout",

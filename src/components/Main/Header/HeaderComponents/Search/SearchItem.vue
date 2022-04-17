@@ -3,22 +3,33 @@
        @focusin="searchFocused = true"
        @focusout="searchFocused = false"
   >
-    <q-input class="search" borderless v-model="query" :model-value="query" :placeholder="$t('header.search.label')"
-             dense
-             color="border-color" hide-bottom-space label-color="black"
-             :style="{borderRadius: searchFocused && responses.length ? '5px 5px 0px 0px': '5px 5px 5px 5px'}"
+
+    <q-input
+      class="search"
+      dense
+      borderless
+      v-model="query"
+      :model-value="query"
+      :placeholder="$t('header.search.label')"
+      color="border-color" hide-bottom-space label-color="black"
+      :style="{
+        borderRadius: searchFocused && responses.length ? '5px 5px 0px 0px': '5px 5px 5px 5px'
+      }"
     >
+      <!--Search icon-->
       <template v-slot:prepend>
         <q-icon name="search"/>
       </template>
+      <!--Clear Cross icon-->
       <template v-slot:append>
-        <q-icon v-if="query !== ''"
-                name="clear"
-                class="cursor-pointer"
-                @click="() => {
-                  this.query = ''
-                  this.responses = []
-                }"
+        <q-icon
+          v-if="query !== ''"
+          name="clear"
+          class="cursor-pointer"
+          @click="() => {
+            this.query = ''
+            this.responses = []
+          }"
         />
       </template>
     </q-input>
@@ -46,17 +57,13 @@
 </template>
 
 <script>
-import {ref} from "vue";
-
-import UserImage from "components/UserImage";
 import axios from "axios";
-import SearchRecommendsElement from "components/Main/Header/HeaderComponents/Search/SearchRecommendsElement";
+import SearchRecommendsElement from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
 
 export default {
   name: "Search",
   components: {
     SearchRecommendsElement,
-    // UserImage,
   },
   mounted() {
 
@@ -78,7 +85,6 @@ export default {
           search: this.query
         }
       }).then((req) => {
-        console.log(req.data)
         this.responses = req.data.results
       })
     }
@@ -138,6 +144,5 @@ export default {
   &:focus-within {
     border-color: $border_color;
   }
-;
 }
 </style>

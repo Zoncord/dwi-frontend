@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import UserImage from "components/UserImage";
+import UserImage from "components/Core/User/UserImage";
 export default {
   name: "SearchRecommendsElement",
   components: {
