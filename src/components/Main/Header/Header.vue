@@ -16,7 +16,7 @@
 
 <script>
 import Logo from "components/Logo";
-import Search from "components/Main/Header/HeaderComponents/Search";
+import Search from "components/Main/Header/HeaderComponents/Search/Search";
 import UserEntry from "components/Main/Header/HeaderComponents/UserEntry";
 
 export default {

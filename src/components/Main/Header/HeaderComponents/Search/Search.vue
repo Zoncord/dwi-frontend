@@ -32,19 +32,13 @@
       transform: searchFocused? 'scaleY(1)' : 'scaleY(0)',
     }"
     >
-      <div v-for="(resp, id) in responses" :key="resp">
-        <q-item clickable class="fit flex items-center">
-          <q-item-section class="fit q-px-md">
-            <div class="flex justify-between fit items-center">
-              <p>{{ resp.title }} уже {{ resp.data.days }} дней</p>
-              <div class="flex items-center">
-                <p class="q-mr-sm">{{ resp.owner }}</p>
-                <UserImage class="search__advice-list__user-image"/>
-              </div>
-            </div>
-          </q-item-section>
-        </q-item>
-        <q-separator v-if="id !== responses.length - 1"/>
+      <div v-for="(resp) in responses" :key="resp">
+        <SearchRecommendsElement
+          :days="resp.data.days"
+          :owner="resp.owner"
+          :title="resp.title"
+          image-url="https://i.stack.imgur.com/d3fNI.png"
+        />
       </div>
     </q-list>
   </div>
@@ -56,11 +50,13 @@ import {ref} from "vue";
 
 import UserImage from "components/UserImage";
 import axios from "axios";
+import SearchRecommendsElement from "components/Main/Header/HeaderComponents/Search/SearchRecommendsElement";
 
 export default {
   name: "Search",
   components: {
-    UserImage,
+    SearchRecommendsElement,
+    // UserImage,
   },
   mounted() {
 
