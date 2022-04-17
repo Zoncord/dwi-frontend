@@ -5,7 +5,7 @@
 <!--      <img src="../assets/images/SVG/arrowPart.svg" alt="arrow part">-->
 <!--      <img src="../assets/images/SVG/arrowPart.svg" alt="arrow part">-->
 <!--    </div>-->
-    <img src="../assets/images/SVG/downArrow.svg"
+    <img src="../../assets/images/SVG/downArrow.svg"
          alt="down arrow"
          class="relative-position"
          :style="{top: top + 'px'}"

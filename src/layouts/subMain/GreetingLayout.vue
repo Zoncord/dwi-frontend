@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import HeaderNavButtons from "components/NavigationButtons";
-import CurvesScrollAnimation from "components/CurvesScrollAnimation";
-import AnimatedArrowDown from "components/AnimatedArrowDown";
+import HeaderNavButtons from "components/OldComponents/NavigationButtons";
+import CurvesScrollAnimation from "components/OldComponents/CurvesScrollAnimation";
+import AnimatedArrowDown from "components/OldComponents/AnimatedArrowDown";
 
 export default {
   name: "GreetingLayout",

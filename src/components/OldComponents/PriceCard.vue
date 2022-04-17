@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Card from "components/Card";
+import Card from "components/OldComponents/Card";
 
 export default {
   name: "PriceCard",

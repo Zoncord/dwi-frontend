@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import NavigationButtons from "components/NavigationButtons";
-import Logo from "components/Logo";
-import HeaderNavigation from "components/HeaderNavigation";
+import NavigationButtons from "components/OldComponents/NavigationButtons";
+import Logo from "components/OldComponents/Logo";
+import HeaderNavigation from "components/OldComponents/HeaderNavigation";
 import {mapGetters, mapMutations} from "vuex";
-import PhoneMenu from "components/PhoneMenu";
+import PhoneMenu from "components/OldComponents/PhoneMenu";
 
 export default {
   name: "Header",

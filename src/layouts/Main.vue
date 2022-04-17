@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Header from "components/Main/Header/Header";
+import Header from "components/Main/Header/HeaderElement";
 
 export default {
   name: "Main",

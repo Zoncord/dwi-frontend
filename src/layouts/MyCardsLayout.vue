@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import Header from "components/MainPageHeader";
-import Long from "components/Long";
-import Card from "components/CardOld";
-import AnimatedText from "components/AnimatedText";
-import Up from "components/Up";
+import Header from "components/OldComponents/MainPageHeader";
+import Long from "components/OldComponents/Long";
+import Card from "components/OldComponents/CardOld";
+import AnimatedText from "components/OldComponents/AnimatedText";
+import Up from "components/OldComponents/Up";
 import Search from "components/Main/Header/HeaderComponents/Search/OldSearch";
 
 export default {

@@ -42,13 +42,13 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 
-import Card from "components/Card";
-import DateCard from "components/DateCard";
+import Card from "components/OldComponents/Card";
+import DateCard from "components/OldComponents/DateCard";
 // import NumberCountUpAnimation from "components/AnimatedNumberCountUp";
-import Header from "components/MainPageHeader";
-import AnimatedNumberCountUp from 'components/AnimatedNumberCountUp'
-import Long from "components/Long";
-import AnimatedText from "components/AnimatedText";
+import Header from "components/OldComponents/MainPageHeader";
+import AnimatedNumberCountUp from 'components/OldComponents/AnimatedNumberCountUp'
+import Long from "components/OldComponents/Long";
+import AnimatedText from "components/OldComponents/AnimatedText";
 import {showAdditionalContent} from "src/store/StartPageStore/mutations";
 
 export default {

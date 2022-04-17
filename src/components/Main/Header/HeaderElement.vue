@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import Logo from "components/Logo";
-import Search from "components/Main/Header/HeaderComponents/Search/SearchItem";
+import Logo from "components/OldComponents/Logo";
+import Search from "components/Main/Header/HeaderComponents/Search/SearchElement";
 import UserEntry from "components/Main/Header/HeaderComponents/UserEntry/UserEntry";
 
 export default {
