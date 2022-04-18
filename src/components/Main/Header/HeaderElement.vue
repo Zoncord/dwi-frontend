@@ -90,7 +90,7 @@ header {
 }
 
 .user-entry{
-  height: 54px;
+  height: 55px;
 }
 
 .q-tabs__content {
@@ -114,5 +114,12 @@ header {
 
 .q-tab__content{
   min-width: auto;
+}
+.user-entry__menu {
+  //margin-top: 7px !important;
+  border-radius: 0 0 10px 10px;
+  box-shadow: none;
+  border: 1px solid $border_color;
+  margin-top: -1px !important;
 }
 </style>

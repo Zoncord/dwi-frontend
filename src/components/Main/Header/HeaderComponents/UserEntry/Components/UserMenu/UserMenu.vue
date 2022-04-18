@@ -50,21 +50,17 @@ export default {
           icon: 'person',
           to: '/profile'
         },
-        addAccount: {
-          icon: 'add',
-          to: '/a'
-        },
         help: {
           icon: 'help',
           to: '/help'
         },
         settings: {
           icon: 'settings',
-          to: '/a'
+          to: '/settings'
         },
         exit: {
           icon: 'logout',
-          to: '/a'
+          to: '/logout'
         }
       }
     }
@@ -90,12 +86,4 @@ export default {
   max-width: none !important;
 }
 
-</style>
-<style lang="scss">
-.user-entry__menu {
-  //margin-top: 7px !important;
-  border-radius: 0 0 10px 10px;
-  box-shadow: none;
-  border: 1px solid $border_color;
-}
 </style>
