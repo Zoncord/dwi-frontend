@@ -111,6 +111,7 @@ header {
 .user-name {
   font-size: 15px;
 }
+
 .q-tab__content{
   min-width: auto;
 }

@@ -33,7 +33,7 @@ export default {
   created() {
     this.$watch(
       () => this.$route.params,
-      (toParams, previousParams) => {
+      (toParams) => {
         this.tab = toParams.id
       }
     )

@@ -88,13 +88,16 @@ export default {
   },
   methods: {
     getResponses() {
-      axios.get(' http://192.168.43.79:8000/api/days_without_incidents/days_without_incidents_page/', {
+      axios.get(process.env.API_URL + 'api/days_without_incidents/days_without_incidents_page/', {
         params: {
           search: this.query
         }
       }).then((req) => {
         this.responses = req.data.results
-      })
+      }).catch((err) => {
+        this.$notifyError(err.message)
+        }
+      )
     }
   }
 }
