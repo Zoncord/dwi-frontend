@@ -95,7 +95,8 @@ export default {
       }).then((req) => {
         this.responses = req.data.results
       }).catch((err) => {
-        this.$notifyError(err.message)
+          console.log(err.message)
+          this.$notifyError(this.$t(`errors["${err.message}"]`))
         }
       )
     }

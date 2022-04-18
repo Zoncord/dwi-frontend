@@ -18,4 +18,7 @@ export default {
       exit: 'Exit',
     }
   },
+  errors: {
+    'Network Error': "Can't access to the server"
+  }
 }
