@@ -89,10 +89,8 @@ header {
   margin-right: 40px;
 }
 
-.q-tabs {
-  .user-entry {
-    margin-right: 0;
-  }
+.user-entry{
+  height: 54px;
 }
 
 .q-tabs__content {

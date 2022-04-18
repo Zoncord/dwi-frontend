@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped >
 .user-entry__menu__user-name {
   font-size: 23px;
   font-weight: 400;
@@ -85,5 +85,17 @@ export default {
 
 .user-entry__menu__user-image {
   width: 80px;
+}
+.q-menu.q-position-engine {
+  max-width: none !important;
+}
+
+</style>
+<style lang="scss">
+.user-entry__menu {
+  //margin-top: 7px !important;
+  border-radius: 0 0 10px 10px;
+  box-shadow: none;
+  border: 1px solid $border_color;
 }
 </style>

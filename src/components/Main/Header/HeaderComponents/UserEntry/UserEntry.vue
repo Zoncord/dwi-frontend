@@ -24,23 +24,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.q-item__section {
-  flex-direction: row;
-}
-
-.q-menu.q-position-engine {
-  max-width: none !important;
-}
-
-.user-entry__menu {
-  margin-top: 7px !important;
-  border-radius: 0 0 10px 10px;
-  box-shadow: none;
-  border: 1px solid $border_color;
-}
-</style>
-
 <style scoped>
 .user-entry__user-name {
   margin-right: 10px;

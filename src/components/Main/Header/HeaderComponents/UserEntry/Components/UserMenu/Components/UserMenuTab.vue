@@ -31,5 +31,7 @@ export default {
 .user-entry__menu-list__icon {
   margin-right: 3px;
 }
-
+.q-item__section {
+  flex-direction: row;
+}
 </style>
