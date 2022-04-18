@@ -2,6 +2,23 @@
 // so you can safely delete all default props below
 
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
+  header: {
+    search: {
+      label: 'Search'
+    },
+    tabs: {
+      feed: 'Feed',
+      explore: 'Explore',
+    },
+    userEntryMenu: {
+      profile: 'Profile',
+      addAccount: 'Add account',
+      help: 'Help',
+      settings: 'Settings',
+      exit: 'Exit',
+    }
+  },
+  errors: {
+    'Network Error': "Can't access to the server"
+  }
 }

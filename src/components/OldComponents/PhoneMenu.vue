@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import Logo from "components/Logo";
-import HeaderNavButtons from "components/NavigationButtons";
+import Logo from "components/Core/Logo";
+import HeaderNavButtons from "components/OldComponents/NavigationButtons";
 import {mapGetters} from "vuex";
 
 export default {

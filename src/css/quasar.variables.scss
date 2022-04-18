@@ -1,11 +1,10 @@
 $primary: #437BD4;
-$additional: #437BD4;
+$additional: #00B0AD;
+$highlight: #00B0AD;
 
 
-//$primary   : #34D0B6;
 $secondary: #FA3E54;
 $accent: #FFBA40;
-//$additional: #437BD4;
 
 $dark: #1D1D1D;
 
@@ -23,21 +22,26 @@ $mBP: #9DACFF;
 $gray: #F0F0F0;
 
 
-$limiter_max_width: 1210px;
+$limiter_max_width: 1280px;
 $header-height: max(40px, 4.5vw);
 
 
+$columnSize: 7.56%;
+$spaceSize: 0.82644%;
 
-//$device:0;
-////@debug $device;
-//@media (min-width: 991px) {
-//  $device: 1;
-//}
-//
-//@media (max-width: 991px) {
-//  $device: 'tablet';
-//}
-//
-//@media (max-width: 479px) {
-//  $device: 'mobile';
-//}
+.text-highlight {
+  color: #00B0AD !important;
+}
+
+.bg-highlight {
+  background: #00B0AD !important;
+}
+
+$border_color: #B8B8B8;
+.text-border-color {
+  color: #B8B8B8 !important;
+}
+
+.bg-border-color {
+  background: #B8B8B8 !important;
+}

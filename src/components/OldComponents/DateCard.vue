@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import Card from "components/Card";
-import DateCardMenu from "components/DateCardMenu";
+import Card from "components/OldComponents/Card";
+import DateCardMenu from "components/OldComponents/DateCardMenu";
 
 export default {
   name: "DateCard",

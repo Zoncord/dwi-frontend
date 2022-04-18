@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1165 776.52">
+  <defs>
+    <style>
+      .cls-1{
+        fill:none;
+        stroke:#000;
+        stroke-miterlimit:10;
+      }
+    </style>
+
+
+  </defs>
+  <g id="Слой_2">
+    <g id="Слой_1-2">
+      <path class="cls-1"
+            d="M155.5.45c-45.35,22-94.42,50.6-90,72,7.19,34.82,151,26,342,31,251.61,6.6,582.57,37.15,584,74,.89,22.84-125,45-176,54-212.36,37.41-295.23,3.72-469,25C208.64,273.33,1.24,326.31.5,385.45c-.72,58.11,198.14,116.25,351,138,363.75,51.75,553.18-90.35,702,26,41.87,32.73,92.48,95.26,111,227"/>
+    </g>
+  </g>
+  <g class="point" transform="translate(100,2.5)">
+    <a>
+      <circle cx="15" cy="15" r="35vw" style="fill: white"/>
+      <circle cx="15" cy="15" r="30vw" style="fill: black"/>
+      <text x="10" y="20" style="fill: white" font-family="Roboto" font-size="20">1</text>
+      <text x="60" y="30" font-family="Roboto" font-size="40">Hello World</text>
+    </a>
+  </g>
+</svg>

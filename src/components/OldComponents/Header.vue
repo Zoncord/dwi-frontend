@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import Logo from "components/Logo";
+import Logo from "components/Core/Logo";
 import {ref} from "vue";
 
 export default {

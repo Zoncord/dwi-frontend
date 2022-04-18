@@ -100,15 +100,15 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 
-import Long from "components/Long";
-import CurvesScrollAnimation from "components/CurvesScrollAnimation";
-import Card from "components/Card";
-import Header from "components/MainPageHeader";
-import DateCardMenu from "components/DateCardMenu";
-import AnimatedArrowDown from "components/AnimatedArrowDown";
-import Footer from "components/Footer";
-import PriceCard from "components/PriceCard";
-import Grid from "components/Grid";
+import Long from "components/OldComponents/Long";
+import CurvesScrollAnimation from "components/OldComponents/CurvesScrollAnimation";
+import Card from "components/OldComponents/Card";
+import Header from "components/OldComponents/MainPageHeader";
+import DateCardMenu from "components/OldComponents/DateCardMenu";
+import AnimatedArrowDown from "components/OldComponents/AnimatedArrowDown";
+import Footer from "components/OldComponents/Footer";
+import PriceCard from "components/OldComponents/PriceCard";
+import Grid from "components/OldComponents/Grid";
 
 
 export default {

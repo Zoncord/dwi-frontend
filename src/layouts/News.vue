@@ -1,13 +1,16 @@
 <template>
-  <div class="news">
-
+  <div class="news ">
+    <div class="flex column">
+      <div class="card"></div>
+      <div class="card"></div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "News",
-  data(){
+  data() {
     return {
       w: window.innerWidth,
       h: window.innerHeight
@@ -16,15 +19,25 @@ export default {
 }
 </script>
 
-<style scoped>
-.news{
+<style lang="scss" scoped>
+.news {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
 }
-.ex{
-  background-color: red;
-  width: 100%;
-  height: 10px;
-  margin-right: 15px;
+.big-card{
+  width: calc(#{$columnSize} * 4 + #{$spaceSize} * 3) !important;
+  height: 600px !important;
+}
+.card {
+  border-radius: 10px;
+  background-color: white;
+  width: calc(#{$columnSize} * 2 + #{$spaceSize});
+  height: 300px;
+  margin-right: $spaceSize;
+  position: relative;
+}
+.last{
+  margin-right: 0;
 }
 </style>
