@@ -1,6 +1,6 @@
 <template>
 
-  <a v-if="link" href="/"
+  <a v-if="link" :href="link"
      class="logo text-center flex items-center justify-center"
      :class="additionalClasses ? additionalClasses: null"
      :style="logoColor ?  logoColor : null"
@@ -39,7 +39,6 @@ export default {
     } else {
       additionalClasses = [
         `text-${this.color}`,
-        // `bg-${this.color}`
       ]
     }
     return {
