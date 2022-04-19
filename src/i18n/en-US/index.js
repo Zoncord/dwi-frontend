@@ -18,7 +18,11 @@ export default {
       exit: 'Exit',
     }
   },
+  profile: {
+    subscribeButton: 'Subscribe',
+    followers: 'followers'
+  },
   errors: {
     'Network Error': "Can't access to the server"
-  }
+  },
 }

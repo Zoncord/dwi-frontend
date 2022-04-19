@@ -41,26 +41,9 @@ img{
 .q-btn {
   border-radius: 10px;
 }
-
-h1 {
-  font-size: calc(30px + 4vw);
-  line-height: normal;
-}
-
-h2 {
-  font-size: calc(30px + 3vw);
-  line-height: normal;
-}
-
-h3 {
-  font-size: calc(25px + 2vw);
-  line-height: normal;
-}
-
-h4 {
-  font-size: calc(15px + 1.5vw);
-  line-height: normal;
-
+.q-card{
+  box-shadow: none;
+  border: solid 1px $border_color;
 }
 
 p {

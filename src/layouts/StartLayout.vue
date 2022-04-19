@@ -122,11 +122,8 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 
-import Long from "components/OldComponents/Long";
 import CurvesScrollAnimation from "components/OldComponents/CurvesScrollAnimation";
-import Card from "components/OldComponents/Card";
 import Header from "components/OldComponents/MainPageHeader";
-import DateCardMenu from "components/OldComponents/DateCardMenu";
 import AnimatedArrowDown from "components/OldComponents/AnimatedArrowDown";
 import Footer from "components/OldComponents/Footer";
 import PriceCard from "components/OldComponents/PriceCard";
@@ -139,7 +136,7 @@ export default {
   components: {
     // Long,
     CurvesScrollAnimation,
-    // Card,
+    // Cards,
     Header,
     // DateCardMenu,
     AnimatedArrowDown,

@@ -1,10 +1,13 @@
 <template>
-<div class=""></div>
+  <q-layout>
+    FeedLayout
+  </q-layout>
 </template>
 
 <script>
 export default {
-  name: "Test"
+  name: "FeedLayout",
+
 }
 </script>
 
