@@ -84,6 +84,7 @@ export default {
   grid-template-columns: repeat(4, 24%);
   grid-column-gap: 1.33333%;
   grid-row-gap: 20px;
+  margin-bottom: 20px;
 }
 .card{
   border-radius: 30px;

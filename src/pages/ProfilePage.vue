@@ -9,7 +9,7 @@
 
 <script>
 import ProfileLayout from "layouts/ProfileLayout";
-import HeaderElement from "components/Main/Header/HeaderElement";
+import HeaderElement from "components/Main/Header/HeaderComponent";
 
 export default {
   name: "ProfilePage",
