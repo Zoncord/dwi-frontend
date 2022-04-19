@@ -1,8 +1,8 @@
 <template>
 <q-layout>
- <ProfileDescription/>
+ <ProfileDescription :is-user-page="isUserPage" :is-subscribed="isSubscribed"/>
   <div class="profile__cards-wrapper">
-    <AddCard/>
+    <AddCard v-if="isUserPage"/>
     <DateCard
       v-for="dateCard in dateCards"
       :key="dateCard"
@@ -12,7 +12,6 @@
       :days-unit="dateCard.daysUnit"
       :user-image="dateCard.userImage"
     />
-
   </div>
 </q-layout>
 </template>
@@ -31,6 +30,8 @@ export default {
   },
   data(){
     return {
+      isUserPage: true,
+      isSubscribed: false,
       dateCards: [
         {
           name: 'Michael L.',
@@ -86,6 +87,25 @@ export default {
 }
 .card{
   border-radius: 30px;
+}
+@media (max-width: 900px){
+  .profile__cards-wrapper{
+      grid-template-columns: repeat(3, 32%);
+    grid-column-gap: 1.33%;
+  }
+}
+@media (max-width: 768px){
+  .profile__cards-wrapper{
+      grid-template-columns: repeat(2, 49%);
+    grid-column-gap: 2%;
+  }
+}
+@media (max-width: 500px){
+  .profile__cards-wrapper{
+      display: flex;
+      flex-direction: column;
+    align-items: center;
+  }
 }
 
 </style>

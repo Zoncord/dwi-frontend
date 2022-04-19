@@ -29,7 +29,7 @@
         <h6 class="profile-description__subscribe-part__subscribe-amount">
           {{ subscribersAmount }} {{ subscribersUnit }} {{ $t('profile.followers') }}
         </h6>
-        <q-btn class="profile-description__subscribe-part__btn" color="highlight" no-caps v-if="isUserPage">
+        <q-btn class="profile-description__subscribe-part__btn" color="highlight" no-caps v-if="!isUserPage && !isSubscribed">
           {{ $t('profile.subscribeButton') }}
         </q-btn>
       </div>
@@ -45,14 +45,20 @@ export default {
   components: {
     UserImage,
   },
+  props: {
+    isUserPage: {
+      required: true,
+    },
+    isSubscribed: {
+      required: true,
+    }
+  },
   data() {
-    let isUserPage = false
     return {
       userName: 'Michal Landrover',
       subscribersAmount: '3',
       subscribersUnit: 'M',
       profileDescription: 'Listen here little shit, my last name is Land Cruiser. And it\'s none of your fucking business why they call me that.',
-      isUserPage,
     }
   }
 }
@@ -90,7 +96,6 @@ a{
   transition: opacity .3s;
 }
 .profile-description__user-part__user-name{
-  //cursor: pointer;
   font-size: 30px;
   font-weight: 500;
   .profile-description__user-part__user-name-edit{
@@ -102,7 +107,6 @@ a{
 }
 .profile-description__user-part__text {
   font-size: 20px;
-  //cursor: pointer;
   .profile-description__user-part__text-edit{
     font-size: 15px;
   }
