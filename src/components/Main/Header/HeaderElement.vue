@@ -116,10 +116,12 @@ header {
   min-width: auto;
 }
 .user-entry__menu {
-  //margin-top: 7px !important;
   border-radius: 0 0 10px 10px;
   box-shadow: none;
   border: 1px solid $border_color;
   margin-top: -1px !important;
+}
+.user-entry{
+  margin-right: 0;
 }
 </style>

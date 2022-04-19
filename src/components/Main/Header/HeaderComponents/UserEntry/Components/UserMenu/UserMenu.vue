@@ -48,7 +48,7 @@ export default {
       menuTabs: {
         profile: {
           icon: 'person',
-          to: '/profile'
+          to: '/profile/a'
         },
         help: {
           icon: 'help',
@@ -81,9 +81,13 @@ export default {
 
 .user-entry__menu__user-image {
   width: 80px;
+  align-items: start;
 }
-.q-menu.q-position-engine {
+
+.q-menu{
   max-width: none !important;
+  max-height: none !important;
+  flex-wrap: nowrap;
 }
 
 </style>
