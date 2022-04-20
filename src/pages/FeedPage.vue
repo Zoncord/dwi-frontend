@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Header from "components/Main/Header/HeaderElement";
+import Header from "components/Main/Header/HeaderComponent";
 import FeedLayout from "layouts/FeedLayout";
 
 export default {

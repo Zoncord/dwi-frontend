@@ -68,3 +68,10 @@ p {
 .q-separator{
   background: $border_color !important;
 }
+.q-btn{
+  box-shadow: none !important;
+  border: solid 1px $border_color;
+}
+.q-btn--actionable.q-btn--standard:before{
+  box-shadow: none !important;
+}

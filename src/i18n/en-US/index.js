@@ -22,7 +22,16 @@ export default {
     subscribeButton: 'Subscribe',
     followers: 'followers'
   },
+  createAchievement: {
+    title: 'Create Acievement'
+  },
   errors: {
     'Network Error': "Can't access to the server"
   },
+  progressFormBar: {
+    cancel: 'Cancel',
+    back: 'Back',
+    next: 'Next',
+    skip: 'Skip',
+  }
 }
