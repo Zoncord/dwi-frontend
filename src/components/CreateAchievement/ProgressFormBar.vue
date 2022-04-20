@@ -1,6 +1,12 @@
 <template>
   <div class="progress-form-bar">
-    <q-linear-progress :value="progress" class="q-mt-md" color="highlight" size="3px"/>
+    <q-linear-progress
+      :value="progress"
+      class="q-mt-md"
+      color="highlight"
+      size="3px"
+      animation-speed="500"
+    />
     <q-toolbar class="limiter progress-form-bar__toolbar row">
       <q-btn class="progress-form-bar__cancel-btn col-2 q-mr-md"
              no-caps
@@ -18,8 +24,7 @@
       <q-btn class="progress-form-bar__next-btn col-2"
              no-caps
              color="highlight"
-             @click="$emit('nextStage')"
-
+             type="submit"
       >
         {{ $t('progressFormBar.next') }}
       </q-btn>
@@ -43,7 +48,11 @@ export default {
   },
   data() {
     return {
-      progress: .5,
+    }
+  },
+  computed: {
+    progress(){
+      return this.activeStage/  this.stagesCount
     }
   }
 }

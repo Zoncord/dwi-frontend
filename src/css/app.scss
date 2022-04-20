@@ -75,3 +75,9 @@ p {
 .q-btn--actionable.q-btn--standard:before{
   box-shadow: none !important;
 }
+
+.q-field--outlined .q-field__control:after{
+  height: 100%;
+  color: $border_color;
+  border: solid 1px $border_color !important;
+}
