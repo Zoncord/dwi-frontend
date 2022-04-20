@@ -1,6 +1,6 @@
 <template>
   <div class="create-achievement">
-<!--    <HeaderComponent/>-->
+    <HeaderComponent/>
     <q-form
       @validation-success="nextStage()"
       @submit.prevent=""
@@ -46,12 +46,12 @@
             libero.</p>
         </q-tab-panel>
       </q-tab-panels>
-<!--      <ProgressFormBar-->
-<!--        @checkValidation="checkValidation()"-->
-<!--        @previousStage="previousStage()"-->
-<!--        :active-stage="tab"-->
-<!--        :stages-count="stagesCount"-->
-<!--      />-->
+      <ProgressFormBar
+        @checkValidation="checkValidation()"
+        @previousStage="previousStage()"
+        :active-stage="tab"
+        :stages-count="stagesCount"
+      />
     </q-form>
   </div>
 
@@ -65,7 +65,7 @@ import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 export default {
   name: "CreateCard",
   components: {
-    // HeaderComponent,
+    HeaderComponent,
     // ProgressFormBar,
   },
   data() {

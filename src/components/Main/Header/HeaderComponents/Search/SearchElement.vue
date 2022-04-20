@@ -3,7 +3,6 @@
        @focusin="searchFocused = true"
        @focusout="searchFocused = false"
   >
-
     <q-input
       class="search"
       dense
@@ -75,7 +74,7 @@ export default {
   data() {
     return {
       query: '',
-      searchFocused: false,
+      searchFocused: true,
       borderRadius: null,
       adviceListHeight: null,
       responses: [],
@@ -95,7 +94,6 @@ export default {
       }).then((req) => {
         this.responses = req.data.results
       }).catch((err) => {
-          console.log(err.message)
           this.$notifyError(this.$t(`errors["${err.message}"]`))
         }
       )
@@ -107,20 +105,30 @@ export default {
 <style lang="scss">
 .search-wrapper {
   position: relative;
+
+  .q-field {
+    .q-field__inner {
+
+      .q-field__control {
+        height: 30px !important;
+
+        .q-field__prepend {
+          height: 30px !important;
+        }
+
+        .q-field__append {
+          height: 30px !important;
+        }
+      }
+    }
+  }
 }
 
-.q-field__control {
-  height: 30px !important;
+.search-recommendation__section{
+  justify-content: space-between;
 }
-
-.q-field__prepend {
-  height: 30px !important;
-}
-
-.q-field__append {
-  height: 30px !important;
-}
-
+</style>
+<style lang="scss" scoped>
 .search__advice-list {
   position: absolute;
   z-index: 100;
@@ -137,10 +145,6 @@ export default {
 
 .search__advice-list__user-image {
   width: 32px;
-}
-
-.q-item__section {
-  justify-content: space-between;
 }
 
 .search {
