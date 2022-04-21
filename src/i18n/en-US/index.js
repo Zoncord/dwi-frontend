@@ -26,7 +26,8 @@ export default {
       description: 'Description',
     },
     secondStage: {
-
+      category: 'Category',
+      tags: 'Tags',
     }
   },
   progressFormBar: {
@@ -34,6 +35,7 @@ export default {
     back: 'Back',
     next: 'Next',
     skip: 'Skip',
+    finish: 'Finish',
   },
   errors: {
     'Network Error': "Can't access to the server",

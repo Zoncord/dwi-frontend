@@ -25,8 +25,17 @@
              no-caps
              color="highlight"
              type="submit"
+             v-if="activeStage !== stagesCount"
       >
         {{ $t('progressFormBar.next') }}
+      </q-btn>
+      <q-btn class="progress-form-bar__next-btn col-2"
+             no-caps
+             color="highlight"
+             @click="$emit('finish')"
+             v-else
+      >
+        {{ $t('progressFormBar.finish') }}
       </q-btn>
     </q-toolbar>
   </div>
