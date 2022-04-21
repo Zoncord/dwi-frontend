@@ -4,48 +4,54 @@
     <q-form
       @validation-success="nextStage()"
       @submit.prevent=""
-      class="flex column"
+      class="flex column text-center"
     >
+      <h5 class="create-achievement__title">{{ $t('createAchievement.title') }}</h5>
       <q-tab-panels v-model="tab">
         <q-tab-panel :name="1" class="limiter">
-            <q-input outlined v-model="text" borderless></q-input>
-            <q-input type="textarea" outlined v-model="text"></q-input>
-          <textarea name="asd" id="asd" cols="1" rows="1"></textarea>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut cupiditate inventore saepe ullam veniam. Accusantium, alias dolores explicabo laboriosam minima voluptas. Cum id ipsa iste labore magnam neque odio.</p>
-        </q-tab-panel>
-
-        <q-tab-panel :name="2">
-          <div class="text-h4 q-mb-md">Alarms</div>
           <q-input
-            v-model="text2"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            outlined
+            v-model="title"
+            borderless
+            :placeholder="$t('createAchievement.firstStage.title') + ' *'"
+            maxlength="256"
+            :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
+            class="create-achievement__title-input"
+            :model-value="title">
+            <template v-slot:append>
+              <p class="create-achievement__input-counter create-achievement__input">
+                {{ 256 - title.length }}
+              </p>
+            </template>
+          </q-input>
+          <q-input
+            type="textarea"
+            class="create-achievement__description-input"
+            outlined
+            v-model="description"
+            :model-value="description"
+            autogrow
+            maxlength="4096"
+            :placeholder="$t('createAchievement.firstStage.description') + ' *'"
+            :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
           >
+            <template v-slot:append class="create-achievement__input-counter create-achievement__input">
+              <p class="create-achievement__input-counter">
+                {{ 4096 - description.length }}
+              </p>
+
+            </template>
           </q-input>
         </q-tab-panel>
 
-        <q-tab-panel :name="3">
-          <div class="text-h4 q-mb-md">Movies</div>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem,
-            quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In,
-            libero.</p>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem,
-            quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In,
-            libero.</p>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem,
-            quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In,
-            libero.</p>
+        <q-tab-panel :name="2" class="limiter">
+<!--          <div class="">-->
+            <q-input class="inline-block"></q-input>
+            <q-input class="inline-block"></q-input>
+<!--          </div>-->
         </q-tab-panel>
       </q-tab-panels>
+
       <ProgressFormBar
         @checkValidation="checkValidation()"
         @previousStage="previousStage()"
@@ -66,15 +72,15 @@ export default {
   name: "CreateCard",
   components: {
     HeaderComponent,
-    // ProgressFormBar,
+    ProgressFormBar,
   },
   data() {
     return {
       tab: 1,
       stagesCount: 3,
       isValid: false,
-      text: '',
-      text2: '',
+      title: '',
+      description: '',
     }
   },
   methods: {
@@ -86,12 +92,9 @@ export default {
     previousStage() {
       if (this.tab > 1) {
         this.tab -= 1
-        console.log(this.tab)
       }
     },
     checkValidation() {
-      // alert(this.isValid)
-      // alert('asfd')
       if (this.isValid) {
         this.nextStage()
       }
@@ -100,19 +103,50 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.limiter{
+.limiter {
   flex-grow: 2;
+  margin-bottom: 85px;
 }
+
 </style>
-<style>
+
+<style lang="scss">
+.create-achievement__title {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+.create-achievement__title-input {
+  margin-bottom: 20px;
+
+  .q-field__control {
+    height: 40px;
+  }
+
+  .q-field__append {
+    height: 40px;
+  }
+}
+
+.create-achievement__description-input {
+  .q-field__control {
+    min-height: 150px;
+  }
+}
+
 .create-achievement {
   height: 100vh;
   position: relative;
 }
 
-/*.progress-form-bar {*/
-/*  position: fixed;*/
-/*  bottom: 0;*/
-/*}*/
+.progress-form-bar {
+  position: fixed;
+  bottom: 0;
+}
+
+.create-achievement__input-counter {
+  font-size: 15px !important;
+}
+
 
 </style>

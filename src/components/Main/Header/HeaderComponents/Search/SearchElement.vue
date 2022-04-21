@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       query: '',
-      searchFocused: true,
+      searchFocused: false,
       borderRadius: null,
       adviceListHeight: null,
       responses: [],
@@ -128,6 +128,7 @@ export default {
   justify-content: space-between;
 }
 </style>
+
 <style lang="scss" scoped>
 .search__advice-list {
   position: absolute;
