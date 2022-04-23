@@ -10,7 +10,8 @@
 a {
   text-decoration: none;
 }
-img{
+
+img {
   display: block;
 }
 
@@ -41,7 +42,8 @@ img{
 .q-btn {
   border-radius: 10px;
 }
-.q-card{
+
+.q-card {
   box-shadow: none;
   border: solid 1px $border_color;
 }
@@ -50,21 +52,43 @@ p {
   margin: 0;
 }
 
-@media (min-width: 1920px){
-  h1{
+@media (min-width: 1920px) {
+  h1 {
     font-size: 7rem;
   }
-  h2{
+  h2 {
     font-size: 5rem;
   }
   h3 {
     font-size: 4rem;
   }
-  h4{
+  h4 {
     font-size: 3rem;
   }
 }
 
-.q-separator{
+.q-separator {
   background: $border_color !important;
+}
+
+.q-btn {
+  box-shadow: none !important;
+  border: solid 1px $border_color;
+}
+
+.q-btn--actionable.q-btn--standard:before {
+  box-shadow: none !important;
+}
+.q-field--outlined .q-field__control {
+  border-radius: 5px;
+  &:hover{
+    &:before{
+      border-color: #939393;
+    }
+  }
+  &:after {
+    height: 100%;
+    color: $border_color;
+    border-width: 1px !important;
+  }
 }

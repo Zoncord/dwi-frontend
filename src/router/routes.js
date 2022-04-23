@@ -1,25 +1,4 @@
 const routes = [
-  // {
-  //   path: '/greeting',
-  //   component: () => import('layouts/StartLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/Index.vue') }
-  //   ]
-  // },
-  // {
-  //   path: '/cards',
-  //   component: () => import('layouts/TestLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/Cards.vue') }
-  //   ]
-  // },
-  // {
-  //   path: '/my',
-  //   component: () => import('layouts/MyCardsLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/Cards.vue') }
-  //   ]
-  // },
   {
     path: '/',
     redirect: '/feed'
@@ -35,6 +14,10 @@ const routes = [
   {
     path: '/profile',
     component: () => import('pages/Error404.vue'),
+  },
+  {
+    path: '/achievement/create',
+    component: () => import('pages/CreateAchievement.vue'),
   },
   {
     path: '/:catchAll(.*)*',

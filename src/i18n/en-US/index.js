@@ -1,6 +1,3 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
   header: {
     search: {
@@ -22,7 +19,29 @@ export default {
     subscribeButton: 'Subscribe',
     followers: 'followers'
   },
-  errors: {
-    'Network Error': "Can't access to the server"
+  createAchievement: {
+    title: 'Create Achievement',
+    firstStage: {
+      title: 'Title',
+      description: 'Description',
+    },
+    secondStage: {
+      category: 'Category',
+      tags: 'Tags',
+    }
   },
+  progressFormBar: {
+    cancel: 'Cancel',
+    back: 'Back',
+    next: 'Next',
+    skip: 'Skip',
+    finish: 'Finish',
+  },
+  errors: {
+    'Network Error': "Can't access to the server",
+    inputs: {
+      emptyField: 'Please, type something'
+    }
+  },
+
 }

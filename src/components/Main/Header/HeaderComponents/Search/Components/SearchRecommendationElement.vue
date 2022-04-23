@@ -1,6 +1,6 @@
 <template>
-  <q-item clickable class="fit flex items-center">
-    <q-item-section class="fit q-px-md">
+  <q-item clickable class="search-recommendation fit flex items-center">
+    <q-item-section class="search-recommendation__section fit q-px-md">
       <div class="flex justify-between fit items-center">
         <p>{{ title }} уже {{ days }} дней</p>
         <div class="flex items-center">
@@ -10,7 +10,6 @@
       </div>
     </q-item-section>
   </q-item>
-  <q-separator/>
 </template>
 
 <script>
@@ -37,6 +36,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.search-recommendation{
+  border-bottom: solid 1px $border_color;
+}
 </style>

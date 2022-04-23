@@ -1,11 +1,11 @@
 <template>
-<q-card class="add-card card flex justify-center items-center">
+<q-card class="add-card card flex justify-center items-center" @click="$router.push('/achievement/create')">
   <Plus></Plus>
 </q-card>
 </template>
 
 <script>
-import Plus from "components/Core/Cards/Plus";
+import Plus from "components/Core/Cards/Components/Plus";
 export default {
   name: "AddCard",
   components: {
