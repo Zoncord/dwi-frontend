@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     getResponses() {
-      axios.get(process.env.API_URL + 'api/days_without_incidents/days_without_incidents_page/', {
+      axios.get(this.$dwidApi + 'api/days_without_incidents/days_without_incidents_page/', {
         params: {
           search: this.query
         }
@@ -124,7 +124,7 @@ export default {
   }
 }
 
-.search-recommendation__section{
+.search-recommendation__section {
   justify-content: space-between;
 }
 </style>

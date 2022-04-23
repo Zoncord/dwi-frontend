@@ -7,7 +7,8 @@ import axios from 'axios'
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: process.env.API_URL })
+const zocnordApi = axios.create({baseURL: process.env.ZONCORD_API_URL})
+const dwiApi = axios.create({baseURL: process.env.DWI_API_URL})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
@@ -16,9 +17,11 @@ export default boot(({ app }) => {
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
   //       so you won't necessarily have to import axios in each vue file
 
-  app.config.globalProperties.$api = api
+  app.config.globalProperties.$zoncordApi = zocnordApi
+  app.config.globalProperties.$dwidApi = dwiApi
+
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
 })
 
-export { api }
+export {zocnordApi, dwiApi}

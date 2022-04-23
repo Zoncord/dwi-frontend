@@ -30,6 +30,9 @@ export default {
       tags: 'Tags',
     }
   },
+  achievement: {
+    at: 'at'
+  },
   progressFormBar: {
     cancel: 'Cancel',
     back: 'Back',
