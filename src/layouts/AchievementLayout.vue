@@ -7,33 +7,45 @@
         <h5 class="achievement__navigation__card-info__unit">{{ achievementUnit }}</h5>
       </div>
       <div class="achievement__navigation__controls q-card  flex">
-        <q-btn icon="arrow_back_ios" class="achievement__navigation__controls__button" :ripple="false" @click="$router.back()"></q-btn>
-        <q-btn icon="favorite" class="achievement__navigation__controls__button" :ripple="false"></q-btn>
+        <q-btn icon="arrow_back_ios" class="achievement__navigation__controls__button" :ripple="false"
+               @click="$router.back()"></q-btn>
+        <q-btn icon="favorite"
+               class="achievement__navigation__controls__button like-btn"
+               :class="{liked: isAchievementLiked}"
+               :ripple="false"
+               @click="isAchievementLiked = !isAchievementLiked"
+        ></q-btn>
         <q-btn icon="chat" class="achievement__navigation__controls__button" :ripple="false"></q-btn>
       </div>
     </nav>
     <div class="achievement__blog col-9">
       <div class="achievement__blog__new q-card  q-mb-md" v-for="item in news" :key="item">
-        <h4 class="achievement__blog__new__title">{{item.title}}</h4>
-        <p class="achievement__blog__new__date">{{item.date}} {{$t('achievement.at')}} {{item.time}}</p>
-        <article class="achievement__blog__new__text">{{item.text}}</article>
+        <h4 class="achievement__blog__new__title">{{ item.title }}</h4>
+        <p class="achievement__blog__new__date">{{ item.date }} {{ $t('achievement.at') }} {{ item.time }}</p>
+        <article class="achievement__blog__new__text">{{ item.text }}</article>
         <div class=" flex justify-between">
           <div class="flex items-center">
             <UserImage class="achievement__blog__new__user-logo"/>
             <h4 class="achievement__blog__user-name">
-              {{$userName}}
+              {{ $userName }}
             </h4>
           </div>
 
-            <nav class="achievement__blog__controls flex items-center ">
-              <q-btn icon="chat" class="achievement__blog__controls__btn" :ripple="false"></q-btn>
-              <q-btn icon="favorite" class="achievement__blog__controls__btn" :ripple="false"></q-btn>
-              <h4 class="achievement__blog__controls__likes">
-                {{item.likes.count}} {{item.likes.unit}}
-              </h4>
+          <nav class="achievement__blog__controls flex items-center ">
+            <q-btn icon="chat" class="achievement__blog__controls__btn" :ripple="false"></q-btn>
+            <q-btn
+              icon="favorite"
+              class="achievement__blog__controls__btn like-btn"
+              :ripple="false"
+              :class="{liked: item.liked}"
+              @click="item.liked = !item.liked"
+            />
+            <h5 class="achievement__blog__controls__likes">
+              {{ item.likes.count }} {{ item.likes.unit }}
+            </h5>
 
 
-            </nav>
+          </nav>
 
         </div>
       </div>
@@ -43,6 +55,7 @@
 
 <script>
 import UserImage from "components/Core/User/UserImage";
+
 export default {
   name: "AchieveLayout",
   components: {
@@ -53,7 +66,7 @@ export default {
       achievementTitle: 'Делаю деньги',
       achievementDay: '3',
       achievementUnit: 'Lyz',
-
+      isAchievementLiked: false,
       news: [
         {
           title: 'Как я это сделал?',
@@ -63,7 +76,8 @@ export default {
           likes: {
             count: 5,
             unit: 'Tys'
-          }
+          },
+          liked: false,
         },
         {
           title: 'Как я это сделал?',
@@ -74,15 +88,22 @@ export default {
             count: 5,
             unit: 'Tys'
           },
-        },
+          liked: true,
+        }
       ]
-
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.liked {
+  color: $highlight;
+}
+.like-btn{
+  transition: color .1s;
+}
+
 .achievement__blog {
   padding-left: 8px;
 }
@@ -90,52 +111,64 @@ export default {
 .achievement__navigation {
   padding-right: 8px;
 }
-.achievement__navigation__controls{
+
+.achievement__navigation__controls {
   border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.achievement__navigation__card-info{
+
+.achievement__navigation__card-info {
   border-radius: 10px;
   padding: 30px;
 }
-.achievement__navigation__card-info__title{
+
+.achievement__navigation__card-info__title {
   font-size: 30px;
   font-weight: 500;
 }
-.achievement__navigation__card-info__day{
+
+.achievement__navigation__card-info__day {
   margin-top: 50px;
   margin-bottom: 50px;
   font-weight: 500;
 }
-.achievement__navigation__card-info__unit{
+
+.achievement__navigation__card-info__unit {
   font-size: 30px;
   font-weight: 500;
 }
-.achievement__blog__new{
+
+.achievement__blog__new {
   padding: 40px;
 }
-.achievement__blog__new__title{
+
+.achievement__blog__new__title {
   margin-bottom: 5px;
+  font-weight: 500;
 }
-.achievement__blog__new__text{
+
+.achievement__blog__new__text {
   font-size: 20px;
   margin-top: 60px;
-  margin-bottom:60px;
+  margin-bottom: 60px;
 }
-.achievement__blog__user-name{
+
+.achievement__blog__user-name {
   font-weight: 400;
 }
-.achievement__blog__controls__btn{
+
+.achievement__blog__controls__btn {
   font-size: 20px;
   border: none;
   width: 50px;
-  //width: auto;
 }
-.achievement__blog__controls__likes{
-  //font-size: 20px;
+
+.achievement__blog__controls__likes {
+  font-weight: 400;
 }
-.achievement__blog__new__user-logo{
+
+.achievement__blog__new__user-logo {
   width: 100px;
   margin-right: 20px;
 }
@@ -148,7 +181,7 @@ export default {
   border-radius: 0;
 }
 
-.q-card{
+.q-card {
   border-radius: 10px;
 }
 </style>
