@@ -20,6 +20,10 @@ const routes = [
     component: () => import('pages/CreateAchievement.vue'),
   },
   {
+    path: '/achievement/:id',
+    component: () => import('pages/AchievementPage.vue'),
+  },
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue')
   }
