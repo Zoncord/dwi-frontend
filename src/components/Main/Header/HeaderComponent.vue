@@ -1,7 +1,7 @@
 <template>
   <header class="flex items-center">
     <div class="limiter flex justify-between items-center">
-      <Logo class="header-elem" color="highlight" link="/">DWI</Logo>
+      <Logo class="header-elem" color="highlight" link="/feed">DWI</Logo>
       <q-tabs
         class="flex items-center"
         active-color="highlight"
