@@ -16,9 +16,9 @@ export default {
     UserImage,
     UserMenu
   },
-  data() {
-    return {
-      userName: 'Michael Landrover',
+  computed: {
+    userName(){
+      return this.$userName
     }
   }
 }

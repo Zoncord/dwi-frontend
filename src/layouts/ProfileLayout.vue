@@ -6,7 +6,7 @@
     <DateCard
       v-for="dateCard in dateCards"
       :key="dateCard"
-      :name="dateCard.name"
+      :ownerName="userName"
       :title="dateCard.title"
       :days="dateCard.days"
       :days-unit="dateCard.daysUnit"
@@ -34,33 +34,28 @@ export default {
       isSubscribed: false,
       dateCards: [
         {
-          name: 'Michael L.',
           title: 'Делает деньги',
           days: 3,
           daysUnit: 'дня',
           userImage:  '',
         },
         {
-          name: 'Michael L.',
           title: 'Делает деньги',
           days: 3,
           daysUnit: 'дня',
           userImage:  '',
         },
         {
-          name: 'Michael L.',
           title: 'Делает деньги',
           days: 3,
           daysUnit: 'дня',
           userImage:  '',
           }, {
-            name: 'Michael L.',
             title: 'Делает деньги',
             days: 3,
             daysUnit: 'дня',
             userImage:  '',
           },{
-            name: 'Michael L.',
             title: 'Делает деньги',
             days: 3,
             daysUnit: 'дня',
@@ -68,6 +63,11 @@ export default {
           },
 
       ]
+    }
+  },
+  computed: {
+    userName(){
+      return this.$userName
     }
   }
 

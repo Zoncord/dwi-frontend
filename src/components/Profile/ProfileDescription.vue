@@ -6,11 +6,11 @@
         <div class="profile-description__user-part__user-container  flex column">
 
           <a href="https://www.google.com/" class="profile-description__user-part__user-name q-mt-md q-mb-sm" v-if="isUserPage">
-            {{ userName }}
+            {{ ownerName }}
             <q-icon class="profile-description__user-part__user-name-edit edit-icon" name="create"/>
           </a>
           <p class="profile-description__user-part__user-name q-mt-md q-mb-sm" v-else>
-            {{ userName }}
+            {{ ownerName }}
           </p>
 
           <a href="https://www.google.com/" class="profile-description__user-part__text" v-if="isUserPage">
@@ -51,14 +51,24 @@ export default {
     },
     isSubscribed: {
       required: true,
-    }
+    },
   },
   data() {
     return {
-      userName: 'Michal Landrover',
-      subscribersAmount: '3',
+      // subscribersAmount: '3',
       subscribersUnit: 'M',
-      profileDescription: 'Listen here little shit, my last name is Land Cruiser. And it\'s none of your fucking business why they call me that.',
+      // profileDescription: 'Listen here little shit, my last name is Land Cruiser. And it\'s none of your fucking business why they call me that.',
+    }
+  },
+  computed: {
+    ownerName(){
+      return this.$userName
+    },
+    profileDescription(){
+      return this.$userDescription
+    },
+    subscribersAmount(){
+      return this.$userSubsCount
     }
   }
 }

@@ -3,7 +3,7 @@
     <div class="date-card__container flex column justify-between items-center">
       <div class="flex column justify-center items-center">
         <UserImage class="date-card__user-image q-mb-sm"/>
-        <p class="date-card__user-name">{{ name }}</p>
+        <p class="date-card__user-name">{{ ownerName }}</p>
       </div>
       <div class="date-card__content flex column justify-between q-mt-md">
         <h5 class="title">
@@ -29,7 +29,7 @@ export default {
     UserImage,
   },
   props: {
-    name: {
+    ownerName: {
       required: true,
     },
     title: {

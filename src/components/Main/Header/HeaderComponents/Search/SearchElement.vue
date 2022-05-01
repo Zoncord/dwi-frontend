@@ -47,10 +47,10 @@
       >
         <SearchRecommendsElement
           v-if="id < 6"
-          :days="resp.data.days"
-          :owner="resp.owner"
+          :days="resp.days"
+          :ownerLink="resp.ownerLink"
           :title="resp.title"
-          image-url="https://i.stack.imgur.com/d3fNI.png"
+          :id="resp.id"
         />
       </div>
     </q-list>
@@ -87,16 +87,19 @@ export default {
   },
   methods: {
     getResponses() {
-      axios.get(this.$dwidApi + 'api/days_without_incidents/days_without_incidents_page/', {
-        params: {
-          search: this.query
+      axios.get(this.$dwiApi + 'achievements/achievement/').then(res => {
+        console.log(res)
+        for (let result of res.data.results){
+          this.responses.push({
+            days: result.days,
+            id: result.id,
+            ownerLink: result.owners[0],
+            description: result.description,
+            title: result.title,
+            url: result.url,
+          })
         }
-      }).then((req) => {
-        this.responses = req.data.results
-      }).catch((err) => {
-          this.$notifyError(this.$t(`errors["${err.message}"]`))
-        }
-      )
+      })
     }
   }
 }

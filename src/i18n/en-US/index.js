@@ -42,6 +42,7 @@ export default {
   },
   errors: {
     'Network Error': "Can't access to the server",
+    'Request failed with status code 404': "Can't find path",
     inputs: {
       emptyField: 'Please, type something'
     }
