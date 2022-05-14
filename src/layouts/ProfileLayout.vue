@@ -12,11 +12,8 @@
     <DateCard
       v-for="dateCard in achievements"
       :key="dateCard"
-      :ownerName="userName"
-      :title="dateCard.title"
-      :days="dateCard.days_since_the_last_incident"
-      :user-image="userImage"
-      :link="`achievement/${dateCard.id}`"
+      :owner-url="dateCard.owners[0]"
+      :url="dateCard.url"
     />
   </div>
 </q-layout>

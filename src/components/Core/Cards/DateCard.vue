@@ -2,8 +2,8 @@
   <a :href="link">
     <q-card class="date-card card flex column justify-center items-center">
       <div class="date-card__container flex column justify-between items-center">
-        <div class="flex column justify-center items-center">
-          <UserImage class="date-card__user-image q-mb-sm"/>
+        <div class="flex column justify-center items-center" @click="$router.go('/profile/' + ownerId)">
+          <UserImage class="date-card__user-image q-mb-sm" :url="ownerImage"/>
           <p class="date-card__user-name">{{ ownerName }}</p>
         </div>
         <div class="date-card__content flex column justify-between q-mt-md">
@@ -31,25 +31,34 @@ export default {
     UserImage,
   },
   props: {
-    ownerName: {
+    ownerUrl: {
       required: true,
     },
-    title: {
+    url: {
       required: true,
-    },
-    days: {
-      required: true,
-    },
-    userImage: {
-      required: true,
-    },
-    link: {
-      default: false,
     }
   },
   data() {
+    this.$axios.get(this.ownerUrl).then(res => {
+      this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
+      this.ownerImage = res.data.general_user_information.img
+      this.ownerId = res.data.id
+    })
+    this.$axios.get(this.url).then(res => {
+      this.title = res.data.title
+      this.days = res.data.days_since_the_last_incident
+    })
     return {
-      daysUnit: this.$tc('days', this.days)
+      ownerName: null,
+      ownerImage: null,
+      ownerId: null,
+      title: null,
+      days: null,
+    }
+  },
+  computed: {
+    daysUnit() {
+      return this.$tc('days', this.days)
     }
   }
 }
