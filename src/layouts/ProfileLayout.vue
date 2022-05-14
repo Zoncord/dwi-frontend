@@ -1,16 +1,22 @@
 <template>
 <q-layout>
- <ProfileDescription :is-user-page="isUserPage" :is-subscribed="isSubscribed"/>
+ <ProfileDescription
+   :is-user-page="isUserPage"
+   :is-subscribed="isSubscribed"
+   :owner-name="userName"
+   :followers-count="followersCount"
+   :profile-description="profileDescription"
+ />
   <div class="profile__cards-wrapper">
     <AddCard v-if="isUserPage"/>
     <DateCard
-      v-for="dateCard in dateCards"
+      v-for="dateCard in achievements"
       :key="dateCard"
       :ownerName="userName"
       :title="dateCard.title"
-      :days="dateCard.days"
-      :days-unit="dateCard.daysUnit"
+      :days="dateCard.days_since_the_last_incident"
       :user-image="dateCard.userImage"
+      :link="`achievement/${dateCard.id}`"
     />
   </div>
 </q-layout>
@@ -29,47 +35,27 @@ export default {
     DateCard,
   },
   data(){
+    this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId).then(res => {
+      this.userName = res.data.first_name + ' ' + res.data.last_name
+      this.followersCount = res.data.followers_count
+      this.profileDescription = res.data.description
+    }).catch(err => {
+      if (err.request) {
+        this.$router.push('/404')
+      }
+    })
+    this.$axios.get(this.$dwiApi + 'achievements/achievement/?owners=' + this.$route.params.userId).then(res => {
+      this.achievements = res.data.results
+    })
     return {
-      isUserPage: true,
+      userName: null,
+      isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
       isSubscribed: false,
-      dateCards: [
-        {
-          title: 'Делает деньги',
-          days: 3,
-          daysUnit: 'дня',
-          userImage:  '',
-        },
-        {
-          title: 'Делает деньги',
-          days: 3,
-          daysUnit: 'дня',
-          userImage:  '',
-        },
-        {
-          title: 'Делает деньги',
-          days: 3,
-          daysUnit: 'дня',
-          userImage:  '',
-          }, {
-            title: 'Делает деньги',
-            days: 3,
-            daysUnit: 'дня',
-            userImage:  '',
-          },{
-            title: 'Делает деньги',
-            days: 3,
-            daysUnit: 'дня',
-            userImage:  '',
-          },
-
-      ]
+      achievements: null,
+      followersCount: null,
+      profileDescription: null,
     }
   },
-  computed: {
-    userName(){
-      return this.$userName
-    }
-  }
 
 }
 </script>

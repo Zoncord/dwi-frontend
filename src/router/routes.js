@@ -24,9 +24,14 @@ const routes = [
     component: () => import('pages/AchievementPage.vue'),
   },
   {
+    path: '/auth',
+    component: () => import('pages/Auth.vue'),
+  },
+  {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/Error404.vue')
-  }
+    component: () => import('pages/Error404.vue'),
+  },
+
 ]
 
 export default routes

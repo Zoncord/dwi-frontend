@@ -1,23 +1,25 @@
 <template>
-  <q-card class="date-card card flex column justify-center items-center">
-    <div class="date-card__container flex column justify-between items-center">
-      <div class="flex column justify-center items-center">
-        <UserImage class="date-card__user-image q-mb-sm"/>
-        <p class="date-card__user-name">{{ ownerName }}</p>
+  <a :href="link">
+    <q-card class="date-card card flex column justify-center items-center">
+      <div class="date-card__container flex column justify-between items-center">
+        <div class="flex column justify-center items-center">
+          <UserImage class="date-card__user-image q-mb-sm"/>
+          <p class="date-card__user-name">{{ ownerName }}</p>
+        </div>
+        <div class="date-card__content flex column justify-between q-mt-md">
+          <h5 class="title">
+            {{ title }}
+          </h5>
+          <h1 class="days">
+            {{ days }}
+          </h1>
+          <h5 class="days-unit">
+            {{ daysUnit }}
+          </h5>
+        </div>
       </div>
-      <div class="date-card__content flex column justify-between q-mt-md">
-        <h5 class="title">
-          {{ title }}
-        </h5>
-        <h1 class="days">
-          {{ days }}
-        </h1>
-        <h5 class="days-unit">
-          {{ daysUnit }}
-        </h5>
-      </div>
-    </div>
-  </q-card>
+    </q-card>
+  </a>
 </template>
 
 <script>
@@ -38,11 +40,16 @@ export default {
     days: {
       required: true,
     },
-    daysUnit: {
-      required: true,
-    },
     userImage: {
       required: true,
+    },
+    link: {
+      default: false,
+    }
+  },
+  data() {
+    return {
+      daysUnit: this.$tc('days', this.days)
     }
   }
 }
@@ -63,9 +70,11 @@ export default {
   flex-wrap: nowrap;
 
 }
-.date-card__content{
+
+.date-card__content {
   height: 100%;
-  *{
+
+  * {
     font-weight: 500;
   }
 }

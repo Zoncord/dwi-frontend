@@ -10,7 +10,7 @@
     <q-toolbar class="limiter progress-form-bar__toolbar row">
       <q-btn class="progress-form-bar__cancel-btn col-2 q-mr-md"
              no-caps
-             @click="$router.push('/profile')"
+             @click="$router.go(-1)"
       >
         {{ $t('progressFormBar.cancel') }}
       </q-btn>

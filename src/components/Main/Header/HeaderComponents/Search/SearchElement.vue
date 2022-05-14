@@ -39,7 +39,7 @@
       class="search__advice-list rounded-borders search-recommends"
       :style="{
       border: searchFocused && responses.length ? 'solid 1px #B8B8B8': 'none',
-      transform: searchFocused? 'scaleY(1)' : 'scaleY(0)',
+      transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
     }"
     >
       <div
@@ -87,8 +87,8 @@ export default {
   },
   methods: {
     getResponses() {
-      axios.get(this.$dwiApi + 'achievements/achievement/').then(res => {
-        console.log(res)
+      axios.get(this.$dwiApi + 'achievements/achievement/?search=' + this.query).then(res => {
+        this.responses = []
         for (let result of res.data.results){
           this.responses.push({
             days: result.days,

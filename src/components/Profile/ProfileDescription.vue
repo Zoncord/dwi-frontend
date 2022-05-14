@@ -1,6 +1,6 @@
 <template>
   <q-card class="profile-description flex justify-between">
-    <div class="profile-description__user-part flex justify-center items-center">
+    <div class="profile-description__user-part flex justify-left items-center">
       <div class="flex profile-description__user-part__container">
         <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md"/>
         <div class="profile-description__user-part__user-container  flex column">
@@ -27,7 +27,7 @@
     <div class="profile-description__subscribe-part flex justify-center items-center">
       <div class="flex column text-center">
         <h6 class="profile-description__subscribe-part__subscribe-amount">
-          {{ subscribersAmount }} {{ subscribersUnit }} {{ $t('profile.followers') }}
+          {{ followersCount }} {{ $tc('profile.followers', followersCount) }}
         </h6>
         <q-btn class="profile-description__subscribe-part__btn" color="highlight" no-caps v-if="!isUserPage && !isSubscribed">
           {{ $t('profile.subscribeButton') }}
@@ -52,25 +52,21 @@ export default {
     isSubscribed: {
       required: true,
     },
+    ownerName: {
+      required: true,
+    },
+    followersCount: {
+      required: true,
+    },
+    profileDescription: {
+      required: true,
+    }
   },
   data() {
     return {
-      // subscribersAmount: '3',
-      subscribersUnit: 'M',
-      // profileDescription: 'Listen here little shit, my last name is Land Cruiser. And it\'s none of your fucking business why they call me that.',
+      // profileDescription: this.$userDescription,
     }
   },
-  computed: {
-    ownerName(){
-      return this.$userName
-    },
-    profileDescription(){
-      return this.$userDescription
-    },
-    subscribersAmount(){
-      return this.$userSubsCount
-    }
-  }
 }
 </script>
 
@@ -86,9 +82,6 @@ a{
   flex-grow: 1;
 }
 
-.profile-description__user-part__user-image {
-  width: 250px;
-}
 
 .profile-description__user-part {
   width: 80%;
@@ -125,5 +118,13 @@ a{
   }
 }
 
+
+</style>
+<style lang="scss">
+.profile-description__user-part__user-image {
+.q-img{
+  width: 150px;
+}
+}
 
 </style>

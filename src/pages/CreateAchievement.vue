@@ -79,6 +79,7 @@
 import HeaderComponent from "components/Main/Header/HeaderComponent";
 import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 import TagsComponent from "components/CreateAchievement/TagsComponent";
+import {mapGetters} from "vuex";
 
 export default {
   name: "CreateCard",
@@ -100,6 +101,7 @@ export default {
     }
   },
   methods: {
+    ...mapGetters('mainStore', ['token']),
     nextStage() {
       if (this.activeTab < this.stagesCount)
         this.activeTab += 1
@@ -115,8 +117,22 @@ export default {
         this.nextStage()
       }
     },
-    finish(){
-      console.log(this.title, this.description, this.tags, this.category)
+    finish() {
+      console.log(`Token ${this.userToken()}`)
+      this.$axios.post(this.$dwiApi + 'achievements/achievement/', {
+        title: this.title,
+        description: this.description,
+        tags: this.tags,
+      }, {
+        headers: {
+          Authorization: `Token ${this.userToken()}`
+        }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+      // this.$router.go(-1)
     },
     deleteTag(id) {
       this.tags.splice(id, 1)
@@ -126,6 +142,11 @@ export default {
         this.tags.unshift(tag)
       }
     },
+  },
+  computed: {
+    userToken(){
+      return this.token
+    }
   }
 }
 </script>

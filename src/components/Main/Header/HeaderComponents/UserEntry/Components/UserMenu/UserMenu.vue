@@ -15,6 +15,7 @@
               :icon="tab.icon"
               :to="tab.to"
               :text="$t(`header.userEntryMenu.${tabName}`)"
+
             />
           </q-list>
         </div>
@@ -48,7 +49,7 @@ export default {
       menuTabs: {
         profile: {
           icon: 'person',
-          to: '/profile/a'
+          to: '/profile/' + this.$userId
         },
         help: {
           icon: 'help',

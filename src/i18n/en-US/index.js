@@ -1,7 +1,8 @@
 export default {
   header: {
     search: {
-      label: 'Search'
+      label: 'Search',
+      already: 'already'
     },
     tabs: {
       feed: 'Feed',
@@ -17,7 +18,7 @@ export default {
   },
   profile: {
     subscribeButton: 'Subscribe',
-    followers: 'followers'
+    followers: 'follower | followers'
   },
   createAchievement: {
     title: 'Create Achievement',
@@ -47,5 +48,6 @@ export default {
       emptyField: 'Please, type something'
     }
   },
+  days: 'day | days'
 
 }
