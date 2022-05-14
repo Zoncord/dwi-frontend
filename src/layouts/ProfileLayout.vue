@@ -15,7 +15,7 @@
       :ownerName="userName"
       :title="dateCard.title"
       :days="dateCard.days_since_the_last_incident"
-      :user-image="dateCard.userImage"
+      :user-image="userImage"
       :link="`achievement/${dateCard.id}`"
     />
   </div>
@@ -36,19 +36,23 @@ export default {
   },
   data(){
     this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId).then(res => {
-      this.userName = res.data.first_name + ' ' + res.data.last_name
+      console.log(res.data)
+      this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
       this.followersCount = res.data.followers_count
       this.profileDescription = res.data.description
     }).catch(err => {
+      console.log(err)
       if (err.request) {
         this.$router.push('/404')
       }
     })
     this.$axios.get(this.$dwiApi + 'achievements/achievement/?owners=' + this.$route.params.userId).then(res => {
+      console.log(res.data)
       this.achievements = res.data.results
     })
     return {
       userName: null,
+      userImage: null,
       isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
       isSubscribed: false,
       achievements: null,

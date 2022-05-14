@@ -62,15 +62,15 @@ export default {
 
   data() {
     this.$axios.get(this.ownerLink).then(res => {
-      //TODO add getting user image from api
-      this.ownerName = res.data.first_name + ' ' + res.data.last_name
+      console.log(res.data)
+      this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
+      this.ownerImage = res.data.general_user_information.image
     })
     let creationDate = new Date(this.creationTime)
-    console.log(creationDate.getTime())
-
     return {
       likesUnit: '',
       isLiked: this.liked,
+      image: null,
       ownerName: null,
       ownerImage: null,
       time: creationDate.toLocaleTimeString(),

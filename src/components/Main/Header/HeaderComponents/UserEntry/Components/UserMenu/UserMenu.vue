@@ -15,7 +15,6 @@
               :icon="tab.icon"
               :to="tab.to"
               :text="$t(`header.userEntryMenu.${tabName}`)"
-
             />
           </q-list>
         </div>

@@ -11,23 +11,23 @@
                @click="$router.back()"></q-btn>
         <q-btn icon="favorite"
                class="achievement__navigation__controls__button like-btn"
-               :class="{liked: isAchievementLiked}"
+               :class="{liked: isLiked}"
                :ripple="false"
-               @click="isAchievementLiked = !isAchievementLiked"
+               @click="handleAchievementLike()"
         ></q-btn>
         <q-btn icon="chat" class="achievement__navigation__controls__button" :ripple="false"></q-btn>
       </div>
     </nav>
     <div class="achievement__blog col-9">
       <AchievementPost
-        v-for="item in news"
-        :key="item"
-        :title="item.title"
-        :creation-time="item.date_time_of_creation"
-        :owner-link="item.author"
+        v-for="post in posts"
+        :key="post"
+        :title="post.title"
+        :creation-time="post.date_time_of_creation"
+        :owner-link="post.author"
         :liked="false"
         :likes-count="-1"
-        :text="item.description"
+        :text="post.description"
       />
     </div>
   </div>
@@ -36,36 +36,99 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import AchievementPost from "components/Acievement/AchievementPost";
+import {mapGetters} from "vuex";
 
 export default {
   name: "AchieveLayout",
   components: {
     AchievementPost,
   },
+  methods: {
+    ...mapGetters('mainStore', ['token']),
+    getIsLiked() {
+      this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$userId}&achievement=${this.$route.params.id}`).then(res => {
+        this.isLiked = res.data.count
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    getAchievementData() {
+      this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
+        this.achievementTitle = res.data.title
+        this.achievementDay = res.data.days_since_the_last_incident
+        this.achievementUrl = res.data.url
+        console.log(res)
+      })
+    },
+    getAchievementNews() {
+      this.$axios.get(this.$dwiApi + 'blog/post/?author=&achievement=' + this.$route.params.id).then(res => {
+        // console.log(res.data.results)
+        //TODO add getting likes from api
+        this.posts = res.data.results
+      })
+    },
+    handleAchievementLike() {
+      this.isLiked = !this.isLiked
+      if (this.isLiked) {
+        this.$axios.post(this.$dwiApi + `rating/achievement/`, {
+          user: this.$userUrl,
+          achievement: this.achievementUrl
+        }, {
+          headers: {
+            Authorization: 'Token ' + this.token()
+          }
+        }).then(res => {
+          console.log(res)
+        })
+      }
+      else{
+        this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$userId}&achievement=${this.$route.params.id}`, {
+          headers: {
+            Authorization: 'Token ' + this.token()
+          }
+        }).then(likeIdResponse => {
+          this.$axios.delete(likeIdResponse.data.results[0].url, {
+            headers: {
+              Authorization: 'Token ' + this.token()
+            }
+          }).then(res => {
+            console.log(res)
+          }).catch(function (error) {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+              // http.ClientRequest in node.js
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message);
+            }
+            console.log(error.config);
+          });
+        })
+      }
+    }
+  },
   data() {
-    this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
-      this.achievementTitle = res.data.title
-      this.achievementDay = res.data.days_since_the_last_incident
-    })
-    this.$axios.get(this.$dwiApi + 'blog/post/?author=&achievement=' + this.$route.params.id).then(res => {
-      console.log(res.data.results)
-      //TODO add getting likes from api
-      this.news = res.data.results
-    })
+    this.getAchievementData()
+    this.getAchievementNews()
+    this.getIsLiked()
     return {
       achievementTitle: null,
       achievementDay: null,
       achievementUnit: 'Дня',
       isAchievementLiked: false,
-      news: null
+      posts: null,
+      isLiked: null,
+      achievementUrl: null,
     }
   },
-  watch: {
-    isAchievementLiked(){
-      console.log('Request')
-      //TODO make axios request
-    }
-  }
 }
 </script>
 
@@ -119,10 +182,12 @@ export default {
 .q-card {
   border-radius: 10px;
 }
+
 .liked {
   color: $highlight;
 }
-.like-btn{
+
+.like-btn {
   transition: color .1s;
 }
 </style>

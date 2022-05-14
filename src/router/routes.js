@@ -28,6 +28,10 @@ const routes = [
     component: () => import('pages/Auth.vue'),
   },
   {
+    path: '/logout',
+    component: () => import('pages/Logout.vue'),
+  },
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue'),
   },

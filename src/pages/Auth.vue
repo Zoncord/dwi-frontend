@@ -13,13 +13,14 @@ export default {
     ...mapMutations('mainStore', ['changeToken']),
     ...mapGetters('mainStore', ['token'])
   },
-  mounted(){
+  async mounted(){
     console.log(this.$route.query.code)
-    this.$axios.post(this.$dwiApi + 'users/authorization/', {
+    await this.$axios.post(this.$dwiApi + 'users/authorization/', {
       code : this.$route.query.code,
-    }).then(res => {
+    }).then(async res => {
       console.log(res)
-      this.changeToken(res.data.token)
+      await this.changeToken(res.data.token)
+      await this.$router.push('/').then(() => document.location.reload())
     }).catch(err => {
       console.log(err)
     })
