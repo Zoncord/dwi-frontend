@@ -2,7 +2,7 @@
   <q-menu class="user-entry__menu flex column justify-center items-center" anchor="bottom right" self="top right">
     <div class="q-pa-md">
       <div class="flex">
-        <UserImage class="user-entry__menu__user-image q-mr-md"/>
+        <UserImage class="user-entry__menu__user-image q-mr-md" :url="this.$userImage"/>
         <div class="flex column">
           <div class="user-entry__menu__user-information flex column justify-center">
             <p class="user-entry__menu__user-name">{{ userName }}</p>

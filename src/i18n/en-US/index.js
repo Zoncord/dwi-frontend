@@ -42,12 +42,17 @@ export default {
     finish: 'Finish',
   },
   errors: {
+    page404: {
+      description: "Can't find this page",
+      button: 'Go home'
+    },
     'Network Error': "Can't access to the server",
     'Request failed with status code 404': "Can't find path",
     inputs: {
       emptyField: 'Please, type something'
     }
   },
-  days: 'day | days'
+  days: 'day | days',
+
 
 }

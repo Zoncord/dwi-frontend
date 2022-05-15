@@ -16,15 +16,15 @@ export default boot(async ({app, router, store}) => {
       }
     }).then(res => {
       app.config.globalProperties.$userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-      app.config.globalProperties.$userImageUrl = res.data.general_user_information.img
+      app.config.globalProperties.$userImage = res.data.general_user_information.img
       app.config.globalProperties.$userId = res.data.id
       app.config.globalProperties.$userUrl = res.data.url
       app.config.globalProperties.$userDescription = res.data.description
       app.config.globalProperties.$userFollowersCount = res.data.followers_count
     })
   }).catch(err => {
-    if (err.response.status === 401 && window.location.pathname !== '/auth/' && window.location.pathname !== '/auth'){
-      window.location.href=process.env.USER_LOGIN_REDIRECT
+    if (err.response.status === 401 && window.location.pathname !== '/auth/' && window.location.pathname !== '/auth') {
+      window.location.href = process.env.USER_LOGIN_REDIRECT
     }
   })
 

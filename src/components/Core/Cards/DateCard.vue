@@ -1,12 +1,12 @@
 <template>
-  <a :href="link">
+  <a :href="'/achievement/' + this.id">
     <q-card class="date-card card flex column justify-center items-center">
       <div class="date-card__container flex column justify-between items-center">
-        <div class="flex column justify-center items-center" @click="$router.go('/profile/' + ownerId)">
+        <a :href="'/profile/' + ownerId" class="date-card__container__user-info flex column justify-center items-center">
           <UserImage class="date-card__user-image q-mb-sm" :url="ownerImage"/>
-          <p class="date-card__user-name">{{ ownerName }}</p>
-        </div>
-        <div class="date-card__content flex column justify-between q-mt-md">
+          <p class="date-card__container__user-name">{{ ownerName }}</p>
+        </a>
+        <div class="date-card__container__content flex column justify-between q-mt-md">
           <h5 class="title">
             {{ title }}
           </h5>
@@ -47,6 +47,7 @@ export default {
     this.$axios.get(this.url).then(res => {
       this.title = res.data.title
       this.days = res.data.days_since_the_last_incident
+      this.id = res.data.id
     })
     return {
       ownerName: null,
@@ -54,6 +55,7 @@ export default {
       ownerId: null,
       title: null,
       days: null,
+      id: null,
     }
   },
   computed: {
@@ -80,19 +82,22 @@ export default {
 
 }
 
-.date-card__content {
+.date-card__container__content {
   height: 100%;
 
   * {
     font-weight: 500;
   }
 }
+.date-card__container__user-info{
+  color: black;
+}
 
 .date-card__user-image {
   width: 60px;
 }
 
-.date-card__user-name {
+.date-card__container__user-name {
   font-size: 20px;
 }
 </style>

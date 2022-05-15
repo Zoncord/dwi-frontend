@@ -2,7 +2,7 @@
   <q-card class="profile-description flex justify-between">
     <div class="profile-description__user-part flex justify-left items-center">
       <div class="flex profile-description__user-part__container">
-        <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md"/>
+        <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="ownerImage"/>
         <div class="profile-description__user-part__user-container  flex column">
 
           <a href="https://www.google.com/" class="profile-description__user-part__user-name q-mt-md q-mb-sm" v-if="isUserPage">
@@ -14,11 +14,11 @@
           </p>
 
           <a href="https://www.google.com/" class="profile-description__user-part__text" v-if="isUserPage">
-            {{ profileDescription }}
+            {{ ownerDescription }}
             <q-icon class="profile-description__user-part__text-edit edit-icon" name="create"/>
           </a>
           <p class="profile-description__user-part__text" v-else>
-            {{ profileDescription }}
+            {{ ownerDescription }}
           </p>
         </div>
       </div>
@@ -39,6 +39,7 @@
 
 <script>
 import UserImage from "components/Core/User/UserImage";
+import {mapGetters} from "vuex";
 
 export default {
   name: "ProfileDescription",
@@ -46,27 +47,54 @@ export default {
     UserImage,
   },
   props: {
-    isUserPage: {
-      required: true,
-    },
-    isSubscribed: {
-      required: true,
-    },
-    ownerName: {
-      required: true,
-    },
-    followersCount: {
-      required: true,
-    },
-    profileDescription: {
+    ownerUrl: {
       required: true,
     }
+  },
+  methods: {
+    ...mapGetters('mainStore', ['token']),
+    getIsSubscribed(){
+      this.$axios.get(this.$dwiApi + `rating/user/?user=${this.$userId}&evaluated_user=${this.ownerId}`, {
+        headers: {
+          Authorization: 'Token ' + this.token()
+        }
+      }).then(res => {
+        this.isSubscribed = Boolean(res.data.count)
+      })
+    }
+  },
+  mounted() {
+
   },
   data() {
+
     return {
-      // profileDescription: this.$userDescription,
+      ownerName: null,
+      ownerImage: null,
+      ownerDescription: null,
+      followersCount: null,
+      isSubscribed: true,
+      isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
     }
   },
+  watch: {
+    ownerUrl(){
+      if (this.ownerUrl){
+        this.$axios.get(this.ownerUrl, {
+          headers: {
+            Authorization: 'Token ' + this.token()
+          }
+        }).then(res => {
+          this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
+          this.ownerImage = res.data.general_user_information.img
+          this.ownerId = res.data.id
+          this.ownerDescription = res.data.description
+          this.followersCount = res.data.followers_count
+          this.getIsSubscribed()
+        })
+      }
+    }
+  }
 }
 </script>
 

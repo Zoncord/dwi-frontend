@@ -8,15 +8,17 @@
 
 export default {
   name: "UserImage",
-  props: [
-    'url'
-  ],
+  props: {
+    url: {
+      required: true,
+    }
+  },
   computed: {
     userImageUrl() {
       if (this.url){
         return this.url
       }
-      return this.$userImageUrl
+      return 'https://kitchenideya.ru/wp-content/uploads/kitchenideafasad_emal_ral7001-95x95.jpg'
     }
   }
 }
@@ -25,7 +27,8 @@ export default {
 <style scoped>
 .user-image{
   border-radius: 50%;
-  /*width: 40px;*/
+  /*width: 35px;*/
+  /*margin: 10px;*/
 }
 
 </style>
