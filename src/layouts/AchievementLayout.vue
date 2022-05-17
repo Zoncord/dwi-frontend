@@ -19,8 +19,14 @@
       </div>
     </nav>
     <div class="achievement__blog col-9 flex column">
-      <q-btn class="q-mb-md" @click="$router.push('/create-post/?achievement-id=' + this.$route.params.id)">
-        Create New Post +
+      <q-btn
+        class="achievement__blog__create-post q-mb-md"
+        @click="$router.push('/create-post/?achievement_id=' + this.$route.params.id)"
+        no-caps
+        v-if="isUserOwner"
+      >
+        Add New Post
+        <q-icon name="add"/>
       </q-btn>
       <AchievementPost
         v-for="post in posts"
@@ -33,33 +39,53 @@
 </template>
 
 <script>
-import UserImage from "components/Core/User/UserImage";
 import AchievementPost from "components/Acievement/AchievementPost";
 import {mapGetters} from "vuex";
+import Plus from "components/Core/Cards/Components/Plus";
 
 export default {
   name: "AchieveLayout",
   components: {
     AchievementPost,
+    // Plus,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
     getIsLiked() {
-      this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$userId}&achievement=${this.$route.params.id}`).then(res => {
+      this.$axios.get(this.$dwiApi + `rating/achievement/`, {
+        headers: {
+          Authorization: 'Token ' + this.token()
+        },
+        params: {
+          user: this.$userId,
+          achievement: this.$route.params.id,
+        }
+      }).then(res => {
         this.isLiked = res.data.count
       }).catch(err => {
         console.log(err)
       })
     },
     getAchievementData() {
+
       this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
+        console.log(res)
         this.achievementTitle = res.data.title
         this.achievementDay = res.data.days_since_the_last_incident
         this.achievementUrl = res.data.url
+        this.achievementOwner = res.data.owners[0]
       })
     },
-    getAchievementNews() {
-      this.$axios.get(this.$dwiApi + 'blog/post/?author=&achievement=' + this.$route.params.id).then(res => {
+    getAchievementPosts() {
+      this.$axios.get(this.$dwiApi + 'blog/post/', {
+        headers: {
+          Authorization: 'Token ' + this.token()
+        },
+        params: {
+          achievement: this.$route.params.id,
+          ordering: '-date_time_of_creation'
+        }
+      }).then(res => {
         this.posts = res.data.results
       })
     },
@@ -74,8 +100,7 @@ export default {
             Authorization: 'Token ' + this.token()
           }
         })
-      }
-      else{
+      } else {
         this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$userId}&achievement=${this.$route.params.id}`, {
           headers: {
             Authorization: 'Token ' + this.token()
@@ -89,11 +114,11 @@ export default {
           //TODO redirect to 404 when error
         })
       }
-    }
+    },
   },
   data() {
     this.getAchievementData()
-    this.getAchievementNews()
+    this.getAchievementPosts()
     this.getIsLiked()
     return {
       achievementTitle: null,
@@ -102,13 +127,19 @@ export default {
       posts: null,
       isLiked: null,
       achievementUrl: null,
+      achievementOwner: null,
+
     }
   },
+  computed:{
+    isUserOwner(){
+      return this.achievementOwner === this.$userUrl
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-
 
 .achievement__blog {
   padding-left: 8px;

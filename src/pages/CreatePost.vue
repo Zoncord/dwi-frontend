@@ -70,13 +70,14 @@ export default {
       }
     },
     async finish() {
+      console.log( this.$dwiApi + `achievements/achievement/${this.$route.query.achievement_id}/`)
       await this.$axios.post(this.$dwiApi + 'blog/post/', {
-        achievement: this.$dwiApi + `achievements/achievement/${this.$route.params['achievement-id']}/`,
+        achievement: this.$dwiApi + `achievements/achievement/${this.$route.query.achievement_id}/`,
         title: this.title,
         description: this.description,
       }, {
         headers: {
-          Authentication: 'Token ' + this.token()
+          Authorization: 'Token ' + this.token()
         }
       })
       this.$router.go(-1)
