@@ -4,7 +4,7 @@
       <div class="q-card achievement__navigation__card-info flex column text-center q-mb-md">
         <h5 class="achievement__navigation__card-info__title">{{ achievementTitle }}</h5>
         <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
-        <h5 class="achievement__navigation__card-info__unit">{{ achievementUnit }}</h5>
+        <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
       </div>
       <div class="achievement__navigation__controls q-card  flex">
         <q-btn icon="arrow_back_ios" class="achievement__navigation__controls__button" :ripple="false"
@@ -22,12 +22,8 @@
       <AchievementPost
         v-for="post in posts"
         :key="post"
-        :title="post.title"
-        :creation-time="post.date_time_of_creation"
-        :owner-link="post.author"
-        :liked="false"
-        :likes-count="-1"
-        :text="post.description"
+        :url="post.url"
+        :ownerUrl="post.author"
       />
     </div>
   </div>
@@ -57,14 +53,14 @@ export default {
         this.achievementTitle = res.data.title
         this.achievementDay = res.data.days_since_the_last_incident
         this.achievementUrl = res.data.url
-        console.log(res)
+        // console.log(res)
       })
     },
     getAchievementNews() {
       this.$axios.get(this.$dwiApi + 'blog/post/?author=&achievement=' + this.$route.params.id).then(res => {
-        // console.log(res.data.results)
         //TODO add getting likes from api
         this.posts = res.data.results
+        // console.log(this.posts)
       })
     },
     handleAchievementLike() {
@@ -78,7 +74,7 @@ export default {
             Authorization: 'Token ' + this.token()
           }
         }).then(res => {
-          console.log(res)
+          // console.log(res)
         })
       }
       else{
@@ -92,25 +88,8 @@ export default {
               Authorization: 'Token ' + this.token()
             }
           }).then(res => {
-            console.log(res)
-          }).catch(function (error) {
-            if (error.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            } else if (error.request) {
-              // The request was made but no response was received
-              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-              // http.ClientRequest in node.js
-              console.log(error.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log('Error', error.message);
-            }
-            console.log(error.config);
-          });
+            // console.log(res)
+          })
         })
       }
     }
@@ -122,7 +101,7 @@ export default {
     return {
       achievementTitle: null,
       achievementDay: null,
-      achievementUnit: 'Дня',
+      // achievementUnit: 'Дня',
       isAchievementLiked: false,
       posts: null,
       isLiked: null,

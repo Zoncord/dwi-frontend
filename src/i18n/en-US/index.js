@@ -17,8 +17,11 @@ export default {
     }
   },
   profile: {
-    subscribeButton: 'Subscribe',
     followers: 'follower | followers'
+  },
+  subscribeButton: {
+    subscribe: 'Subscribe',
+    unsubscribe: 'Unsubscribe',
   },
   createAchievement: {
     title: 'Create Achievement',

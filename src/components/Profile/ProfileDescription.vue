@@ -5,7 +5,8 @@
         <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="ownerImage"/>
         <div class="profile-description__user-part__user-container  flex column">
 
-          <a href="https://www.google.com/" class="profile-description__user-part__user-name q-mt-md q-mb-sm" v-if="isUserPage">
+          <a href="https://www.google.com/" class="profile-description__user-part__user-name q-mt-md q-mb-sm"
+             v-if="isUserPage">
             {{ ownerName }}
             <q-icon class="profile-description__user-part__user-name-edit edit-icon" name="create"/>
           </a>
@@ -26,12 +27,19 @@
     <q-separator vertical/>
     <div class="profile-description__subscribe-part flex justify-center items-center">
       <div class="flex column text-center">
-        <h6 class="profile-description__subscribe-part__subscribe-amount">
-          {{ followersCount }} {{ $tc('profile.followers', followersCount) }}
+        <h6 class="profile-description__subscribe-part__subscribe-amount" v-if="followersCount !== null">
+          {{ followersCount }} {{ $tc('profile.followers', followersCount)  }}
         </h6>
-        <q-btn class="profile-description__subscribe-part__btn" color="highlight" no-caps v-if="!isUserPage && !isSubscribed">
-          {{ $t('profile.subscribeButton') }}
-        </q-btn>
+<!--        <q-btn class="profile-description__subscribe-part__btn" color="highlight" no-caps-->
+<!--               v-if="!isUserPage && !isSubscribed">-->
+<!--          {{ $t('profile.subscribeButton.subscribe') }}-->
+<!--        </q-btn>-->
+        <SubscribeButton
+          v-if="!isUserPage && isSubscribed !== null"
+          class="profile-description__subscribe-part__btn"
+          :is-subscribed="isSubscribed"
+          v-on:toggleSubscribe="toggleSubscribe"
+        />
       </div>
     </div>
   </q-card>
@@ -40,11 +48,13 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
+import SubscribeButton from "components/Core/SubscribeButton";
 
 export default {
   name: "ProfileDescription",
   components: {
     UserImage,
+    SubscribeButton,
   },
   props: {
     ownerUrl: {
@@ -53,7 +63,7 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    getIsSubscribed(){
+    getIsSubscribed() {
       this.$axios.get(this.$dwiApi + `rating/user/?user=${this.$userId}&evaluated_user=${this.ownerId}`, {
         headers: {
           Authorization: 'Token ' + this.token()
@@ -61,25 +71,30 @@ export default {
       }).then(res => {
         this.isSubscribed = Boolean(res.data.count)
       })
+    },
+    toggleSubscribe(){
+      if (this.isSubscribed){
+        this.followersCount -= 1
+      }
+      else{
+        this.followersCount += 1
+      }
+      this.isSubscribed = !this.isSubscribed
     }
   },
-  mounted() {
-
-  },
   data() {
-
     return {
       ownerName: null,
       ownerImage: null,
       ownerDescription: null,
       followersCount: null,
-      isSubscribed: true,
+      isSubscribed: null,
       isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
     }
   },
   watch: {
-    ownerUrl(){
-      if (this.ownerUrl){
+    ownerUrl() {
+      if (this.ownerUrl) {
         this.$axios.get(this.ownerUrl, {
           headers: {
             Authorization: 'Token ' + this.token()
@@ -93,15 +108,17 @@ export default {
           this.getIsSubscribed()
         })
       }
-    }
+    },
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
-a{
+a {
   color: black;
 }
+
 .profile-description {
   border-radius: 15px;
 }
@@ -122,25 +139,32 @@ a{
 .profile-description__user-part__container {
   flex-wrap: nowrap;
 }
-.edit-icon{
+
+.edit-icon {
   opacity: 0;
   transition: opacity .3s;
 }
-.profile-description__user-part__user-name{
+
+.profile-description__user-part__user-name {
   font-size: 30px;
   font-weight: 500;
-  .profile-description__user-part__user-name-edit{
+
+  .profile-description__user-part__user-name-edit {
     font-size: 20px;
   }
+
   &:hover .profile-description__user-part__user-name-edit {
     opacity: 1;
   }
 }
+
 .profile-description__user-part__text {
   font-size: 20px;
-  .profile-description__user-part__text-edit{
+
+  .profile-description__user-part__text-edit {
     font-size: 15px;
   }
+
   &:hover .profile-description__user-part__text-edit {
     opacity: 1;
   }
@@ -150,9 +174,9 @@ a{
 </style>
 <style lang="scss">
 .profile-description__user-part__user-image {
-.q-img{
-  width: 150px;
-}
+  .q-img {
+    width: 150px;
+  }
 }
 
 </style>

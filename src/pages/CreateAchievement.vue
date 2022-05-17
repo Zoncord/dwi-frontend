@@ -132,7 +132,7 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-      // this.$router.go(-1)
+      this.$router.go(-1)
     },
     deleteTag(id) {
       this.tags.splice(id, 1)

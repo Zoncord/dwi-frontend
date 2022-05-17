@@ -11,8 +11,8 @@
 
       <q-btn
         class="q-mt-xl"
-        color="white"
-        text-color="black"
+        color="highlight"
+        text-color="white"
         unelevated
         to="/"
         :label="$t('errors.page404.button')"

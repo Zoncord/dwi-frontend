@@ -56,12 +56,11 @@ export default {
     },
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
-    progress(){
-      return this.activeStage/  this.stagesCount
+    progress() {
+      return this.activeStage / this.stagesCount
     }
   }
 }

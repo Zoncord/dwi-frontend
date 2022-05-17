@@ -37,7 +37,7 @@ export default {
         Authorization: 'Token ' + this.token()
       }
     } ).then(res => {
-      console.log(res)
+      console.log(res.data)
       this.title = res.data.title
       this.id = res.data.id
       this.days = res.data.days_since_the_last_incident
@@ -48,13 +48,14 @@ export default {
         Authorization: 'Token ' + this.token()
       }
     }).then(res => {
-      this.ownerName = res.data.general_user_information.first_name + res.data.general_user_information.last_name
+      this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
       this.ownerImage = res.data.general_user_information.img
       this.ownerId = res.data.id
     })
   },
   data() {
     return {
+      id: null,
       title: null,
       days: null,
       ownerName: null,

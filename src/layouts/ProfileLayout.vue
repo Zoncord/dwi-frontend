@@ -32,17 +32,17 @@ export default {
     ...mapGetters('mainStore', ['token'])
   },
   data() {
-    this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId).then(res => {
+    this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId, {
+      headers: {
+        Authorization: 'Token ' + this.token()
+      }
+    }).then(res => {
       this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
       this.userUrl = res.data.url
       this.followersCount = res.data.followers_count
       this.profileDescription = res.data.description
-    }, {
-      headers: {
-        Authorization: 'Token ' + this.token()
-      }
     }).catch(err => {
-      console.log(err)
+      // console.log(err)
       if (err.request) {
         this.$router.push('/404')
       }
