@@ -42,7 +42,6 @@ export default {
       this.followersCount = res.data.followers_count
       this.profileDescription = res.data.description
     }).catch(err => {
-      // console.log(err)
       if (err.request) {
         this.$router.push('/404')
       }

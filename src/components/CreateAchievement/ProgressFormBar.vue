@@ -17,6 +17,7 @@
       <q-btn class="progress-form-bar__back-btn col-2"
              no-caps
              @click="$emit('previousStage')"
+             v-if="activeStage > 1"
       >
         {{ $t('progressFormBar.back') }}
       </q-btn>

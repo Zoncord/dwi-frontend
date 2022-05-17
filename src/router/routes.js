@@ -32,6 +32,11 @@ const routes = [
     component: () => import('pages/Logout.vue'),
   },
   {
+    path: '/create-post',
+    component: () => import('pages/CreatePost.vue'),
+  },
+
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue'),
   },

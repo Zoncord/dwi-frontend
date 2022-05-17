@@ -18,7 +18,10 @@
         <q-btn icon="chat" class="achievement__navigation__controls__button" :ripple="false"></q-btn>
       </div>
     </nav>
-    <div class="achievement__blog col-9">
+    <div class="achievement__blog col-9 flex column">
+      <q-btn class="q-mb-md" @click="$router.push('/create-post/?achievement-id=' + this.$route.params.id)">
+        Create New Post +
+      </q-btn>
       <AchievementPost
         v-for="post in posts"
         :key="post"
@@ -53,14 +56,11 @@ export default {
         this.achievementTitle = res.data.title
         this.achievementDay = res.data.days_since_the_last_incident
         this.achievementUrl = res.data.url
-        // console.log(res)
       })
     },
     getAchievementNews() {
       this.$axios.get(this.$dwiApi + 'blog/post/?author=&achievement=' + this.$route.params.id).then(res => {
-        //TODO add getting likes from api
         this.posts = res.data.results
-        // console.log(this.posts)
       })
     },
     handleAchievementLike() {
@@ -73,8 +73,6 @@ export default {
           headers: {
             Authorization: 'Token ' + this.token()
           }
-        }).then(res => {
-          // console.log(res)
         })
       }
       else{
@@ -87,9 +85,8 @@ export default {
             headers: {
               Authorization: 'Token ' + this.token()
             }
-          }).then(res => {
-            // console.log(res)
           })
+          //TODO redirect to 404 when error
         })
       }
     }
@@ -101,7 +98,6 @@ export default {
     return {
       achievementTitle: null,
       achievementDay: null,
-      // achievementUnit: 'Дня',
       isAchievementLiked: false,
       posts: null,
       isLiked: null,
