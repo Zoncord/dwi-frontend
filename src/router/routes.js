@@ -8,6 +8,10 @@ const routes = [
     component: () => import('pages/FeedPage.vue'),
   },
   {
+    path: '/explore',
+    component: () => import('pages/ExplorePage.vue'),
+  },
+  {
     path: '/profile/:userId',
     component: () => import('pages/ProfilePage.vue'),
   },
@@ -36,6 +40,10 @@ const routes = [
     component: () => import('pages/CreatePost.vue'),
   },
 
+  {
+    path: '/test',
+    component: () => import('pages/Test.vue'),
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue'),

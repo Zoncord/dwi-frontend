@@ -28,12 +28,8 @@
     <div class="profile-description__subscribe-part flex justify-center items-center">
       <div class="flex column text-center">
         <h6 class="profile-description__subscribe-part__subscribe-amount" v-if="followersCount !== null">
-          {{ followersCount }} {{ $tc('profile.followers', followersCount)  }}
+          {{ followersCount }} {{ $tc('profile.followers', followersCount) }}
         </h6>
-<!--        <q-btn class="profile-description__subscribe-part__btn" color="highlight" no-caps-->
-<!--               v-if="!isUserPage && !isSubscribed">-->
-<!--          {{ $t('profile.subscribeButton.subscribe') }}-->
-<!--        </q-btn>-->
         <SubscribeButton
           v-if="!isUserPage && isSubscribed !== null"
           class="profile-description__subscribe-part__btn"
@@ -86,6 +82,7 @@ export default {
     return {
       ownerName: null,
       ownerImage: null,
+      ownerId: null,
       ownerDescription: null,
       followersCount: null,
       isSubscribed: null,

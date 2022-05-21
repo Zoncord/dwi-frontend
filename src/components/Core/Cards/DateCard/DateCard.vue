@@ -2,7 +2,8 @@
   <a :href="'/achievement/' + this.id">
     <q-card class="date-card card flex column justify-center items-center">
       <div class="date-card__container flex column justify-between items-center">
-        <a :href="'/profile/' + ownerId" class="date-card__container__user-info flex column justify-center items-center">
+        <a :href="'/profile/' + ownerId"
+           class="date-card__container__user-info flex column justify-center items-center">
           <UserImage class="date-card__user-image q-mb-sm" :url="ownerImage"/>
           <p class="date-card__container__user-name">{{ ownerName }}</p>
         </a>
@@ -18,17 +19,19 @@
           </h5>
         </div>
       </div>
+     <ContextMenu type="card" :parent-id="this.id"/>
     </q-card>
   </a>
 </template>
 
 <script>
 import UserImage from "components/Core/User/UserImage";
-
+import ContextMenu from "components/Core/Cards/DateCard/ContextMenu";
 export default {
   name: "DateCard",
   components: {
     UserImage,
+    ContextMenu,
   },
   props: {
     ownerUrl: {
@@ -89,7 +92,8 @@ export default {
     font-weight: 500;
   }
 }
-.date-card__container__user-info{
+
+.date-card__container__user-info {
   color: black;
 }
 

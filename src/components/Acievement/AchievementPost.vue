@@ -4,7 +4,7 @@
     <p class="achievement__blog__post__date">{{ date }} {{ $t('achievement.at') }} {{ time }}</p>
     <article class="achievement__blog__post__text">{{ description }}</article>
     <div class="flex justify-between">
-      <div class="flex items-center">
+      <a class="flex items-center" :href="`/profile/${ownerId}`">
         <UserImage
           class="achievement__blog__post__user-logo"
           :url="ownerImage"
@@ -12,7 +12,7 @@
         <h4 class="achievement__blog__user-name">
           {{ ownerName }}
         </h4>
-      </div>
+      </a>
 
       <nav class="achievement__blog__controls flex items-center ">
         <q-btn icon="chat" class="achievement__blog__controls__btn" :ripple="false"></q-btn>
@@ -20,7 +20,7 @@
           icon="favorite"
           class="achievement__blog__controls__btn like-btn"
           :ripple="false"
-          :class="{liked: isLiked}"
+          :class="{liked: this.isLiked}"
           @click="handleLiking()"
         />
         <h5 class="achievement__blog__controls__likes">
@@ -141,7 +141,7 @@ export default {
   data() {
     return {
       likesUnit: '',
-      isLiked: null,
+      isLiked: false,
       likesCount: null,
       image: null,
       ownerName: null,
@@ -149,6 +149,8 @@ export default {
       ownerId: null,
       title: null,
       description: null,
+      date: null,
+      time: null,
     }
   }
 }

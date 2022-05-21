@@ -18,7 +18,7 @@
 <script>
 import ProfileDescription from "components/Profile/ProfileDescription";
 import AddCard from "components/Core/Cards/AddCard";
-import DateCard from "components/Core/Cards/DateCard";
+import DateCard from "components/Core/Cards/DateCard/DateCard";
 import {mapGetters} from "vuex";
 
 export default {
@@ -34,7 +34,7 @@ export default {
   data() {
     this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId, {
       headers: {
-        Authorization: 'Token ' + this.token()
+        Authorization: `Token ${this.token()}`
       }
     }).then(res => {
       this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name

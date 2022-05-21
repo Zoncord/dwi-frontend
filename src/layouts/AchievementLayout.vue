@@ -189,10 +189,6 @@ export default {
   border-radius: 10px;
 }
 
-.liked {
-  color: $highlight;
-}
-
 .like-btn {
   transition: color .1s;
 }

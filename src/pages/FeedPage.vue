@@ -18,20 +18,6 @@ export default {
     Header,
     FeedLayout,
   },
-  created() {
-    this.$watch(
-      () => this.$route.params,
-      (toParams) => {
-        this.tab = toParams.id
-      }
-    )
-  },
-  data() {
-    return {
-      tab: this.$route.params.id,
-    }
-  },
-
 }
 </script>
 <style lang="scss">
