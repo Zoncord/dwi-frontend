@@ -1,11 +1,12 @@
 <template>
   <q-card class="profile-description flex justify-between">
-    <div class="profile-description__user-part flex justify-left items-center">
+    <div class="profile-description__user-part">
       <div class="flex profile-description__user-part__container">
         <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="ownerImage"/>
         <div class="profile-description__user-part__user-container  flex column">
 
-          <a href="https://zoncord.tech/accounts/profile" class="profile-description__user-part__user-name q-mt-md q-mb-sm"
+          <a href="https://zoncord.tech/accounts/profile"
+             class="profile-description__user-part__user-name q-mt-md q-mb-sm"
              v-if="isUserPage">
             {{ ownerName }}
             <q-icon class="profile-description__user-part__user-name-edit edit-icon" name="create"/>
@@ -14,13 +15,16 @@
             {{ ownerName }}
           </p>
 
-          <p href="https://www.google.com/" class="profile-description__user-part__text" v-if="isUserPage">
-            {{ ownerDescription }}
-            <q-icon class="profile-description__user-part__text-edit edit-icon" name="create"/>
-          </p>
+          <EditableText
+            class="profile-description__user-part__editable-text"
+            v-if="isUserPage"
+            v-model="ownerDescription"
+            @finishEditing="changeDescription"
+          />
           <p class="profile-description__user-part__text" v-else>
             {{ ownerDescription }}
           </p>
+
         </div>
       </div>
     </div>
@@ -45,12 +49,14 @@
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
 import SubscribeButton from "components/Core/SubscribeButton";
+import EditableText from "components/Core/EditableText/EditableText";
 
 export default {
   name: "ProfileDescription",
   components: {
     UserImage,
     SubscribeButton,
+    EditableText,
   },
   props: {
     ownerUrl: {
@@ -68,14 +74,43 @@ export default {
         this.isSubscribed = Boolean(res.data.count)
       })
     },
-    toggleSubscribe(){
-      if (this.isSubscribed){
+    toggleSubscribe() {
+      if (this.isSubscribed) {
         this.followersCount -= 1
-      }
-      else{
+      } else {
         this.followersCount += 1
       }
       this.isSubscribed = !this.isSubscribed
+    },
+    changeDescription() {
+      console.log(this.ownerDescription)
+      this.$axios.put(`${this.$dwiApi}users/user/${this.$userId}`, {
+        description: this.ownerDescription,
+        zoncord_access_token: this.token(),
+      }, {
+        headers: {
+          Authorization: `Token ${this.token()}`
+        }
+      })  .then(res => {
+        console.log(res)
+      }).catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
     }
   },
   data() {
@@ -100,6 +135,7 @@ export default {
           this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
           this.ownerImage = res.data.general_user_information.img
           this.ownerId = res.data.id
+          console.log(res.data.description)
           this.ownerDescription = res.data.description
           this.followersCount = res.data.followers_count
           this.getIsSubscribed()
@@ -171,9 +207,10 @@ a {
 </style>
 <style lang="scss">
 .profile-description__user-part__user-image {
+  align-items: start;
+
   .q-img {
     width: 150px;
   }
 }
-
 </style>
