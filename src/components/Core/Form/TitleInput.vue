@@ -1,17 +1,16 @@
 <template>
   <q-input
-    @input="handleInput"
     outlined
-    v-model="title"
     borderless
     :placeholder="$t('createAchievement.firstStage.title') + ' *'"
     :maxlength="this.maxLength"
     :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
     class="title-input"
+    v-model="title"
     :model-value="title"
   >
     <template v-slot:append>
-      <p class="title-input__chars-counter">
+      <p class="text-input__chars-counter">
         {{ this.maxLength - title.length }}
       </p>
     </template>
@@ -22,20 +21,22 @@
 export default {
   name: "TitleInput",
   props: {
-    value: {},
+    modelValue: {},
     maxLength: {
       default: 256,
     }
   },
   data() {
     return {
-      content: this.value,
-      title: '',
+      title: this.modelValue,
     }
   },
-  methods: {
-    handleInput(e) {
-      this.$emit('input', this.content)
+  watch: {
+    title() {
+      this.$emit('update:modelValue', this.title)
+    },
+    modelValue(){
+      this.title = this.modelValue
     }
   }
 }

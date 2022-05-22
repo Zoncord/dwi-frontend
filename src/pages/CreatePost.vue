@@ -16,7 +16,7 @@
       @checkValidation="checkValidation()"
       @finish="finish()"
       :active-stage="activeTab"
-      :stages-count="stagesCount"
+      :stages-count="1"
     />
   </q-form>
 </template>
@@ -43,7 +43,6 @@ export default {
       }
     },
     async finish() {
-      console.log( this.$dwiApi + `achievements/achievement/${this.$route.query.achievement_id}/`)
       await this.$axios.post(this.$dwiApi + 'blog/post/', {
         achievement: this.$dwiApi + `achievements/achievement/${this.$route.query.achievement_id}/`,
         title: this.title,
@@ -59,7 +58,6 @@ export default {
   data() {
     return {
       activeTab: 1,
-      stagesCount: 1,
       isValid: false,
       title: '',
       description: '',
@@ -71,21 +69,5 @@ export default {
 <style lang="scss" scoped>
 .create-post__title-input{
   margin-bottom: 20px;
-}
-.progress-form-bar {
-  position: fixed;
-  bottom: 0;
-}
-
-
-
-</style>
-
-<style lang="scss">
-
-.create-post__fist-stage__description-input {
-  .q-field__control {
-    min-height: 150px;
-  }
 }
 </style>

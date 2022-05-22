@@ -66,6 +66,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.progress-form-bar {
+  height: 80px;
+  position: fixed;
+  bottom: 0;
+}
+
+.progress-form-bar__toolbar {
+  height: 100%;
+}
+</style>
+
 <style lang="scss">
 .q-linear-progress__track {
   margin-top: auto;
@@ -86,12 +99,3 @@ export default {
 </style>
 
 
-<style lang="scss" scoped>
-.progress-form-bar {
-  height: 80px;
-}
-
-.progress-form-bar__toolbar {
-  height: 100%;
-}
-</style>

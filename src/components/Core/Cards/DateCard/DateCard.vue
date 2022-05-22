@@ -19,7 +19,7 @@
           </h5>
         </div>
       </div>
-     <ContextMenu type="card" :parent-id="this.id"/>
+     <ContextMenu type="card" :parent-id="this.id" v-if="this.ownerId === this.$userId"/>
     </q-card>
   </a>
 </template>

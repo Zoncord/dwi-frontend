@@ -24,6 +24,10 @@ const routes = [
     component: () => import('pages/CreateAchievement.vue'),
   },
   {
+    path: '/achievement/edit',
+    component: () => import('pages/EditAchievement.vue'),
+  },
+  {
     path: '/achievement/:id',
     component: () => import('pages/AchievementPage.vue'),
   },

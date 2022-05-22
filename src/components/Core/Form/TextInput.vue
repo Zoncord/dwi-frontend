@@ -2,17 +2,16 @@
   <q-input
     @input="handleInput"
     type="textarea"
-    class="create-post__fist-stage__description-input"
+    class="text-input"
     outlined
-    v-model="description"
     :model-value="description"
     autogrow
     maxlength="4096"
     :placeholder="$t('createAchievement.firstStage.description') + ' *'"
     :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
   >
-    <template v-slot:append class="title-input__chars-counter create-achievement__input">
-      <p class="title-input__chars-counter">
+    <template v-slot:append class="text-input__chars-counter">
+      <p class="text-input__chars-counter">
         {{ 4096 - description.length }}
       </p>
     </template>
@@ -28,7 +27,7 @@ export default {
       default: 256,
     }
   },
-  data(){
+  data() {
     return {
       description: ''
     }
@@ -41,6 +40,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.text-input {
+  .q-field__control {
+    min-height: 150px;
+  }
+}
 </style>
