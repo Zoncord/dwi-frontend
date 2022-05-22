@@ -60,6 +60,22 @@ export default {
     }
   },
   days: 'day | days',
-
-
+  dialog: {
+    title: {
+      sure: 'Are you sure?',
+    },
+    message: {
+      reset: {
+        achievement: 'Your days without incident will be reset',
+      },
+      delete: {
+        card: 'Your card will be deleted',
+        post: 'Your post will be deleted',
+      }
+    },
+    variant: {
+      yes: 'yes',
+      no: 'no',
+    }
+  }
 }

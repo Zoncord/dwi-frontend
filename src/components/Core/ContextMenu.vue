@@ -54,21 +54,28 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async delete() {
-      if (this.type === 'card') {
-        await this.$axios.delete(this.$dwiApi + 'achievements/achievement/' + this.parentId, {
-          headers: {
-            Authorization: `Token ${this.token()}`
-          }
-        })
-        document.location.reload()
-      } else if (this.type === 'post') {
-        await this.$axios.delete(this.$dwiApi + 'blog/post/' + this.parentId, {
-          headers: {
-            Authorization: `Token ${this.token()}`
-          }
-        })
-        document.location.reload()
-      }
+      this.$q.dialog({
+        title: this.$t('dialog.title.sure'),
+        message: this.$t(`dialog.message.delete.${this.type}`),
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        if (this.type === 'card') {
+          await this.$axios.delete(this.$dwiApi + 'achievements/achievement/' + this.parentId, {
+            headers: {
+              Authorization: `Token ${this.token()}`
+            }
+          })
+          document.location.reload()
+        } else if (this.type === 'post') {
+          await this.$axios.delete(this.$dwiApi + 'blog/post/' + this.parentId, {
+            headers: {
+              Authorization: `Token ${this.token()}`
+            }
+          })
+          document.location.reload()
+        }
+      })
     },
     edit() {
       if (this.type === 'card') {
@@ -77,33 +84,23 @@ export default {
         this.$router.push(`/post/edit/${this.parentId}`)
       }
     },
-    async reset() {
-      await this.$axios.post(`${this.$dwiApi}achievements/incident/`, {
+    reset() {
+      this.$q.dialog({
+        title: this.$t('dialog.title.sure'),
+        message: this.$t('dialog.message.reset.achievement'),
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        await this.$axios.post(`${this.$dwiApi}achievements/incident/`, {
             achievement: `${this.$dwiApi}achievements/achievement/${this.parentId}/`,
-        },
-        {
-          headers: {
-            Authorization: `Token ${this.token()}`
-          }
-        }).catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
-      // document.location.reload()
+          },
+          {
+            headers: {
+              Authorization: `Token ${this.token()}`
+            }
+          })
+        document.location.reload()
+      })
     }
   },
   data() {

@@ -50,14 +50,6 @@ export default {
           icon: 'person',
           to: '/profile/' + this.$userId
         },
-        help: {
-          icon: 'help',
-          to: '/help'
-        },
-        settings: {
-          icon: 'settings',
-          to: '/settings'
-        },
         exit: {
           icon: 'logout',
           to: '/logout'

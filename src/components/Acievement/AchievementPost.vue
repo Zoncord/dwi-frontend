@@ -28,7 +28,7 @@
         </h5>
       </nav>
     </div>
-    <ContextMenu type="post" :parent-id="id"/>
+    <ContextMenu v-if="ownerId === this.$userId" type="post" :parent-id="id"/>
   </div>
 </template>
 

@@ -7,10 +7,10 @@
           <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
           <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
         </div>
-        <q-separator class="q-mb-md"/>
-        <h5 class="q-mb-sm">
+        <q-separator/>
+        <h6 class="achievement__navigation__card-info__description q-ma-sm">
           {{ achievementDescription }}
-        </h5>
+        </h6>
       </div>
 
       <div class="achievement__navigation__controls q-card  flex">
@@ -185,6 +185,9 @@ export default {
 .achievement__navigation__card-info__unit {
   font-size: 30px;
   font-weight: 500;
+}
+.achievement__navigation__card-info__description{
+  font-weight: 400;
 }
 
 </style>
