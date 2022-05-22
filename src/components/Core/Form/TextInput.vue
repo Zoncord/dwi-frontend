@@ -1,18 +1,18 @@
 <template>
   <q-input
-    @input="handleInput"
     type="textarea"
     class="text-input"
     outlined
     :model-value="description"
+    v-model="description"
     autogrow
-    maxlength="4096"
+    :maxlength="maxLength"
     :placeholder="$t('createAchievement.firstStage.description') + ' *'"
     :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
   >
     <template v-slot:append class="text-input__chars-counter">
       <p class="text-input__chars-counter">
-        {{ 4096 - description.length }}
+        {{ maxLength - description.length }}
       </p>
     </template>
   </q-input>
@@ -22,21 +22,24 @@
 export default {
   name: "TextInput",
   props: {
-    value: {},
+    modelValue: {},
     maxLength: {
-      default: 256,
+      default: 4096,
     }
   },
   data() {
     return {
-      description: ''
+      description: this.modelValue
     }
   },
-  methods: {
-    handleInput(e) {
-      this.$emit('input', this.content)
+  watch: {
+    description(){
+      this.$emit('update:modelValue', this.description)
+    },
+    modelValue(){
+      this.description = this.modelValue
     }
-  }
+  },
 }
 </script>
 

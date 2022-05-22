@@ -6,7 +6,7 @@
       @submit.prevent=""
       class="create-post flex column text-center"
     >
-      <h5 class="create-post__title q-my-xl">Edit Achievement</h5>
+      <h5 class="create-post__title q-my-xl">Edit Post</h5>
       <q-tab-panels v-model="activeTab">
         <q-tab-panel :name="1" class="limiter create-post__fist-stage">
           <TitleInput v-model="title" class="create-post__title-input"/>
@@ -30,7 +30,7 @@ import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 import {mapGetters} from "vuex";
 
 export default {
-  name: "EditAchievement",
+  name: "EditPost",
   components: {
     HeaderComponent,
     TitleInput,
@@ -40,7 +40,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async finish() {
-      await this.$axios.patch( `${this.$dwiApi}achievements/achievement/${this.$route.params.postId}`, {
+      await this.$axios.patch( `${this.$dwiApi}blog/post/${this.$route.params.postId}`, {
         title: this.title,
         description: this.description,
       }, {
@@ -51,7 +51,7 @@ export default {
       this.$router.go(-1)
     },
     getAchievementsInformation() {
-      this.$axios.get(`${this.$dwiApi}achievements/achievement/${this.$route.params.postId}`,  {
+      this.$axios.get(`${this.$dwiApi}blog/post/${this.$route.params.postId}`,  {
         headers: {
           Authorization: `Token ${this.token()}`
         }

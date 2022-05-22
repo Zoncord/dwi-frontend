@@ -5,15 +5,32 @@
     class="date-card-menu flex justify-center"
   >
     <q-list class="date-card-menu__items">
-      <q-item class="date-card-menu__items__item items-center" clickable @click="this.reset">
+      <q-item
+        class="date-card-menu__items__item items-center"
+        v-if="items.includes('reset')"
+        clickable
+        @click="this.reset"
+      >
         <q-item-section>Reset</q-item-section>
         <q-icon name="refresh"/>
       </q-item>
-      <q-item class="date-card-menu__items__item items-center" clickable @click="this.edit">
+
+      <q-item
+        class="date-card-menu__items__item items-center"
+        v-if="items.includes('edit')"
+        clickable
+        @click="this.edit"
+      >
         <q-item-section class="flex items-center no-wrap">Edit</q-item-section>
         <q-icon name="edit"/>
       </q-item>
-      <q-item class="date-card-menu__items__item items-center" clickable @click="this.delete">
+
+      <q-item
+        class="date-card-menu__items__item items-center"
+        v-if="items.includes('delete')"
+        clickable
+        @click="this.delete"
+      >
         <q-item-section>Delete</q-item-section>
         <q-icon name="clear"/>
       </q-item>
@@ -48,11 +65,26 @@ export default {
     },
     edit() {
       if (this.type === 'card') {
-        this.$router.push(`/achievement/edit?achievementId=${this.parentId}`)
+        this.$router.push(`/achievement/edit/${this.parentId}`)
+      }
+      else if (this.type === 'post'){
+        this.$router.push(`/post/edit/${this.parentId}`)
       }
     },
     reset() {
 
+    }
+  },
+  data(){
+    let items
+    if (this.type === 'card'){
+      items = ['reset', 'edit', 'delete']
+    }
+    else if (this.type === 'post'){
+      items = ['edit', 'delete']
+    }
+    return {
+      items: items,
     }
   }
 }

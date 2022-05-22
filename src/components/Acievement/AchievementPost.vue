@@ -28,17 +28,20 @@
         </h5>
       </nav>
     </div>
+    <ContextMenu type="post" :parent-id="id"/>
   </div>
 </template>
 
 <script>
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
+import ContextMenu from "components/Core/Cards/DateCard/ContextMenu";
 
 export default {
   name: "AchievementPost",
   components: {
     UserImage,
+    ContextMenu,
   },
   props: {
     url: {

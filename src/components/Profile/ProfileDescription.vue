@@ -5,7 +5,7 @@
         <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="ownerImage"/>
         <div class="profile-description__user-part__user-container  flex column">
 
-          <a href="https://www.google.com/" class="profile-description__user-part__user-name q-mt-md q-mb-sm"
+          <a href="https://zoncord.tech/accounts/profile" class="profile-description__user-part__user-name q-mt-md q-mb-sm"
              v-if="isUserPage">
             {{ ownerName }}
             <q-icon class="profile-description__user-part__user-name-edit edit-icon" name="create"/>
@@ -14,10 +14,10 @@
             {{ ownerName }}
           </p>
 
-          <a href="https://www.google.com/" class="profile-description__user-part__text" v-if="isUserPage">
+          <p href="https://www.google.com/" class="profile-description__user-part__text" v-if="isUserPage">
             {{ ownerDescription }}
             <q-icon class="profile-description__user-part__text-edit edit-icon" name="create"/>
-          </a>
+          </p>
           <p class="profile-description__user-part__text" v-else>
             {{ ownerDescription }}
           </p>
