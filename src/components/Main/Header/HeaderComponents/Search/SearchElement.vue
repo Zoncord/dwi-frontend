@@ -12,7 +12,7 @@
       :placeholder="$t('header.search.label')"
       color="border-color" hide-bottom-space label-color="black"
       :style="{
-        borderRadius: searchFocused && responses.length ? '5px 5px 0px 0px': '5px 5px 5px 5px'
+        borderRadius: searchFocused && achievements.length ? '5px 5px 0px 0px': '5px 5px 5px 5px'
       }"
     >
       <!--Search icon-->
@@ -27,7 +27,7 @@
           class="cursor-pointer"
           @click="() => {
             this.query = ''
-            this.responses = []
+            this.achievements = []
           }"
         />
       </template>
@@ -38,19 +38,16 @@
       padding
       class="search__advice-list rounded-borders search-recommends"
       :style="{
-      border: searchFocused && responses.length ? 'solid 1px #B8B8B8': 'none',
-      transform: searchFocused? 'scaleY(1)' : 'scaleY(0)',
+      border: searchFocused && achievements.length ? 'solid 1px #B8B8B8': 'none',
+      transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
     }"
     >
       <div
-        v-for="(resp, id) in responses" :key="resp"
+        v-for="(resp, id) in achievements" :key="resp"
       >
         <SearchRecommendsElement
           v-if="id < 6"
-          :days="resp.data.days"
-          :owner="resp.owner"
-          :title="resp.title"
-          image-url="https://i.stack.imgur.com/d3fNI.png"
+          :url="resp.url"
         />
       </div>
     </q-list>
@@ -69,7 +66,7 @@ export default {
     SearchRecommendsElement,
   },
   mounted() {
-    this.getResponses()
+    this.getAchievements()
   },
   data() {
     return {
@@ -77,26 +74,29 @@ export default {
       searchFocused: false,
       borderRadius: null,
       adviceListHeight: null,
-      responses: [],
+      achievements: [],
     }
   },
   watch: {
     query() {
-      this.getResponses()
+      this.getAchievements()
     }
   },
   methods: {
-    getResponses() {
-      axios.get(this.$dwidApi + 'api/days_without_incidents/days_without_incidents_page/', {
-        params: {
-          search: this.query
+    getAchievements() {
+      axios.get(this.$dwiApi + 'achievements/achievement/?search=' + this.query).then(res => {
+        this.achievements = []
+        for (let result of res.data.results){
+          this.achievements.push({
+            // days: result.days_since_the_last_incident,
+            // id: result.id,
+            // ownerLink: result.owners[0],
+            // description: result.description,
+            // title: result.title,
+            url: result.url,
+          })
         }
-      }).then((req) => {
-        this.responses = req.data.results
-      }).catch((err) => {
-          this.$notifyError(this.$t(`errors["${err.message}"]`))
-        }
-      )
+      })
     }
   }
 }

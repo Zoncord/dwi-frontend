@@ -2,107 +2,152 @@
   <div class="achievement flex row justify-between q-mt-md">
     <nav class="achievement__navigation col-3">
       <div class="q-card achievement__navigation__card-info flex column text-center q-mb-md">
-        <h5 class="achievement__navigation__card-info__title">{{ achievementTitle }}</h5>
-        <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
-        <h5 class="achievement__navigation__card-info__unit">{{ achievementUnit }}</h5>
+        <div class="achievement__navigation__card-info__wrapper">
+          <h5 class="achievement__navigation__card-info__title">{{ achievementTitle }}</h5>
+          <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
+          <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
+        </div>
+        <q-separator class="q-mb-md"/>
+        <h5 class="q-mb-sm">
+          {{ achievementDescription }}
+        </h5>
       </div>
+
       <div class="achievement__navigation__controls q-card  flex">
         <q-btn icon="arrow_back_ios" class="achievement__navigation__controls__button" :ripple="false"
                @click="$router.back()"></q-btn>
         <q-btn icon="favorite"
                class="achievement__navigation__controls__button like-btn"
-               :class="{liked: isAchievementLiked}"
+               :class="{liked: isLiked}"
                :ripple="false"
-               @click="isAchievementLiked = !isAchievementLiked"
+               @click="handleAchievementLike()"
         ></q-btn>
         <q-btn icon="chat" class="achievement__navigation__controls__button" :ripple="false"></q-btn>
       </div>
     </nav>
-    <div class="achievement__blog col-9">
-      <div class="achievement__blog__new q-card  q-mb-md" v-for="item in news" :key="item">
-        <h4 class="achievement__blog__new__title">{{ item.title }}</h4>
-        <p class="achievement__blog__new__date">{{ item.date }} {{ $t('achievement.at') }} {{ item.time }}</p>
-        <article class="achievement__blog__new__text">{{ item.text }}</article>
-        <div class=" flex justify-between">
-          <div class="flex items-center">
-            <UserImage class="achievement__blog__new__user-logo"/>
-            <h4 class="achievement__blog__user-name">
-              {{ $userName }}
-            </h4>
-          </div>
-
-          <nav class="achievement__blog__controls flex items-center ">
-            <q-btn icon="chat" class="achievement__blog__controls__btn" :ripple="false"></q-btn>
-            <q-btn
-              icon="favorite"
-              class="achievement__blog__controls__btn like-btn"
-              :ripple="false"
-              :class="{liked: item.liked}"
-              @click="item.liked = !item.liked"
-            />
-            <h5 class="achievement__blog__controls__likes">
-              {{ item.likes.count }} {{ item.likes.unit }}
-            </h5>
-
-
-          </nav>
-
-        </div>
-      </div>
+    <div class="achievement__blog col-9 flex column">
+      <q-btn
+        class="achievement__blog__create-post q-mb-md"
+        @click="$router.push('/create-post/?achievement_id=' + this.$route.params.id)"
+        no-caps
+        v-if="isUserOwner"
+        :ripple="false"
+      >
+        {{ $t('achievement.addNewPost') }}
+        <q-icon name="add"/>
+      </q-btn>
+      <AchievementPost
+        v-for="post in posts"
+        :key="post"
+        :url="post.url"
+        :ownerUrl="post.author"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import UserImage from "components/Core/User/UserImage";
+import AchievementPost from "components/Acievement/AchievementPost";
+import {mapGetters} from "vuex";
+import Plus from "components/Core/Cards/Components/Plus";
 
 export default {
   name: "AchieveLayout",
   components: {
-    UserImage,
+    AchievementPost,
+    // Plus,
+  },
+  methods: {
+    ...mapGetters('mainStore', ['token']),
+    getIsLiked() {
+      this.$axios.get(this.$dwiApi + `rating/achievement/`, {
+        headers: {
+          Authorization: 'Token ' + this.token()
+        },
+        params: {
+          user: this.$userId,
+          achievement: this.$route.params.id,
+        }
+      }).then(res => {
+        this.isLiked = res.data.count
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    getAchievementData() {
+      this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
+        console.log(res)
+        this.achievementTitle = res.data.title
+        this.achievementDay = res.data.days_since_the_last_incident
+        this.achievementUrl = res.data.url
+        this.achievementOwner = res.data.owners[0]
+        this.achievementDescription = res.data.description
+      })
+    },
+    getAchievementPosts() {
+      this.$axios.get(this.$dwiApi + 'blog/post/', {
+        headers: {
+          Authorization: 'Token ' + this.token()
+        },
+        params: {
+          achievement: this.$route.params.id,
+          ordering: '-date_time_of_creation'
+        }
+      }).then(res => {
+        this.posts = res.data.results
+      })
+    },
+    handleAchievementLike() {
+      this.isLiked = !this.isLiked
+      if (this.isLiked) {
+        this.$axios.post(this.$dwiApi + `rating/achievement/`, {
+          user: this.$userUrl,
+          achievement: this.achievementUrl
+        }, {
+          headers: {
+            Authorization: 'Token ' + this.token()
+          }
+        })
+      } else {
+        this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$userId}&achievement=${this.$route.params.id}`, {
+          headers: {
+            Authorization: 'Token ' + this.token()
+          }
+        }).then(likeIdResponse => {
+          this.$axios.delete(likeIdResponse.data.results[0].url, {
+            headers: {
+              Authorization: 'Token ' + this.token()
+            }
+          })
+          //TODO redirect to 404 when error
+        })
+      }
+    },
   },
   data() {
+    this.getAchievementData()
+    this.getAchievementPosts()
+    this.getIsLiked()
     return {
-      achievementTitle: 'Делаю деньги',
-      achievementDay: '3',
-      achievementUnit: 'Lyz',
+      achievementTitle: null,
+      achievementDay: null,
       isAchievementLiked: false,
-      news: [
-        {
-          title: 'Как я это сделал?',
-          date: '05.05.2004',
-          time: '5:25',
-          text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet assumenda corporis, doloremque eveniet ex impedit iusto, omnis placeat possimus quae quaerat, quis sit voluptates. Ipsam iure maxime odio optio sed! ',
-          likes: {
-            count: 5,
-            unit: 'Tys'
-          },
-          liked: false,
-        },
-        {
-          title: 'Как я это сделал?',
-          date: '05.05.2004',
-          time: '5:25',
-          text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet assumenda corporis, doloremque eveniet ex impedit iusto, omnis placeat possimus quae quaerat, quis sit voluptates. Ipsam iure maxime odio optio sed! ',
-          likes: {
-            count: 5,
-            unit: 'Tys'
-          },
-          liked: true,
-        }
-      ]
+      posts: null,
+      isLiked: null,
+      achievementUrl: null,
+      achievementOwner: null,
+      achievementDescription: null,
+    }
+  },
+  computed: {
+    isUserOwner() {
+      return this.achievementOwner === this.$userUrl
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.liked {
-  color: $highlight;
-}
-.like-btn{
-  transition: color .1s;
-}
 
 .achievement__blog {
   padding-left: 8px;
@@ -120,6 +165,9 @@ export default {
 
 .achievement__navigation__card-info {
   border-radius: 10px;
+  //padding: 30px;
+}
+.achievement__navigation__card-info__wrapper{
   padding: 30px;
 }
 
@@ -139,39 +187,6 @@ export default {
   font-weight: 500;
 }
 
-.achievement__blog__new {
-  padding: 40px;
-}
-
-.achievement__blog__new__title {
-  margin-bottom: 5px;
-  font-weight: 500;
-}
-
-.achievement__blog__new__text {
-  font-size: 20px;
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-
-.achievement__blog__user-name {
-  font-weight: 400;
-}
-
-.achievement__blog__controls__btn {
-  font-size: 20px;
-  border: none;
-  width: 50px;
-}
-
-.achievement__blog__controls__likes {
-  font-weight: 400;
-}
-
-.achievement__blog__new__user-logo {
-  width: 100px;
-  margin-right: 20px;
-}
 </style>
 
 <style lang="scss">
@@ -183,5 +198,9 @@ export default {
 
 .q-card {
   border-radius: 10px;
+}
+
+.like-btn {
+  transition: color .1s;
 }
 </style>

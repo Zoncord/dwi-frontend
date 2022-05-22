@@ -1,7 +1,7 @@
 <template>
   <div class="user-entry flex items-center justify-center">
     <p class="user-entry__user-name">{{ userName }}</p>
-    <UserImage class="user-entry__user-image"/>
+    <UserImage class="user-entry__user-image" :url="this.$userImage"/>
     <UserMenu :user-name="userName"></UserMenu>
   </div>
 </template>
@@ -16,9 +16,9 @@ export default {
     UserImage,
     UserMenu
   },
-  data() {
-    return {
-      userName: 'Michael Landrover',
+  computed: {
+    userName(){
+      return this.$userName
     }
   }
 }

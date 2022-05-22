@@ -1,6 +1,6 @@
 <template>
   <div class="user-image-wrapper flex justify-center items-center">
-    <q-img class="user-image" alt="User Image" src="https://ic.pics.livejournal.com/instaforex_ru/25000283/168859/168859_900.jpg" spinner-size="0px" ratio="1"></q-img>
+    <q-img class="user-image" alt="User Image" :src="userImageUrl" spinner-size="0px" ratio="1"/>
   </div>
 </template>
 
@@ -9,7 +9,17 @@
 export default {
   name: "UserImage",
   props: {
-
+    url: {
+      required: true,
+    }
+  },
+  computed: {
+    userImageUrl() {
+      if (this.url){
+        return this.url
+      }
+      return 'https://kitchenideya.ru/wp-content/uploads/kitchenideafasad_emal_ral7001-95x95.jpg'
+    }
   }
 }
 </script>
@@ -17,7 +27,8 @@ export default {
 <style scoped>
 .user-image{
   border-radius: 50%;
-  /*width: 40px;*/
+  /*width: 35px;*/
+  /*margin: 10px;*/
 }
 
 </style>

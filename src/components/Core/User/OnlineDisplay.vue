@@ -1,6 +1,6 @@
 <template>
 <div class="online-display">
-  {{online ? "Online" : "Offline"}}
+  {{online ? $t('header.userEntryMenu.online') : $t('header.userEntryMenu.offline')}}
 </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: "OnlineDisplay",
   data(){
     return {
-      online: false,
+      online: true,
     }
   }
 }

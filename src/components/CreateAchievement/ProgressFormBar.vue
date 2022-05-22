@@ -10,13 +10,14 @@
     <q-toolbar class="limiter progress-form-bar__toolbar row">
       <q-btn class="progress-form-bar__cancel-btn col-2 q-mr-md"
              no-caps
-             @click="$router.push('/profile')"
+             @click="$router.go(-1)"
       >
         {{ $t('progressFormBar.cancel') }}
       </q-btn>
       <q-btn class="progress-form-bar__back-btn col-2"
              no-caps
              @click="$emit('previousStage')"
+             v-if="activeStage > 1"
       >
         {{ $t('progressFormBar.back') }}
       </q-btn>
@@ -56,16 +57,28 @@ export default {
     },
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
-    progress(){
-      return this.activeStage/  this.stagesCount
+    progress() {
+      return this.activeStage / this.stagesCount
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.progress-form-bar {
+  height: 80px;
+  position: fixed;
+  bottom: 0;
+}
+
+.progress-form-bar__toolbar {
+  height: 100%;
+}
+</style>
+
 <style lang="scss">
 .q-linear-progress__track {
   margin-top: auto;
@@ -86,12 +99,3 @@ export default {
 </style>
 
 
-<style lang="scss" scoped>
-.progress-form-bar {
-  height: 80px;
-}
-
-.progress-form-bar__toolbar {
-  height: 100%;
-}
-</style>
