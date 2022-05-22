@@ -9,6 +9,8 @@ export default {
       explore: 'Explore',
     },
     userEntryMenu: {
+      online: 'Online',
+      offline: 'Offline',
       profile: 'Profile',
       addAccount: 'Add account',
       help: 'Help',
@@ -35,7 +37,9 @@ export default {
     }
   },
   achievement: {
-    at: 'at'
+    at: 'at',
+    description: 'Description',
+    addNewPost: 'Add new post',
   },
   progressFormBar: {
     cancel: 'Cancel',

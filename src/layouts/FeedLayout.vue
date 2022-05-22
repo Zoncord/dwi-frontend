@@ -1,11 +1,13 @@
 <template>
   <q-layout>
-    <AchievementPost
-      v-for="post in posts"
-      :key="post"
-      :url="post.url"
-      :owner-url="post.ownerUrl"
-    />
+    <div class="q-mt-md">
+      <AchievementPost
+        v-for="post in posts"
+        :key="post"
+        :url="post.url"
+        :owner-url="post.ownerUrl"
+      />
+    </div>
   </q-layout>
 </template>
 

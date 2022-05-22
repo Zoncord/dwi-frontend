@@ -2,10 +2,17 @@
   <div class="achievement flex row justify-between q-mt-md">
     <nav class="achievement__navigation col-3">
       <div class="q-card achievement__navigation__card-info flex column text-center q-mb-md">
-        <h5 class="achievement__navigation__card-info__title">{{ achievementTitle }}</h5>
-        <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
-        <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
+        <div class="achievement__navigation__card-info__wrapper">
+          <h5 class="achievement__navigation__card-info__title">{{ achievementTitle }}</h5>
+          <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
+          <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
+        </div>
+        <q-separator class="q-mb-md"/>
+        <h5 class="q-mb-sm">
+          {{ achievementDescription }}
+        </h5>
       </div>
+
       <div class="achievement__navigation__controls q-card  flex">
         <q-btn icon="arrow_back_ios" class="achievement__navigation__controls__button" :ripple="false"
                @click="$router.back()"></q-btn>
@@ -24,8 +31,9 @@
         @click="$router.push('/create-post/?achievement_id=' + this.$route.params.id)"
         no-caps
         v-if="isUserOwner"
+        :ripple="false"
       >
-        Add New Post
+        {{ $t('achievement.addNewPost') }}
         <q-icon name="add"/>
       </q-btn>
       <AchievementPost
@@ -67,13 +75,13 @@ export default {
       })
     },
     getAchievementData() {
-
       this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
         console.log(res)
         this.achievementTitle = res.data.title
         this.achievementDay = res.data.days_since_the_last_incident
         this.achievementUrl = res.data.url
         this.achievementOwner = res.data.owners[0]
+        this.achievementDescription = res.data.description
       })
     },
     getAchievementPosts() {
@@ -128,11 +136,11 @@ export default {
       isLiked: null,
       achievementUrl: null,
       achievementOwner: null,
-
+      achievementDescription: null,
     }
   },
-  computed:{
-    isUserOwner(){
+  computed: {
+    isUserOwner() {
       return this.achievementOwner === this.$userUrl
     }
   }
@@ -157,6 +165,9 @@ export default {
 
 .achievement__navigation__card-info {
   border-radius: 10px;
+  //padding: 30px;
+}
+.achievement__navigation__card-info__wrapper{
   padding: 30px;
 }
 

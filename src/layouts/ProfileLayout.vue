@@ -46,7 +46,11 @@ export default {
         this.$router.push('/404')
       }
     })
-    this.$axios.get(this.$dwiApi + 'achievements/achievement/?owners=' + this.$route.params.userId).then(res => {
+    this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
+      params: {
+        owners: this.$route.params.userId
+      }
+    }).then(res => {
       this.achievements = res.data.results
     })
     return {
@@ -78,9 +82,6 @@ export default {
   margin-bottom: 20px;
 }
 
-.card {
-  border-radius: 30px;
-}
 
 @media (max-width: 900px) {
   .profile__cards-wrapper {

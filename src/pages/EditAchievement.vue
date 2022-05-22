@@ -9,8 +9,8 @@
       <h5 class="create-post__title q-my-xl">Edit Achievement</h5>
       <q-tab-panels v-model="activeTab">
         <q-tab-panel :name="1" class="limiter create-post__fist-stage">
-          <TitleInput v-model="title" class="create-post__title-input"/>
-          <TextInput v-model="description"/>
+          <TitleInput v-model="title" class="create-post__title-input" :max-length="64"/>
+          <TextInput v-model="description" :max-length="128"/>
         </q-tab-panel>
       </q-tab-panels>
       <ProgressFormBar
@@ -40,7 +40,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async finish() {
-      await this.$axios.patch( `${this.$dwiApi}achievements/achievement/${this.$route.params.postId}`, {
+      await this.$axios.patch( `${this.$dwiApi}achievements/achievement/${this.$route.params.achievementId}`, {
         title: this.title,
         description: this.description,
       }, {
@@ -51,7 +51,7 @@ export default {
       this.$router.go(-1)
     },
     getAchievementsInformation() {
-      this.$axios.get(`${this.$dwiApi}achievements/achievement/${this.$route.params.postId}`,  {
+      this.$axios.get(`${this.$dwiApi}achievements/achievement/${this.$route.params.achievementId}`,  {
         headers: {
           Authorization: `Token ${this.token()}`
         }

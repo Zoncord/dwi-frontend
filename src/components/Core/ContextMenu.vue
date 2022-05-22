@@ -61,26 +61,56 @@ export default {
           }
         })
         document.location.reload()
+      } else if (this.type === 'post') {
+        await this.$axios.delete(this.$dwiApi + 'blog/post/' + this.parentId, {
+          headers: {
+            Authorization: `Token ${this.token()}`
+          }
+        })
+        document.location.reload()
       }
     },
     edit() {
       if (this.type === 'card') {
         this.$router.push(`/achievement/edit/${this.parentId}`)
-      }
-      else if (this.type === 'post'){
+      } else if (this.type === 'post') {
         this.$router.push(`/post/edit/${this.parentId}`)
       }
     },
-    reset() {
-
+    async reset() {
+      await this.$axios.post(`${this.$dwiApi}achievements/incident/`, {
+            achievement: `${this.$dwiApi}achievements/achievement/${this.parentId}/`,
+        },
+        {
+          headers: {
+            Authorization: `Token ${this.token()}`
+          }
+        }).catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
+      // document.location.reload()
     }
   },
-  data(){
+  data() {
     let items
-    if (this.type === 'card'){
+    if (this.type === 'card') {
       items = ['reset', 'edit', 'delete']
-    }
-    else if (this.type === 'post'){
+    } else if (this.type === 'post') {
       items = ['edit', 'delete']
     }
     return {

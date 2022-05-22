@@ -14,13 +14,13 @@
             v-model="title"
             borderless
             :placeholder="$t('createAchievement.firstStage.title') + ' *'"
-            maxlength="256"
+            maxlength="64"
             :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
             class="create-achievement__fist-stage__title-input"
             :model-value="title">
             <template v-slot:append>
               <p class="create-achievement__fist-stage__input-counter create-achievement__input">
-                {{ 256 - title.length }}
+                {{ 64 - title.length }}
               </p>
             </template>
           </q-input>
@@ -32,13 +32,13 @@
             v-model="description"
             :model-value="description"
             autogrow
-            maxlength="4096"
+            maxlength="128"
             :placeholder="$t('createAchievement.firstStage.description') + ' *'"
             :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
           >
             <template v-slot:append class="create-achievement__fist-stage__input-counter create-achievement__input">
               <p class="create-achievement__fist-stage__input-counter">
-                {{ 4096 - description.length }}
+                {{ 128 - description.length }}
               </p>
             </template>
           </q-input>

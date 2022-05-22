@@ -35,7 +35,7 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
-import ContextMenu from "components/Core/Cards/DateCard/ContextMenu";
+import ContextMenu from "components/Core/ContextMenu";
 
 export default {
   name: "AchievementPost",
@@ -164,6 +164,7 @@ export default {
 
 .achievement__blog__post {
   padding: 40px;
+
 }
 
 .achievement__blog__post__title {
@@ -175,6 +176,7 @@ export default {
   font-size: 20px;
   margin-top: 60px;
   margin-bottom: 60px;
+  white-space: pre-line;
 }
 
 .achievement__blog__user-name {
