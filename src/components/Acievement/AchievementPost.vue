@@ -79,8 +79,10 @@ export default {
       })
     },
     async getLikesData() {
-      //TODO change params in link to params in params everywhere
-      await this.$axios.get(this.$dwiApi + `rating/post/?user=&post=${this.id}`, {
+      await this.$axios.get(`${this.$dwiApi}rating/post/`, {
+        params: {
+          post: this.id
+        },
         headers: {
           Authorization: 'Token ' + this.token()
         }
@@ -123,7 +125,7 @@ export default {
       } else {
         await this.$axios.post(this.$dwiApi + 'rating/post/', {
             user: this.$userUrl,
-            post: this.$dwiApi + `blog/post/${this.id}/` ,
+            post: this.$dwiApi + `blog/post/${this.id}/`,
           },
           {
             headers: {
