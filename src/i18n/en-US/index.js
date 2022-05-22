@@ -69,7 +69,7 @@ export default {
         achievement: 'Your days without incident will be reset',
       },
       delete: {
-        card: 'Your card will be deleted',
+        achievement: 'Your achievement and all posts in it will be deleted',
         post: 'Your post will be deleted',
       }
     },

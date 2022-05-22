@@ -60,7 +60,7 @@ export default {
         cancel: true,
         persistent: true,
       }).onOk(async () => {
-        if (this.type === 'card') {
+        if (this.type === 'achievement') {
           await this.$axios.delete(this.$dwiApi + 'achievements/achievement/' + this.parentId, {
             headers: {
               Authorization: `Token ${this.token()}`
@@ -78,7 +78,7 @@ export default {
       })
     },
     edit() {
-      if (this.type === 'card') {
+      if (this.type === 'achievements') {
         this.$router.push(`/achievement/edit/${this.parentId}`)
       } else if (this.type === 'post') {
         this.$router.push(`/post/edit/${this.parentId}`)
@@ -105,7 +105,7 @@ export default {
   },
   data() {
     let items
-    if (this.type === 'card') {
+    if (this.type === 'achievements') {
       items = ['reset', 'edit', 'delete']
     } else if (this.type === 'post') {
       items = ['edit', 'delete']

@@ -49,13 +49,12 @@
 <script>
 import AchievementPost from "components/Acievement/AchievementPost";
 import {mapGetters} from "vuex";
-import Plus from "components/Core/Cards/Components/Plus";
+
 
 export default {
   name: "AchieveLayout",
   components: {
     AchievementPost,
-    // Plus,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
@@ -76,7 +75,6 @@ export default {
     },
     getAchievementData() {
       this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
-        console.log(res)
         this.achievementTitle = res.data.title
         this.achievementDay = res.data.days_since_the_last_incident
         this.achievementUrl = res.data.url

@@ -33,7 +33,7 @@
       <q-btn class="progress-form-bar__next-btn col-2"
              no-caps
              color="highlight"
-             @click="() => {$emit('finish')}"
+             @click="finish"
              v-else
       >
         {{ $t('progressFormBar.finish') }}
@@ -56,9 +56,21 @@ export default {
       default: null,
     },
   },
+  data(){
+    return {
+      coefficient: 1,
+    }
+  },
+  methods: {
+    finish(){
+      //TODO remove coefficient kludge
+      this.coefficient = 0
+      this.$emit('finish')
+    }
+  },
   computed: {
     progress() {
-      return this.activeStage / (this.stagesCount + 1)
+      return this.activeStage / (this.stagesCount + this.coefficient)
     }
   }
 }
