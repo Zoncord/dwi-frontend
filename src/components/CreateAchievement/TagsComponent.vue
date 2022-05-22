@@ -19,7 +19,7 @@
     <q-list class="q-mt-sm">
       <q-item class="tags-component__tag q-mb-sm" v-for="(tag, id) in tags" :key="tag">
         <q-item-section class="tags-component__tag__section flex items-center">
-          {{ '#' + tag }}
+          {{ '#' + tag.tag }}
         </q-item-section>
 
         <q-btn icon="close" flat dense class="tags-component__tag__delete-btn" size="10px" :ripple="false"

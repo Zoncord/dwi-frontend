@@ -104,3 +104,19 @@ a{
 .card {
   border-radius: 30px;
 }
+.q-dialog-plugin{
+  .q-btn{
+    border: none;
+    span{
+      color: black;
+      transition: color .2s;
+      &:hover{
+        color: $highlight;
+      }
+    }
+    .q-focus-helper{
+      display: none;
+    }
+
+  }
+}

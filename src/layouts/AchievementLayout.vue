@@ -7,10 +7,10 @@
           <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
           <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
         </div>
-        <q-separator class="q-mb-md"/>
-        <h5 class="q-mb-sm">
+        <q-separator/>
+        <h6 class="achievement__navigation__card-info__description q-ma-sm">
           {{ achievementDescription }}
-        </h5>
+        </h6>
       </div>
 
       <div class="achievement__navigation__controls q-card  flex">
@@ -49,13 +49,12 @@
 <script>
 import AchievementPost from "components/Acievement/AchievementPost";
 import {mapGetters} from "vuex";
-import Plus from "components/Core/Cards/Components/Plus";
+
 
 export default {
   name: "AchieveLayout",
   components: {
     AchievementPost,
-    // Plus,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
@@ -76,7 +75,6 @@ export default {
     },
     getAchievementData() {
       this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
-        console.log(res)
         this.achievementTitle = res.data.title
         this.achievementDay = res.data.days_since_the_last_incident
         this.achievementUrl = res.data.url
@@ -185,6 +183,9 @@ export default {
 .achievement__navigation__card-info__unit {
   font-size: 30px;
   font-weight: 500;
+}
+.achievement__navigation__card-info__description{
+  font-weight: 400;
 }
 
 </style>

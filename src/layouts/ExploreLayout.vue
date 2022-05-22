@@ -36,7 +36,6 @@ export default {
           ownerUrl: achievement.owners[0],
         })
       }
-      console.log(res.data)
     })
     return {
       achievements: []

@@ -117,20 +117,28 @@ export default {
         this.nextStage()
       }
     },
-    finish() {
-      console.log(`Token ${this.userToken()}`)
-      this.$axios.post(this.$dwiApi + 'achievements/achievement/', {
-        title: this.title,
-        description: this.description,
-        tags: this.tags,
+    async finish() {
+      let categoryUrl
+      await this.$axios.post(`${this.$dwiApi}achievements/category/`, {
+        title: this.category,
+        slug: this.category,
+        description: this.category,
       }, {
         headers: {
           Authorization: `Token ${this.userToken()}`
         }
       }).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
+        categoryUrl = res.data.url
+      })
+      await this.$axios.post(this.$dwiApi + 'achievements/achievement/', {
+        title: this.title,
+        description: this.description,
+        tags: this.tags.map((tag) => {return tag.url}),
+        category: categoryUrl,
+      }, {
+        headers: {
+          Authorization: `Token ${this.userToken()}`
+        }
       })
       this.$router.go(-1)
     },
@@ -139,7 +147,20 @@ export default {
     },
     addTag(tag) {
       if (tag && this.tags.length < this.maxTags) {
-        this.tags.unshift(tag)
+        this.$axios.post(`${this.$dwiApi}achievements/tag/`, {
+          title: tag,
+          slug: tag,
+          description: tag,
+        }, {
+          headers: {
+            Authorization: `Token ${this.token()}`,
+          }
+        }).then(res => {
+          this.tags.unshift({
+            tag: tag,
+            url: res.data.url,
+          })
+        })
       }
     },
   },
