@@ -1,6 +1,6 @@
 <template>
   <div class="user-entry flex items-center justify-center">
-    <p class="user-entry__user-name">{{ userName }}</p>
+    <UserName class="user-entry__user-name" :name="userName"/>
     <UserImage class="user-entry__user-image" :url="this.$userImage"/>
     <UserMenu :user-name="userName"></UserMenu>
   </div>
@@ -9,12 +9,13 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import UserMenu from "components/Main/Header/HeaderComponents/UserEntry/Components/UserMenu/UserMenu";
-
+import UserName from "components/Core/User/UserName";
 export default {
   name: "UserEntry",
   components: {
     UserImage,
-    UserMenu
+    UserMenu,
+    UserName,
   },
   computed: {
     userName(){

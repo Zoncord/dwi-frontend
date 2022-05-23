@@ -1,21 +1,23 @@
 <template>
-  <a :href="'/achievement/' + this.id">
+  <a :href="this.id !== null ? `/achievement/${this.id}` : '/404'">
     <q-card class="date-card card flex column justify-center items-center">
       <div class="date-card__container flex column justify-between items-center">
         <a :href="'/profile/' + ownerId"
            class="date-card__container__user-info flex column justify-center items-center">
-          <UserImage class="date-card__user-image q-mb-sm" :url="ownerImage"/>
-          <p class="date-card__container__user-name">{{ ownerName }}</p>
+          <UserImage class="date-card__user-image q-mb-md" :url="ownerImage"/>
+          <UserName class="date-card__container__user-name" :name="ownerName"/>
         </a>
-        <div class="date-card__container__content flex column justify-between q-mt-md">
-          <h5 class="title">
+        <div class="date-card__container__content flex column justify-between items-center q-mt-md">
+          <h5 class="title" v-if="title !== null">
             {{ title }}
           </h5>
-          <h1 class="days">
+          <q-skeleton width="150px" height="20px" class="q-mt-md" v-else/>
+          <h1 class="days" v-if="days !== null">
             {{ days }}
           </h1>
+          <q-skeleton width="60px" height="80px" v-else/>
           <h5 class="days-unit">
-            {{ daysUnit }}
+            {{ $tc('days', days !== null ? days : 5) }}
           </h5>
         </div>
       </div>
@@ -27,10 +29,12 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import ContextMenu from "components/Core/ContextMenu";
+import UserName from "components/Core/User/UserName";
 export default {
   name: "DateCard",
   components: {
     UserImage,
+    UserName,
     ContextMenu,
   },
   props: {
@@ -61,11 +65,6 @@ export default {
       id: null,
     }
   },
-  computed: {
-    daysUnit() {
-      return this.$tc('days', this.days)
-    }
-  }
 }
 </script>
 

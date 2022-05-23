@@ -6,24 +6,36 @@
         <div class="profile-description__user-part__user-container  flex column">
 
           <a href="https://zoncord.tech/accounts/profile"
-             class="profile-description__user-part__user-name q-mt-md q-mb-sm"
+             class="profile-description__user-part__user-name q-mt-md q-mb-sm flex items-center"
              v-if="isUserPage">
-            {{ ownerName }}
+            <UserName
+              class="q-mr-sm"
+              name-class="profile-description__user-part__user-name"
+              :name="ownerName"
+            />
             <q-icon class="profile-description__user-part__user-name-edit edit-icon" name="create"/>
           </a>
-          <p class="profile-description__user-part__user-name q-mt-md q-mb-sm" v-else>
-            {{ ownerName }}
-          </p>
-
-          <EditableText
-            class="profile-description__user-part__editable-text"
-            v-if="isUserPage"
-            v-model="ownerDescription"
-            @finishEditing="changeDescription"
+          <UserName
+            class="profile-description__user-part__user-name q-mt-md q-mb-sm"
+            name-class="profile-description__user-part__user-name"
+            :name="ownerName"
+            skeleton-scale="1.3"
+            v-else
           />
-          <p class="profile-description__user-part__text" v-else>
-            {{ ownerDescription }}
-          </p>
+          <div v-if="ownerDescription !== null">
+
+
+            <EditableText
+              class="profile-description__user-part__editable-text"
+              v-if="isUserPage"
+              v-model="ownerDescription"
+              @finishEditing="changeDescription"
+            />
+            <p class="profile-description__user-part__text" v-else>
+              {{ ownerDescription }}
+            </p>
+          </div>
+          <RandomSkeletonDescription class="q-mt-md" word-height="15px" v-else/>
 
         </div>
       </div>
@@ -31,9 +43,12 @@
     <q-separator vertical/>
     <div class="profile-description__subscribe-part flex justify-center items-center">
       <div class="flex column text-center">
-        <h6 class="profile-description__subscribe-part__subscribe-amount" v-if="followersCount !== null">
-          {{ followersCount }} {{ $tc('profile.followers', followersCount) }}
+        <h6 class="profile-description__subscribe-part__subscribe-amount flex items-center">
+          <span v-if="followersCount !== null">{{ followersCount }} </span>
+          <q-skeleton width="60px" class="q-mr-md" v-else/>
+          {{ $tc('profile.followers', followersCount !== null ? followersCount : 0) }}
         </h6>
+
         <SubscribeButton
           v-if="!isUserPage && isSubscribed !== null"
           class="profile-description__subscribe-part__btn"
@@ -50,13 +65,17 @@ import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
 import SubscribeButton from "components/Core/SubscribeButton";
 import EditableText from "components/Core/EditableText/EditableText";
+import UserName from "components/Core/User/UserName";
+import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
 
 export default {
   name: "ProfileDescription",
   components: {
     UserImage,
+    UserName,
     SubscribeButton,
     EditableText,
+    RandomSkeletonDescription,
   },
   props: {
     ownerUrl: {
@@ -162,9 +181,6 @@ a {
 }
 
 .profile-description__user-part__user-name {
-  font-size: 30px;
-  font-weight: 500;
-
   .profile-description__user-part__user-name-edit {
     font-size: 20px;
   }
@@ -191,9 +207,15 @@ a {
 <style lang="scss">
 .profile-description__user-part__user-image {
   align-items: start;
+  width: 150px;
 
-  .q-img {
+  .q-responsive {
     width: 150px;
   }
+}
+
+.profile-description__user-part__user-name {
+  font-size: 30px;
+  font-weight: 500;
 }
 </style>
