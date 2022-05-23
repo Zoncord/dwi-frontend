@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  dwi_frontend:
+    image: zoncorddocker.azurecr.io/dwi_frontend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    env_file:
+      - ./.env
