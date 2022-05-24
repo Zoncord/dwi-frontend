@@ -23,7 +23,6 @@ export default boot(async ({app, router, store}) => {
     })
   })
     .catch(err => {
-      console.log(err)
       if (err.response && err.response.status === 401 && window.location.pathname !== '/auth/' && window.location.pathname !== '/auth') {
         window.location.href = enterRedirectLink
       }

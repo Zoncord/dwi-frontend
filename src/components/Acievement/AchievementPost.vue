@@ -1,17 +1,27 @@
 <template>
   <div class="achievement__blog__post q-card  q-mb-md">
-    <h4 class="achievement__blog__post__title">{{ title }}</h4>
-    <p class="achievement__blog__post__date">{{ date }} {{ $t('achievement.at') }} {{ time }}</p>
-    <article class="achievement__blog__post__text">{{ description }}</article>
+    <h4 class="achievement__blog__post__title" v-if="title">{{ title }}</h4>
+    <q-skeleton width="200px" height="40px" class="achievement__blog__post__title-skeleton q-mb-md" v-else/>
+    <div class="achievement__blog__post__time">
+      <p v-if="date" class="q-mr-sm">{{ date }}</p>
+      <q-skeleton width="100px" v-else class="q-mr-sm"/>
+      <p class="q-mr-sm"> {{ $t('achievement.at') }}</p>
+      <p v-if="date" class="q-mr-sm">{{ time }}</p>
+      <q-skeleton width="100px" v-else/>
+    </div>
+
+    <article class="achievement__blog__post__text" v-if="description">{{ description }}</article>
+    <RandomSkeletonDescription
+      class="achievement__blog__post__text-skeleton q-my-xl"
+      v-else
+    />
     <div class="flex justify-between">
       <a class="flex items-center" :href="`/profile/${ownerId}`">
         <UserImage
           class="achievement__blog__post__user-logo"
           :url="ownerImage"
         />
-        <h4 class="achievement__blog__user-name">
-          {{ ownerName }}
-        </h4>
+        <UserName :name="ownerName"/>
       </a>
 
       <nav class="achievement__blog__controls flex items-center ">
@@ -23,9 +33,10 @@
           :class="{liked: this.isLiked}"
           @click="handleLiking()"
         />
-        <h5 class="achievement__blog__controls__likes">
-          {{ likesCount }} {{ likesUnit }}
+        <h5 class="achievement__blog__controls__likes" v-if="likesCount !== null">
+          {{ likesCount }}
         </h5>
+        <q-skeleton width="40px" v-else/>
       </nav>
     </div>
     <ContextMenu v-if="ownerId === this.$userId" type="post" :parent-id="id"/>
@@ -36,12 +47,16 @@
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
 import ContextMenu from "components/Core/ContextMenu";
+import UserName from "components/Core/User/UserName";
+import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
 
 export default {
   name: "AchievementPost",
   components: {
     UserImage,
     ContextMenu,
+    UserName,
+    RandomSkeletonDescription,
   },
   props: {
     url: {
@@ -114,7 +129,6 @@ export default {
             Authorization: 'Token ' + this.token()
           }
         }).then(async res => {
-          console.log(res.data.results[0].url)
           await this.$axios.delete(res.data.results[0].url, {
             headers: {
               Authorization: 'Token ' + this.token()
@@ -135,7 +149,8 @@ export default {
         this.likesCount += 1
       }
       this.isLiked = !this.isLiked
-    }
+    },
+
   },
   async mounted() {
     await this.getUserData()
@@ -162,7 +177,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.achievement__blog__post__title-skeleton {
+  border-radius: 5px !important;
+}
 
+.user-name {
+  font-size: 25px;
+}
+
+.achievement__blog__post__time {
+  * {
+    display: inline-block;
+  }
+}
 
 .achievement__blog__post {
   padding: 40px;

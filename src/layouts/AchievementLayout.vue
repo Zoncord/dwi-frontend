@@ -99,7 +99,6 @@ export default {
       this.isLiked = !this.isLiked
       if (this.isLiked) {
         this.$axios.post(this.$dwiApi + `rating/achievement/`, {
-          user: this.$userUrl,
           achievement: this.achievementUrl
         }, {
           headers: {

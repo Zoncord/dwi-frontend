@@ -5,7 +5,7 @@
         <UserImage class="user-entry__menu__user-image q-mr-md" :url="this.$userImage"/>
         <div class="flex column">
           <div class="user-entry__menu__user-information flex column justify-center">
-            <p class="user-entry__menu__user-name">{{ userName }}</p>
+            <UserName name-class="user-entry__menu__user-name" :name="userName"/>
             <OnlineDisplay/>
           </div>
           <q-list class="user-entry__menu-list flex column" >
@@ -30,7 +30,7 @@
 import UserImage from "components/Core/User/UserImage";
 import OnlineDisplay from "components/Core/User/OnlineDisplay";
 import UserMenuTab from "components/Main/Header/HeaderComponents/UserEntry/Components/UserMenu/Components/UserMenuTab";
-
+import UserName from "components/Core/User/UserName";
 export default {
   name: "Menu",
   props: {
@@ -42,6 +42,7 @@ export default {
     UserImage,
     OnlineDisplay,
     UserMenuTab,
+    UserName,
   },
   data() {
     return {
@@ -61,11 +62,6 @@ export default {
 </script>
 
 <style lang="scss" scoped >
-.user-entry__menu__user-name {
-  font-size: 23px;
-  font-weight: 400;
-  white-space: nowrap
-}
 
 .user-entry__menu-list {
   align-items: start;
@@ -80,6 +76,14 @@ export default {
   max-width: none !important;
   max-height: none !important;
   flex-wrap: nowrap;
+}
+
+</style>
+<style>
+.user-entry__menu__user-name {
+  font-size: 23px;
+  font-weight: 400;
+  white-space: nowrap
 }
 
 </style>

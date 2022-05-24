@@ -56,9 +56,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import SearchRecommendsElement
-  from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
+import SearchRecommendsElement from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Search",
@@ -74,7 +73,7 @@ export default {
       searchFocused: false,
       borderRadius: null,
       adviceListHeight: null,
-      achievements: [],
+      achievements: [{}],
     }
   },
   watch: {
@@ -83,16 +82,19 @@ export default {
     }
   },
   methods: {
+    ...mapGetters('mainStore', ['token']),
     getAchievements() {
-      axios.get(this.$dwiApi + 'achievements/achievement/?search=' + this.query).then(res => {
+      this.$axios.get(`${this.$dwiApi}achievements/achievement/`, {
+        params: {
+          search: this.query,
+        },
+        headers: {
+          Authorization: `Token ${this.token()}`
+        }
+      }).then(res => {
         this.achievements = []
-        for (let result of res.data.results){
+        for (let result of res.data.results) {
           this.achievements.push({
-            // days: result.days_since_the_last_incident,
-            // id: result.id,
-            // ownerLink: result.owners[0],
-            // description: result.description,
-            // title: result.title,
             url: result.url,
           })
         }

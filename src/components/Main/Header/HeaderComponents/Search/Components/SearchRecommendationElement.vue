@@ -3,9 +3,17 @@
     <q-item clickable class="search-recommendation fit flex items-center">
       <q-item-section class="search-recommendation__section fit q-px-md">
         <div class="flex justify-between fit items-center">
-          <p>{{ title }} {{ $t('header.search.already') }} {{ days }} {{ $tc('days', days) }}</p>
+          <div class="search-recommendation__section__content-wrapper">
+            <p v-if="title" class="q-mr-sm">{{ title }}</p>
+            <q-skeleton class="title-skeleton q-mr-sm" v-else/>
+            <p class="q-mr-sm">{{ $t('header.search.already') }}</p>
+            <p v-if="days !== null" class="q-mr-sm">{{ days }}</p>
+            <q-skeleton class="days-skeleton q-mr-sm" width="40px" v-else/>
+            <p>{{ $tc('days', days) }}</p>
+          </div>
+
           <a :href="'profile/' + ownerId" class="flex items-center">
-            <p class="q-mr-sm">{{ ownerName }}</p>
+            <UserName class="q-mr-sm" :name="ownerName"/>
             <UserImage class="search__advice-list__user-image" :url="ownerImage"/>
           </a>
         </div>
@@ -17,11 +25,13 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
+import UserName from "components/Core/User/UserName";
 
 export default {
   name: "SearchRecommendsElement",
   components: {
     UserImage,
+    UserName,
   },
   props: {
     url: {
@@ -31,13 +41,12 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token'])
   },
-  async mounted(){
-    await this.$axios.get(this.url,{
+  async mounted() {
+    await this.$axios.get(this.url, {
       headers: {
         Authorization: 'Token ' + this.token()
       }
-    } ).then(res => {
-      console.log(res.data)
+    }).then(res => {
       this.title = res.data.title
       this.id = res.data.id
       this.days = res.data.days_since_the_last_incident
@@ -67,14 +76,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-a {
-  color: black;
+.title-skeleton{
+  width: 80px;
 }
-
+.days-skeleton{
+  width: 15px;
+}
 .search-recommendation {
   border-bottom: solid 1px $border_color;
 }
-.search__advice-list__user-image{
+.search-recommendation__section__content-wrapper{
+
+  *{
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+}
+.search__advice-list__user-image {
   width: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
