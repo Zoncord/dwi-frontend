@@ -12,8 +12,10 @@ export default {
   methods: {
     ...mapMutations('mainStore', ['deleteToken'])
   },
-  mounted() {
+  async mounted() {
     this.deleteToken()
+    await this.$axios.post(`https://api.zoncord.tech/auth/logout/`)
+    //TODO make not hardcode link
     window.location.href = this.$enterRedirect
   }
 }

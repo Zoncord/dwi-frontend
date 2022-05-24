@@ -44,8 +44,8 @@
     <div class="profile-description__subscribe-part flex justify-center items-center">
       <div class="flex column text-center">
         <h6 class="profile-description__subscribe-part__subscribe-amount flex items-center">
-          <span v-if="followersCount !== null">{{ followersCount }} </span>
-          <q-skeleton width="60px" class="q-mr-md" v-else/>
+          <span v-if="followersCount !== null" class="q-mr-sm">{{ followersCount }} </span>
+          <q-skeleton width="60px" class="q-mr-sm" v-else/>
           {{ $tc('profile.followers', followersCount !== null ? followersCount : 0) }}
         </h6>
 
@@ -137,7 +137,6 @@ export default {
           this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
           this.ownerImage = res.data.general_user_information.img
           this.ownerId = res.data.id
-          console.log(res.data.description)
           this.ownerDescription = res.data.description
           this.followersCount = res.data.followers_count
           this.getIsSubscribed()

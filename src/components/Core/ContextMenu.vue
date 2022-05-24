@@ -7,7 +7,7 @@
     <q-list class="date-card-menu__items">
       <q-item
         class="date-card-menu__items__item items-center"
-        v-if="items.includes('reset')"
+        v-if="this.items.includes('reset')"
         clickable
         @click="this.reset"
       >
@@ -17,7 +17,7 @@
 
       <q-item
         class="date-card-menu__items__item items-center"
-        v-if="items.includes('edit')"
+        v-if="this.items.includes('edit')"
         clickable
         @click="this.edit"
       >
@@ -27,7 +27,7 @@
 
       <q-item
         class="date-card-menu__items__item items-center"
-        v-if="items.includes('delete')"
+        v-if="this.items.includes('delete')"
         clickable
         @click="this.delete"
       >
@@ -78,7 +78,7 @@ export default {
       })
     },
     edit() {
-      if (this.type === 'achievements') {
+      if (this.type === 'achievement') {
         this.$router.push(`/achievement/edit/${this.parentId}`)
       } else if (this.type === 'post') {
         this.$router.push(`/post/edit/${this.parentId}`)
@@ -105,7 +105,7 @@ export default {
   },
   data() {
     let items
-    if (this.type === 'achievements') {
+    if (this.type === 'achievement') {
       items = ['reset', 'edit', 'delete']
     } else if (this.type === 'post') {
       items = ['edit', 'delete']

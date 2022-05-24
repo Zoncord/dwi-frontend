@@ -119,22 +119,22 @@ export default {
     },
     async finish() {
       let categoryUrl
-      await this.$axios.post(`${this.$dwiApi}achievements/category/`, {
-        title: this.category,
-        slug: this.category,
-        description: this.category,
-      }, {
-        headers: {
-          Authorization: `Token ${this.userToken()}`
-        }
-      }).then(res => {
-        categoryUrl = res.data.url
-      })
+      if (this.category) {
+        await this.$axios.post(`${this.$dwiApi}achievements/category/`, {
+          title: this.category,
+        }, {
+          headers: {
+            Authorization: `Token ${this.userToken()}`
+          }
+        }).then(res => {
+          categoryUrl = res.data.url
+        })
+      }
       await this.$axios.post(this.$dwiApi + 'achievements/achievement/', {
         title: this.title,
         description: this.description,
         tags: this.tags.map((tag) => {return tag.url}),
-        category: categoryUrl,
+        category: this.category ? categoryUrl: null,
       }, {
         headers: {
           Authorization: `Token ${this.userToken()}`
@@ -149,8 +149,6 @@ export default {
       if (tag && this.tags.length < this.maxTags) {
         this.$axios.post(`${this.$dwiApi}achievements/tag/`, {
           title: tag,
-          slug: tag,
-          description: tag,
         }, {
           headers: {
             Authorization: `Token ${this.token()}`,
@@ -160,7 +158,24 @@ export default {
             tag: tag,
             url: res.data.url,
           })
-        })
+        })  .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        });
       }
     },
   },

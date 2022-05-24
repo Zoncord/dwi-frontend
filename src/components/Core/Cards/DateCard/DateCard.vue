@@ -21,7 +21,7 @@
           </h5>
         </div>
       </div>
-     <ContextMenu type="card" :parent-id="this.id" v-if="this.ownerId === this.$userId"/>
+     <ContextMenu type="achievement" :parent-id="this.id" v-if="this.ownerId === this.$userId"/>
     </q-card>
   </a>
 </template>
@@ -46,6 +46,7 @@ export default {
     }
   },
   data() {
+    console.log(this.ownerId , this.$userId)
     this.$axios.get(this.ownerUrl).then(res => {
       this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
       this.ownerImage = res.data.general_user_information.img
