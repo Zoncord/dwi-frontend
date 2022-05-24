@@ -1,14 +1,14 @@
-# develop stage
-FROM node as develop-stage
-WORKDIR /app
+FROM node as build
+WORKDIR /home/dwi_front
 COPY package*.json ./
-RUN yarn global add @quasar/cli
-COPY . .
-# build stage
-FROM develop-stage as build-stage
-RUN yarn
+
+RUN npm i -g @quasar/cli
+RUN npm init quasar
+RUN npm install
+
+COPY . ./
 RUN quasar build
-# production stage
-FROM nginx:1.17.5-alpine as production-stage
-COPY --from=build-stage /app/dist/spa /usr/share/nginx/html
-CMD ["nginx", "-g", "daemon off;"]
+
+FROM steebchen/nginx-spa:stable
+COPY --from=build /home/dwi_front/dist/spa /app
+COPY --from=build /home/dwi_front/dist/spa/ /home/dwi_front/dist/
