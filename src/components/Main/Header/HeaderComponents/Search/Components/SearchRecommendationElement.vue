@@ -5,15 +5,15 @@
         <div class="flex justify-between fit items-center">
           <div class="search-recommendation__section__content-wrapper">
             <p v-if="title" class="q-mr-sm">{{ title }}</p>
-            <q-skeleton class="title-skeleton q-mr-sm" v-else/>
-            <p class="q-mr-sm">{{ $t('header.search.already') }}</p>
-            <p v-if="days !== null" class="q-mr-sm">{{ days }}</p>
-            <q-skeleton class="days-skeleton q-mr-sm" width="40px" v-else/>
+            <q-skeleton class="title-skeleton m-r" v-else/>
+            <p class="m-r">{{ $t('header.search.already') }}</p>
+            <p v-if="days !== null" class="m-r">{{ days }}</p>
+            <q-skeleton class="days-skeleton m-r" width="40px" v-else/>
             <p>{{ $tc('days', days) }}</p>
           </div>
 
           <a :href="'profile/' + ownerId" class="flex items-center">
-            <UserName class="q-mr-sm" :name="ownerName"/>
+            <UserName class="q-mr-md" :name="ownerName"/>
             <UserImage class="search__advice-list__user-image" :url="ownerImage"/>
           </a>
         </div>
@@ -97,5 +97,8 @@ export default {
   width: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.m-r{
+  margin-right: 3px;
 }
 </style>
