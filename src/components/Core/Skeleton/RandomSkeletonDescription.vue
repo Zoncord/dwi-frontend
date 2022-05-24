@@ -5,7 +5,7 @@
     :key="word"
     :width="`${word}px`"
     class="inline-block q-mr-sm"
-    :height="wordHeight"
+    :height="`${wordHeight}px`"
   />
 </div>
 </template>
