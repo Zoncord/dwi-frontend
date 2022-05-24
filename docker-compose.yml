@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  dwi_frontend:
+    image: zoncorddocker.azurecr.io/dwi_frontend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 80
+    env_file:
+      - ./.env
+    networks:
+      - zoncorddeploy_static_media_network
+    command: nginx
+
+
+
+networks:
+  zoncorddeploy_static_media_network:
+    external: true
