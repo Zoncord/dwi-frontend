@@ -23,30 +23,12 @@ export default {
       default: 1
     }
   },
-  mounted() {
-    console.log(this.nameClass)
-  },
   data(){
     return {
       width: 100 * this.skeletonScale,
       height: 20 * this.skeletonScale
     }
   },
-  // computed: {
-  //   awidth() {
-  //     let width = 100 * this.skeletonScale
-  //     return {
-  //       width
-  //     }
-  //   },
-  //   height() {
-  //     let height = 20 * this.skeletonScale
-  //     return {
-  //       height
-  //     }
-  //   }
-  // }
-
 }
 </script>
 

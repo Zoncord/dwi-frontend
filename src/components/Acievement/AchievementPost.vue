@@ -171,6 +171,7 @@ export default {
       description: null,
       date: null,
       time: null,
+      id: null,
     }
   }
 }

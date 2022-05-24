@@ -36,24 +36,28 @@
         {{ $t('achievement.addNewPost') }}
         <q-icon name="add"/>
       </q-btn>
-      <AchievementPost
-        v-for="post in posts"
-        :key="post"
-        :url="post.url"
-        :ownerUrl="post.author"
-      />
+      <InfiniteScroll :on-load-request="getPosts">
+        <AchievementPost
+          v-for="post in posts"
+          :key="post"
+          :url="post.url"
+          :ownerUrl="post.ownerUrl"
+        />
+      </InfiniteScroll>
     </div>
   </div>
 </template>
 
 <script>
 import AchievementPost from "components/Acievement/AchievementPost";
+import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 import {mapGetters} from "vuex";
 
 
 export default {
   name: "AchieveLayout",
   components: {
+    InfiniteScroll,
     AchievementPost,
   },
   methods: {
@@ -82,19 +86,6 @@ export default {
         this.achievementDescription = res.data.description
       })
     },
-    getAchievementPosts() {
-      this.$axios.get(this.$dwiApi + 'blog/post/', {
-        headers: {
-          Authorization: 'Token ' + this.token()
-        },
-        params: {
-          achievement: this.$route.params.id,
-          ordering: '-date_time_of_creation'
-        }
-      }).then(res => {
-        this.posts = res.data.results
-      })
-    },
     handleAchievementLike() {
       this.isLiked = !this.isLiked
       if (this.isLiked) {
@@ -120,16 +111,34 @@ export default {
         })
       }
     },
+    async getPosts(index) {
+      await this.$axios.get(this.$dwiApi + 'blog/post/', {
+        headers: {
+          Authorization: 'Token ' + this.token()
+        },
+        params: {
+          achievement: this.$route.params.id,
+          ordering: '-date_time_of_creation',
+          page: index,
+        }
+      }).then(res => {
+        for (let post of res.data.results) {
+          this.posts.push({
+            url: post.url,
+            ownerUrl: post.author,
+          })
+        }
+      })
+    },
   },
   data() {
     this.getAchievementData()
-    this.getAchievementPosts()
     this.getIsLiked()
     return {
       achievementTitle: null,
       achievementDay: null,
       isAchievementLiked: false,
-      posts: null,
+      posts: [],
       isLiked: null,
       achievementUrl: null,
       achievementOwner: null,
@@ -164,7 +173,8 @@ export default {
   border-radius: 10px;
   //padding: 30px;
 }
-.achievement__navigation__card-info__wrapper{
+
+.achievement__navigation__card-info__wrapper {
   padding: 30px;
 }
 
@@ -183,7 +193,8 @@ export default {
   font-size: 30px;
   font-weight: 500;
 }
-.achievement__navigation__card-info__description{
+
+.achievement__navigation__card-info__description {
   font-weight: 400;
 }
 

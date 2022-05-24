@@ -12,7 +12,7 @@
       :placeholder="$t('header.search.label')"
       color="border-color" hide-bottom-space label-color="black"
       :style="{
-        borderRadius: searchFocused && achievements.length ? '5px 5px 0px 0px': '5px 5px 5px 5px'
+        borderRadius: searchFocused  ? '5px 5px 0px 0px': '5px 5px 5px 5px'
       }"
     >
       <!--Search icon-->
@@ -36,27 +36,36 @@
       dense
       bordered
       padding
-      class="search__advice-list rounded-borders search-recommends"
+      class="search__advice-list rounded-borders"
       :style="{
-      border: searchFocused && achievements.length ? 'solid 1px #B8B8B8': 'none',
+      border: searchFocused ? 'solid 1px #B8B8B8': 'none',
       transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
     }"
+
     >
-      <div
-        v-for="(resp, id) in achievements" :key="resp"
-      >
-        <SearchRecommendsElement
-          v-if="id < 6"
-          :url="resp.url"
-        />
+      <div v-if="achievements.length !== 0">
+        <div
+          v-for="(resp, id) in achievements" :key="resp"
+
+        >
+          <SearchRecommendsElement
+            v-if="id < 6"
+            :url="resp.url"
+          />
+        </div>
+      </div>
+      <div class="flex justify-center q-my-md" v-else>
+        <p>Ничего не найдено</p>
       </div>
     </q-list>
+
   </div>
 
 </template>
 
 <script>
-import SearchRecommendsElement from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
+import SearchRecommendsElement
+  from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
 import {mapGetters} from "vuex";
 
 export default {
@@ -73,7 +82,7 @@ export default {
       searchFocused: false,
       borderRadius: null,
       adviceListHeight: null,
-      achievements: [{}],
+      achievements: [],
     }
   },
   watch: {
@@ -143,7 +152,6 @@ export default {
   border-top: none !important;
   transition: transform .25s;
   transform-origin: top;
-
 }
 
 .search__advice-list__user-image {

@@ -3,15 +3,18 @@
     <ProfileDescription
       :owner-url="userUrl"
     />
-    <div class="profile__cards-wrapper">
-      <AddCard v-if="isUserPage"/>
-      <DateCard
-        v-for="dateCard in achievements"
-        :key="dateCard"
-        :owner-url="dateCard.owners[0]"
-        :url="dateCard.url"
-      />
-    </div>
+      <InfiniteScroll  :on-load-request="getAchievements">
+        <div class="profile__cards-wrapper">
+          <AddCard v-if="isUserPage"/>
+          <DateCard
+            v-for="dateCard in achievements"
+            :key="dateCard"
+            :owner-url="dateCard.owners[0]"
+            :url="dateCard.url"
+          />
+        </div>
+
+      </InfiniteScroll>
   </q-layout>
 </template>
 
@@ -20,6 +23,7 @@ import ProfileDescription from "components/Profile/ProfileDescription";
 import AddCard from "components/Core/Cards/AddCard";
 import DateCard from "components/Core/Cards/DateCard/DateCard";
 import {mapGetters} from "vuex";
+import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
 export default {
   name: "ProfileLayout",
@@ -27,9 +31,20 @@ export default {
     ProfileDescription,
     AddCard,
     DateCard,
+    InfiniteScroll,
   },
   methods: {
-    ...mapGetters('mainStore', ['token'])
+    ...mapGetters('mainStore', ['token']),
+    async getAchievements(index){
+      await this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
+        params: {
+          owners: this.$route.params.userId,
+          page: index,
+        }
+      }).then(res => {
+        this.achievements = res.data.results
+      })
+    }
   },
   data() {
     this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId, {
@@ -46,13 +61,7 @@ export default {
         this.$router.push('/404')
       }
     })
-    this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
-      params: {
-        owners: this.$route.params.userId
-      }
-    }).then(res => {
-      this.achievements = res.data.results
-    })
+
     return {
       userName: null,
       userImage: null,

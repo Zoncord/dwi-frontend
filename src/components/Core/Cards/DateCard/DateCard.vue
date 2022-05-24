@@ -46,7 +46,6 @@ export default {
     }
   },
   data() {
-    console.log(this.ownerId , this.$userId)
     this.$axios.get(this.ownerUrl).then(res => {
       this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
       this.ownerImage = res.data.general_user_information.img
