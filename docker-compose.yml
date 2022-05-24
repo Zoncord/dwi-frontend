@@ -8,6 +8,15 @@ services:
       context: .
       dockerfile: Dockerfile
     expose:
-      - 8080
+      - 80
     env_file:
       - ./.env
+    networks:
+      - zoncorddeploy_static_media_network
+    command: nginx
+
+
+
+networks:
+  zoncorddeploy_static_media_network:
+    external: true
