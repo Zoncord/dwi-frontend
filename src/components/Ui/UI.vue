@@ -1,13 +1,20 @@
 <template>
   <div class="ui">
     <HeaderComponent v-if="header"/>
-    <div class="ui__content"
-         :class="{
-            'limiter': limiter,
-          }"
+    <div
+      class="ui__content"
+      :class="{
+          'p-t-55': header,
+          'p-b-67': $q.screen.lt.md && footer,
+      }"
     >
-      <slot/>
+      <q-scroll-area class="ui__scroll">
+        <div :class="{'limiter': limiter}">
+            <slot/>
+        </div>
+      </q-scroll-area>
     </div>
+
     <FooterNavigation v-if="$q.screen.lt.md && footer"/>
   </div>
 </template>
@@ -37,8 +44,13 @@ export default {
 </script>
 
 <style scoped>
+.ui{
+  height: 100vh;
+}
 .ui__content {
-  padding-top: 55px;
-  padding-bottom: 67px;
+  height: 100%;
+}
+.ui__scroll{
+  height: 100%;
 }
 </style>
