@@ -9,7 +9,6 @@
           :owner-url="post.ownerUrl"
         />
       </InfiniteScroll>
-
     </div>
   </q-layout>
 </template>
@@ -30,7 +29,7 @@ export default {
     async getPosts(index) {
       await this.$axios.get(this.$dwiApi + 'blog/post', {
         params: {
-          ordering: '-rating',
+          ordering: '-date_of_creation',
           page: index,
         },
         headers: {

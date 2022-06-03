@@ -33,4 +33,7 @@ export default {
 </script>
 
 <style scoped>
+/*.user-name__skeleton-wrapper{*/
+/*  flex-wrap: nowrap;*/
+/*}*/
 </style>

@@ -1,13 +1,18 @@
 <template>
   <div class="achievement flex row justify-between q-mt-md">
-    <nav class="achievement__navigation col-3">
+    <nav class="achievement__navigation" :class="{
+      'col-3': $q.screen.gt.sm,
+      'pr-8': $q.screen.gt.sm,
+      'q-mb-md': $q.screen.lt.md,
+      'full-width':$q.screen.lt.md,
+    }">
       <div class="q-card achievement__navigation__card-info flex column text-center q-mb-md">
         <div class="achievement__navigation__card-info__wrapper">
           <h5 class="achievement__navigation__card-info__title">{{ achievementTitle }}</h5>
           <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
           <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
         </div>
-        <q-separator/>
+        <q-separator class="achievement__navigation__card-info__separator"/>
         <h6 class="achievement__navigation__card-info__description q-ma-sm">
           {{ achievementDescription }}
         </h6>
@@ -25,7 +30,12 @@
         <q-btn icon="chat" class="achievement__navigation__controls__button" :ripple="false"></q-btn>
       </div>
     </nav>
-    <div class="achievement__blog col-9 flex column">
+    <div class="achievement__blog column"
+         :class="{
+             'col-9': $q.screen.gt.sm,
+             'pl-8': $q.screen.gt.sm,
+        }"
+    >
       <q-btn
         class="achievement__blog__create-post q-mb-md"
         @click="$router.push('/create-post/?achievement_id=' + this.$route.params.id)"
@@ -154,15 +164,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.achievement__blog {
-  padding-left: 8px;
+@media (max-width: 1024px){
+  .achievement__blog{
+    width: 100%;
+  }
 }
-
-.achievement__navigation {
-  padding-right: 8px;
-}
-
 .achievement__navigation__controls {
   border-radius: 10px;
   padding-top: 5px;
@@ -171,11 +177,17 @@ export default {
 
 .achievement__navigation__card-info {
   border-radius: 10px;
-  //padding: 30px;
 }
 
 .achievement__navigation__card-info__wrapper {
   padding: 30px;
+  width: 100%;
+  word-break: break-word;
+}
+
+.achievement__navigation__card-info__separator {
+  width: 100%;
+
 }
 
 .achievement__navigation__card-info__title {
@@ -196,6 +208,7 @@ export default {
 
 .achievement__navigation__card-info__description {
   font-weight: 400;
+  word-break: break-word;
 }
 
 </style>

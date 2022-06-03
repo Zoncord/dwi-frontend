@@ -38,19 +38,17 @@
       padding
       class="search__advice-list rounded-borders"
       :style="{
-      border: searchFocused ? 'solid 1px #B8B8B8': 'none',
-      transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
-    }"
-
+        border: searchFocused ? 'solid 1px #B8B8B8': 'none',
+        transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
+      }"
     >
       <div v-if="achievements.length !== 0">
         <div
           v-for="(resp, id) in achievements" :key="resp"
-
         >
           <SearchRecommendsElement
-            v-if="id < 6"
             :url="resp.url"
+            v-if="id < ($q.screen.gt.sm ? 6: 3)"
           />
         </div>
       </div>
@@ -77,6 +75,9 @@ export default {
     this.getAchievements()
   },
   data() {
+    setInterval(() => {
+      console.log(this.$q.screen.gt.sm)
+    }, 100)
     return {
       query: '',
       searchFocused: false,
@@ -88,7 +89,7 @@ export default {
   watch: {
     query() {
       this.getAchievements()
-    }
+    },
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
@@ -102,14 +103,16 @@ export default {
         }
       }).then(res => {
         this.achievements = []
-        for (let result of res.data.results) {
-          this.achievements.push({
-            url: result.url,
-          })
+        for (let result in res.data.results) {
+          // if (result < (this.$q.screen.gt.sm ? 5 : 1)) {
+            this.achievements.push({
+              url: res.data.results[result].url,
+            })
+          // }
         }
       })
     }
-  }
+  },
 }
 </script>
 

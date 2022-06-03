@@ -1,5 +1,5 @@
 <template>
-  <a :href="this.id !== null ? `/achievement/${this.id}` : '/404'">
+  <a :href="this.id !== null ? `/achievement/${this.id}` : null" class="date-card-wrapper">
     <q-card class="date-card card flex column justify-center items-center">
       <div class="date-card__container flex column justify-between items-center">
         <a :href="'/profile/' + ownerId"
@@ -8,7 +8,7 @@
           <UserName class="date-card__container__user-name" :name="ownerName"/>
         </a>
         <div class="date-card__container__content flex column justify-between items-center q-mt-md">
-          <h5 class="title" v-if="title !== null">
+          <h5 class="title q-px-md" v-if="title !== null">
             {{ title }}
           </h5>
           <q-skeleton width="150px" height="20px" class="q-mt-md" v-else/>
@@ -69,6 +69,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media(max-width: 1024px){
+  .date-card-wrapper{
+    width: 100%;
+  }
+}
+
+.title{
+  overflow-wrap: anywhere;
+}
+
 .date-card {
   max-width: 300px;
   width: 100%;

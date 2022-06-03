@@ -79,47 +79,85 @@ p {
 .q-btn--actionable.q-btn--standard:before {
   box-shadow: none !important;
 }
+
 .q-field--outlined .q-field__control {
   border-radius: 5px;
-  &:hover{
-    &:before{
+
+  &:hover {
+    &:before {
       border-color: #939393;
     }
   }
+
   &:after {
     height: 100%;
     color: $border_color;
     border-width: 1px !important;
   }
 }
-.liked{
+
+.liked {
   color: $highlight;
 }
-a{
+
+a {
   color: black;
 }
+
 .text-input__chars-counter {
   font-size: 15px !important;
 }
+
 .card {
   border-radius: 30px;
 }
-.q-dialog-plugin{
-  .q-btn{
+
+@media(max-width: 1024px) {
+  .card {
+    max-width: none !important;
+  }
+}
+
+
+.q-dialog-plugin {
+  .q-btn {
     border: none;
-    span{
+
+    span {
       color: black;
       transition: color .2s;
-      &:hover{
+
+      &:hover {
         color: $highlight;
       }
     }
-    .q-focus-helper{
+
+    .q-focus-helper {
       display: none;
     }
 
   }
 }
-.q-skeleton{
+
+.q-field__bottom{
+  align-items: center !important;
+}
+
+.q-skeleton {
   cursor: auto;
+}
+
+.pr-8 {
+  padding-right: 8px;
+}
+
+.pl-8 {
+  padding-left: 8px;
+}
+.fit-width{
+  width: 100%;
+}
+
+::-webkit-scrollbar { /* chrome based */
+  height: 100vh;
 }

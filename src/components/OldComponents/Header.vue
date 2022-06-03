@@ -76,9 +76,9 @@ header {
   width: 33%;
 }
 
-.q-tab__content {
-  z-index: 2;
-}
+//.q-tab__content {
+//  z-index: 2;
+//}
 
 .q-tab--active {
   background-color: #9DACFF !important;

@@ -77,5 +77,7 @@ export default {
       yes: 'yes',
       no: 'no',
     }
-  }
+  },
+  // description: 'Description'
+  noDescription: 'This person has not description'
 }

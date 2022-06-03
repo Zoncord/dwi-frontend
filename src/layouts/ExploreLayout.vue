@@ -61,6 +61,23 @@ export default {
   grid-row-gap: 20px;
   margin-bottom: 20px;
 }
+@media(max-width: 1024px){
+  .date-cards-wrapper{
+    grid-template-columns: repeat(3, 32%);
+    grid-column-gap: 2%;
+  }
+}
+@media(max-width: 800px){
+  .date-cards-wrapper{
+    grid-template-columns: repeat(2, 49%);
+    grid-column-gap: 2%;
+  }
+}@media(max-width: 600px){
+  .date-cards-wrapper{
+    grid-template-columns: repeat(1, 100%);
+    grid-column-gap: 0;
+  }
+}
 
 .date-card {
   border-radius: 30px;

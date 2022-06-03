@@ -3,7 +3,7 @@
     <ProfileDescription
       :owner-url="userUrl"
     />
-      <InfiniteScroll  :on-load-request="getAchievements">
+      <InfiniteScroll :on-load-request="getAchievements">
         <div class="profile__cards-wrapper">
           <AddCard v-if="isUserPage"/>
           <DateCard
@@ -13,7 +13,6 @@
             :url="dateCard.url"
           />
         </div>
-
       </InfiniteScroll>
   </q-layout>
 </template>
@@ -33,47 +32,49 @@ export default {
     DateCard,
     InfiniteScroll,
   },
+  props: {
+    userId: {
+      required: true,
+    }
+  },
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getAchievements(index){
       await this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
         params: {
-          owners: this.$route.params.userId,
+          owners: this.userId,
           page: index,
         }
       }).then(res => {
         this.achievements = res.data.results
       })
+    },
+    getUserData(){
+      this.$axios.get(this.$dwiApi + 'users/user/' + this.userId, {
+        headers: {
+          Authorization: `Token ${this.token()}`
+        }
+      }).then(res => {
+        this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
+        this.userUrl = res.data.url
+        this.followersCount = res.data.followers_count
+        this.profileDescription = res.data.description
+      })
     }
   },
   data() {
-    this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId, {
-      headers: {
-        Authorization: `Token ${this.token()}`
-      }
-    }).then(res => {
-      this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-      this.userUrl = res.data.url
-      this.followersCount = res.data.followers_count
-      this.profileDescription = res.data.description
-    }).catch(err => {
-      if (err.request) {
-        this.$router.push('/404')
-      }
-    })
-
+    this.getUserData()
     return {
       userName: null,
       userImage: null,
       userUrl: null,
-      isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
+      isUserPage: this.userId.toString() === this.$userId.toString(),
       isSubscribed: false,
       achievements: null,
       followersCount: null,
       profileDescription: null,
     }
   },
-
 }
 </script>
 

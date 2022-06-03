@@ -22,9 +22,6 @@ export default {
       this.changeToken(res.data.token)
       await this.$router.push('/').then(() => document.location.reload())
     })
-    return {
-
-    }
   },
 
 }

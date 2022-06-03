@@ -194,12 +194,14 @@ export default {
 
 .achievement__blog__post {
   padding: 40px;
+  width: 100%;
 
 }
 
 .achievement__blog__post__title {
   margin-bottom: 5px;
   font-weight: 500;
+  word-break: break-all;
 }
 
 .achievement__blog__post__text {
@@ -207,6 +209,7 @@ export default {
   margin-top: 60px;
   margin-bottom: 60px;
   white-space: pre-line;
+  word-break: break-all;
 }
 
 .achievement__blog__user-name {

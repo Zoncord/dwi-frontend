@@ -3,7 +3,7 @@
     <div class="limiter flex justify-between items-center">
       <Logo class="header-elem" color="highlight" link="/feed">DWI</Logo>
       <q-tabs
-        class="flex items-center"
+        class="header-tabs flex items-center gt-sm"
         active-color="highlight"
         indicator-color="highlight"
         narrow-indicator
@@ -26,8 +26,8 @@
           :ripple="false"
         />
       </q-tabs>
-      <Search class="header-elem"/>
-      <UserEntry class="header-elem"/>
+      <Search :class="{'header-elem': $q.screen.gt.sm, }"/>
+      <UserEntry class="gt-sm"/>
     </div>
   </header>
 </template>
@@ -49,8 +49,15 @@ export default {
 
 <style lang="scss">
 header {
-  height: 55px;
+  min-height: 55px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
   border-bottom: 1px solid #B8B8B8;
+  background-color: white;
+}
+.limiter{
+  flex-wrap: nowrap;
 }
 
 .logo {
@@ -58,7 +65,7 @@ header {
 }
 
 .q-tab {
-  height: 55px;
+  min-height: 55px;
   padding: 0;
 
   .q-focus-helper {
@@ -88,16 +95,14 @@ header {
 .header-elem {
   margin-right: 40px;
 }
-
-.user-entry{
-  height: 55px;
+@media(max-width: 1024px){
+  .header-elem {
+    margin-right: 15px;
+  }
 }
 
-.q-tabs__content {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.user-entry{
+  min-height: 55px;
 }
 
 .search-wrapper {
@@ -112,9 +117,9 @@ header {
   font-size: 15px;
 }
 
-.q-tab__content{
-  min-width: auto;
-}
+//.q-tab__content{
+//  min-width: auto;
+//}
 .user-entry__menu {
   border-radius: 0 0 10px 10px;
   box-shadow: none;
@@ -124,4 +129,5 @@ header {
 .user-entry{
   margin-right: 0;
 }
+
 </style>

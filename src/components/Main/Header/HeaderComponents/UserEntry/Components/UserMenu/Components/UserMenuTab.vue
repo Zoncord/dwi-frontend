@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable v-close-popup dense :href="to" exact-active-class="user-menu-tab--exact-active" replace >
+  <q-item clickable v-close-popup dense @click="$router.push(to)" exact-active-class="user-menu-tab--exact-active" replace >
       <q-item-section class="flex items-center">
         <q-icon :name="icon" class="user-entry__menu-list__icon"></q-icon>
         <p>{{ text }}</p>

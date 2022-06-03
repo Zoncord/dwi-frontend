@@ -1,21 +1,17 @@
 <template>
-  <div>
-    <HeaderComponent/>
-    <div class="limiter">
+  <UI>
       <ExploreLayout/>
-    </div>
-
-  </div>
+  </UI>
 </template>
 
 <script>
 import ExploreLayout from "layouts/ExploreLayout";
-import HeaderComponent from "components/Main/Header/HeaderComponent";
+import UI from "components/Ui/UI";
 export default {
   name: "ExplorePage",
   components: {
+    UI,
     ExploreLayout,
-    HeaderComponent,
   }
 }
 </script>

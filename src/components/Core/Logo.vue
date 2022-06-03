@@ -1,12 +1,12 @@
 <template>
 
-  <a v-if="link" :href="link"
-     class="logo text-center flex items-center justify-center"
+  <div v-if="link" @click="$router.push('/')"
+     class="logo link-logo text-center flex items-center justify-center"
      :class="additionalClasses ? additionalClasses: null"
      :style="logoColor ?  logoColor : null"
   >
     <slot/>
-  </a>
+  </div>
   <div v-else
        class="logo text-center flex items-center justify-center"
        :class="additionalClasses ? additionalClasses: null"
@@ -60,5 +60,8 @@ export default {
 
 p {
   display: block;
+}
+.link-logo{
+  cursor: pointer;
 }
 </style>

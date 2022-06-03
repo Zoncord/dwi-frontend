@@ -1,32 +1,65 @@
 <template>
-  <q-card class="profile-description flex justify-between">
-    <div class="profile-description__user-part">
-      <div class="flex profile-description__user-part__container">
+  <q-card
+    class="profile-description flex justify-between items-center"
+    :class="{
+      'column': $q.screen.lt.md,
+     }"
+  >
+    <div class="profile-description__user-part"
+         :class="{
+              'q-mb-lg': $q.screen.lt.md,
+          }"
+    >
+      <div class="flex profile-description__user-part__container "
+           :class="{
+          'column': $q.screen.lt.md,
+          'items-center': $q.screen.lt.md,
+        }"
+      >
         <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="ownerImage"/>
-        <div class="profile-description__user-part__user-container  flex column">
+        <div class="profile-description__user-part__user-container  flex column"
+             :class="{
+                'items-center': $q.screen.lt.md,
+                'text-center': $q.screen.lt.md,
+                 'fit-width': $q.screen.lt.md,
+             }"
 
+        >
           <a href="https://zoncord.tech/accounts/profile"
              class="profile-description__user-part__user-name q-mt-md q-mb-sm flex items-center"
-             v-if="isUserPage">
+             v-if="isUserPage"
+          >
             <UserName
-              class="q-mr-sm"
+              :class="{
+                'q-mr-sm': $q.screen.gt.sm
+              }"
               name-class="profile-description__user-part__user-name"
               :name="ownerName"
+              skeleton-scale="1.5"
             />
-            <q-icon class="profile-description__user-part__user-name-edit edit-icon" name="create"/>
+            <q-icon
+              class="profile-description__user-part__user-name-edit"
+              :class="{
+                'edit-icon-hover': $q.screen.gt.sm,
+              }"
+              name="create"
+              v-if="ownerName"
+            />
           </a>
           <UserName
             class="profile-description__user-part__user-name q-mt-md q-mb-sm"
             name-class="profile-description__user-part__user-name"
             :name="ownerName"
-            skeleton-scale="1.3"
+            skeleton-scale="1.5"
             v-else
           />
-          <div v-if="ownerDescription !== null">
-
-
+          <div
+            :class="{'profile-description__user-part__wrapper-fit': $q.screen.lt.md}"
+            v-if="ownerDescription !== null"
+          >
             <EditableText
               class="profile-description__user-part__editable-text"
+              input-class="profile-description__user-part__editable-text__input"
               v-if="isUserPage"
               v-model="ownerDescription"
               @finishEditing="changeDescription"
@@ -36,14 +69,21 @@
             </p>
           </div>
           <RandomSkeletonDescription class="q-mt-md" word-height="15px" v-else/>
-
         </div>
       </div>
     </div>
-    <q-separator vertical/>
-    <div class="profile-description__subscribe-part flex justify-center items-center">
+    <q-separator
+      :vertical="$q.screen.gt.md"
+      :style="{
+        'width': $q.screen.gt.md ? '1px': '100%'
+      }"
+    />
+    <div class="profile-description__subscribe-part flex justify-center items-center" :style="{
+        'width': $q.screen.gt.md ? null : '100%'
+      }">
       <div class="flex column text-center">
-        <h6 class="profile-description__subscribe-part__subscribe-amount flex items-center">
+        <h6 class="profile-description__subscribe-part__subscribe-amount flex items-center"
+            :class="{'q-my-sm': $q.screen.lt.lg}">
           <span v-if="followersCount !== null" class="q-mr-sm">{{ followersCount }} </span>
           <q-skeleton width="60px" class="q-mr-sm" v-else/>
           {{ $tc('profile.followers', followersCount !== null ? followersCount : 0) }}
@@ -115,6 +155,9 @@ export default {
       })
     }
   },
+  beforeUpdate() {
+    this.isUserPage = this.$route.params.userId.toString() === this.$userId.toString()
+  },
   data() {
     return {
       ownerName: null,
@@ -149,6 +192,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.profile-description__user-part__wrapper-fit {
+  width: 100%;
+}
+
 a {
   color: black;
 }
@@ -174,10 +222,11 @@ a {
   flex-wrap: nowrap;
 }
 
-.edit-icon {
+.edit-icon-hover {
   opacity: 0;
   transition: opacity .3s;
 }
+
 
 .profile-description__user-part__user-name {
   .profile-description__user-part__user-name-edit {
@@ -204,6 +253,12 @@ a {
 
 </style>
 <style lang="scss">
+@media (max-width: 1024px) {
+  .profile-description__user-part__editable-text__input{
+    text-align: center;
+  }
+}
+
 .profile-description__user-part__user-image {
   align-items: start;
   width: 150px;

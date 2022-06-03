@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <HeaderComponent/>
+  <UI :limiter="false" :footer="false">
     <q-form
       @validation-success="finish()"
       @submit.prevent=""
@@ -19,23 +18,23 @@
         :stages-count="1"
       />
     </q-form>
-  </div>
+  </UI>
 </template>
 
 <script>
-import HeaderComponent from "components/Main/Header/HeaderComponent";
 import TitleInput from "components/Core/Form/TitleInput";
 import TextInput from "components/Core/Form/TextInput";
 import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 import {mapGetters} from "vuex";
+import UI from "components/Ui/UI";
 
 export default {
   name: "EditAchievement",
   components: {
-    HeaderComponent,
     TitleInput,
     TextInput,
     ProgressFormBar,
+    UI,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),

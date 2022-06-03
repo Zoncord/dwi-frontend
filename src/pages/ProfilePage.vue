@@ -1,21 +1,26 @@
 <template>
-  <div class="">
-    <HeaderElement/>
-    <div class="limiter">
-      <ProfileLayout/>
-    </div>
-  </div>
+  <UI>
+    <ProfileLayout :user-id="userId" :key="userId"/>
+  </UI>
 </template>
 
 <script>
 import ProfileLayout from "layouts/ProfileLayout";
-import HeaderElement from "components/Main/Header/HeaderComponent";
+import UI from "components/Ui/UI";
 
 export default {
   name: "ProfilePage",
   components: {
     ProfileLayout,
-    HeaderElement,
+    UI,
+  },
+  data() {
+    return {
+      userId: this.$route.params.userId,
+    }
+  },
+  beforeRouteUpdate(to) {
+    this.userId = to.params.userId
   }
 }
 </script>
