@@ -1,43 +1,55 @@
 <template>
   <div class="achievement__blog__post q-card  q-mb-md">
-    <h4 class="achievement__blog__post__title" v-if="title">{{ title }}</h4>
-    <q-skeleton width="200px" height="40px" class="achievement__blog__post__title-skeleton q-mb-md" v-else/>
-    <div class="achievement__blog__post__time">
-      <p v-if="date" class="q-mr-sm">{{ date }}</p>
-      <q-skeleton width="100px" v-else class="q-mr-sm"/>
-      <p class="q-mr-sm"> {{ $t('achievement.at') }}</p>
-      <p v-if="date" class="q-mr-sm">{{ time }}</p>
-      <q-skeleton width="100px" v-else/>
+    <div class="q-mx-lg">
+      <h4 class="achievement__blog__post__title" v-if="title">{{ title }}</h4>
+      <q-skeleton width="200px" height="40px" class="achievement__blog__post__title-skeleton q-mb-md" v-else/>
+      <DateComponent :full-date="creationDate"/>
+
+      <article class="achievement__blog__post__text" v-if="description">{{ description }}</article>
+      <RandomSkeletonDescription
+        class="achievement__blog__post__text-skeleton q-my-xl"
+        v-else
+      />
+      <div class="flex justify-between">
+        <a class="flex items-center" :href="`/profile/${ownerId}`">
+          <UserImage
+            class="achievement__blog__post__user-logo"
+            :url="ownerImage"
+          />
+          <UserName :name="ownerName"/>
+        </a>
+
+        <nav class="achievement__blog__controls flex items-center ">
+          <q-btn
+            icon="chat"
+            class="achievement__blog__controls__btn"
+            :text-color="commentsActive ? 'highlight' : null"
+            :ripple="false"
+            @click="toggleComments"
+          />
+          <q-btn
+            icon="favorite"
+            class="achievement__blog__controls__btn like-btn"
+            :ripple="false"
+            :class="{liked: this.isLiked}"
+            @click="handleLiking()"
+          />
+          <h5 class="achievement__blog__controls__likes" v-if="likesCount !== null">
+            {{ likesCount }}
+          </h5>
+          <q-skeleton width="40px" v-else/>
+        </nav>
+      </div>
     </div>
-
-    <article class="achievement__blog__post__text" v-if="description">{{ description }}</article>
-    <RandomSkeletonDescription
-      class="achievement__blog__post__text-skeleton q-my-xl"
-      v-else
-    />
-    <div class="flex justify-between">
-      <a class="flex items-center" :href="`/profile/${ownerId}`">
-        <UserImage
-          class="achievement__blog__post__user-logo"
-          :url="ownerImage"
-        />
-        <UserName :name="ownerName"/>
-      </a>
-
-      <nav class="achievement__blog__controls flex items-center ">
-        <q-btn icon="chat" class="achievement__blog__controls__btn" :ripple="false"></q-btn>
-        <q-btn
-          icon="favorite"
-          class="achievement__blog__controls__btn like-btn"
-          :ripple="false"
-          :class="{liked: this.isLiked}"
-          @click="handleLiking()"
-        />
-        <h5 class="achievement__blog__controls__likes" v-if="likesCount !== null">
-          {{ likesCount }}
-        </h5>
-        <q-skeleton width="40px" v-else/>
-      </nav>
+    <div
+      class="achievement__blog__post__comments"
+      :style="{
+          animation: commentsActive ? 'slideInDown .25s normal 1  both' : commentsFirstToggle ? null: 'backInDown .25s normal 1 forwards',
+          height: ' 0'
+      }"
+    >
+      <q-separator/>
+      <CommentsComponent/>
     </div>
     <ContextMenu v-if="ownerId === this.$userId" type="post" :parent-id="id"/>
   </div>
@@ -49,6 +61,8 @@ import {mapGetters} from "vuex";
 import ContextMenu from "components/Core/ContextMenu";
 import UserName from "components/Core/User/UserName";
 import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
+import CommentsComponent from "components/Acievement/AchievementPost/Comments/CommentsComponent";
+import DateComponent from "components/Core/DateComponent/DateComponent";
 
 export default {
   name: "AchievementPost",
@@ -57,6 +71,8 @@ export default {
     ContextMenu,
     UserName,
     RandomSkeletonDescription,
+    CommentsComponent,
+    DateComponent,
   },
   props: {
     url: {
@@ -85,11 +101,9 @@ export default {
           Authorization: 'Token ' + this.token()
         }
       }).then(res => {
-        let creationDate = new Date(res.data.date_time_of_creation)
+        this.creationDate = new Date(res.data.date_time_of_creation)
         this.id = res.data.id
         this.title = res.data.title
-        this.date = creationDate.toLocaleDateString()
-        this.time = creationDate.toLocaleTimeString()
         this.description = res.data.description
       })
     },
@@ -150,6 +164,10 @@ export default {
       }
       this.isLiked = !this.isLiked
     },
+    toggleComments() {
+      this.commentsActive = !this.commentsActive
+      this.commentsFirstToggle = false
+    }
 
   },
   async mounted() {
@@ -169,9 +187,10 @@ export default {
       ownerId: null,
       title: null,
       description: null,
-      date: null,
-      time: null,
       id: null,
+      commentsActive: false,
+      creationDate: null,
+      commentsFirstToggle: true,
     }
   }
 }
@@ -186,14 +205,10 @@ export default {
   font-size: 25px;
 }
 
-.achievement__blog__post__time {
-  * {
-    display: inline-block;
-  }
-}
 
 .achievement__blog__post {
-  padding: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   width: 100%;
 
 }
@@ -229,5 +244,31 @@ export default {
 .achievement__blog__post__user-logo {
   width: 100px;
   margin-right: 20px;
+}
+
+.achievement__blog__post__comments {
+  overflow: hidden;
+  transition: transform .25s;
+  transform-origin: top;
+  border-radius: 0 !important;
+}
+
+</style>
+<style>
+@keyframes slideInDown {
+  from{
+    height: 0;
+  }
+  to{
+    height: 350px;
+  }
+}
+@keyframes backInDown {
+  from{
+    height: 350px;
+  }
+  to{
+    height: 0;
+  }
 }
 </style>

@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import AchievementPost from "components/Acievement/AchievementPost";
+import AchievementPost from "components/Acievement/AchievementPost/AchievementPost";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 import {mapGetters} from "vuex";
 

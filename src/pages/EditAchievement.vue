@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import TitleInput from "components/Core/Form/TitleInput";
-import TextInput from "components/Core/Form/TextInput";
+import TitleInput from "components/Core/Inputs/TitleInput";
+import TextInput from "components/Core/Inputs/TextInput";
 import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 import {mapGetters} from "vuex";
 import UI from "components/Ui/UI";

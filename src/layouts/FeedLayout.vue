@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import AchievementPost from "components/Acievement/AchievementPost";
+import AchievementPost from "components/Acievement/AchievementPost/AchievementPost";
 import {mapGetters} from "vuex";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 

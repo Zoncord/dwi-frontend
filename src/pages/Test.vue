@@ -7,10 +7,7 @@
 </template>
 
 <script>
-import AchievementPost from "components/Acievement/AchievementPost";
 import HeaderComponent from "components/Main/Header/HeaderComponent";
-import DateCard from "components/Core/Cards/DateCard/DateCard";
-// import UserName from "components/Core/User/UserName";
 import ProfileDescription from "components/Profile/ProfileDescription";
 export default {
   name: "Test",

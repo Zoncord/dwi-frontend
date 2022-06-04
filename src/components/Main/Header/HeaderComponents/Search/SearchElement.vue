@@ -104,11 +104,9 @@ export default {
       }).then(res => {
         this.achievements = []
         for (let result in res.data.results) {
-          // if (result < (this.$q.screen.gt.sm ? 5 : 1)) {
             this.achievements.push({
               url: res.data.results[result].url,
             })
-          // }
         }
       })
     }
