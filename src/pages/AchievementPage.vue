@@ -1,18 +1,19 @@
 <template>
-  <HeaderComponent></HeaderComponent>
-<div class="limiter">
+<UI>
   <AchievementLayout/>
-</div>
+</UI>
+
+
 </template>
 
 <script>
-import HeaderComponent from "components/Main/Header/HeaderComponent";
 import AchievementLayout from "layouts/AchievementLayout";
+import UI from "components/Ui/UI";
 export default {
   name: "AchievementPage",
   components: {
-    HeaderComponent,
     AchievementLayout,
+    UI,
   }
 }
 </script>

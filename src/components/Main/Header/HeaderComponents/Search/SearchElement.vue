@@ -12,7 +12,7 @@
       :placeholder="$t('header.search.label')"
       color="border-color" hide-bottom-space label-color="black"
       :style="{
-        borderRadius: searchFocused && achievements.length ? '5px 5px 0px 0px': '5px 5px 5px 5px'
+        borderRadius: searchFocused  ? '5px 5px 0px 0px': '5px 5px 5px 5px'
       }"
     >
       <!--Search icon-->
@@ -36,29 +36,35 @@
       dense
       bordered
       padding
-      class="search__advice-list rounded-borders search-recommends"
+      class="search__advice-list rounded-borders"
       :style="{
-      border: searchFocused && achievements.length ? 'solid 1px #B8B8B8': 'none',
-      transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
-    }"
+        border: searchFocused ? 'solid 1px #B8B8B8': 'none',
+        transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
+      }"
     >
-      <div
-        v-for="(resp, id) in achievements" :key="resp"
-      >
-        <SearchRecommendsElement
-          v-if="id < 6"
-          :url="resp.url"
-        />
+      <div v-if="achievements.length !== 0">
+        <div
+          v-for="(resp, id) in achievements" :key="resp"
+        >
+          <SearchRecommendsElement
+            :url="resp.url"
+            v-if="id < ($q.screen.gt.sm ? 6: 3)"
+          />
+        </div>
+      </div>
+      <div class="flex justify-center q-my-md" v-else>
+        <p>Ничего не найдено</p>
       </div>
     </q-list>
+
   </div>
 
 </template>
 
 <script>
-import axios from "axios";
 import SearchRecommendsElement
   from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Search",
@@ -80,25 +86,28 @@ export default {
   watch: {
     query() {
       this.getAchievements()
-    }
+    },
   },
   methods: {
+    ...mapGetters('mainStore', ['token']),
     getAchievements() {
-      axios.get(this.$dwiApi + 'achievements/achievement/?search=' + this.query).then(res => {
+      this.$axios.get(`${this.$dwiApi}achievements/achievement/`, {
+        params: {
+          search: this.query,
+        },
+        headers: {
+          Authorization: `Token ${this.token()}`
+        }
+      }).then(res => {
         this.achievements = []
-        for (let result of res.data.results){
-          this.achievements.push({
-            // days: result.days_since_the_last_incident,
-            // id: result.id,
-            // ownerLink: result.owners[0],
-            // description: result.description,
-            // title: result.title,
-            url: result.url,
-          })
+        for (let result in res.data.results) {
+            this.achievements.push({
+              url: res.data.results[result].url,
+            })
         }
       })
     }
-  }
+  },
 }
 </script>
 
@@ -141,7 +150,6 @@ export default {
   border-top: none !important;
   transition: transform .25s;
   transform-origin: top;
-
 }
 
 .search__advice-list__user-image {

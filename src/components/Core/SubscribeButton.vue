@@ -52,7 +52,6 @@ export default {
         })
       } else {
         await this.$axios.post(this.$dwiApi + 'rating/user/', {
-            user: this.$userUrl,
             evaluated_user: this.$dwiApi + 'users/user/' + this.$route.params.userId + '/'
           },
           {

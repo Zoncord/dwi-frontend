@@ -1,6 +1,5 @@
 <template>
-  <div class="create-achievement">
-    <HeaderComponent/>
+  <UI :footer="false" :limiter="false">
     <q-form
       @validation-success="nextStage()"
       @submit.prevent=""
@@ -70,23 +69,21 @@
         :stages-count="stagesCount"
       />
     </q-form>
-  </div>
-
-
+  </UI>
 </template>
 
 <script>
-import HeaderComponent from "components/Main/Header/HeaderComponent";
 import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 import TagsComponent from "components/CreateAchievement/TagsComponent";
 import {mapGetters} from "vuex";
+import UI from "components/Ui/UI";
 
 export default {
   name: "CreateCard",
   components: {
-    HeaderComponent,
     ProgressFormBar,
     TagsComponent,
+    UI,
   },
   data() {
     return {
@@ -119,22 +116,22 @@ export default {
     },
     async finish() {
       let categoryUrl
-      await this.$axios.post(`${this.$dwiApi}achievements/category/`, {
-        title: this.category,
-        slug: this.category,
-        description: this.category,
-      }, {
-        headers: {
-          Authorization: `Token ${this.userToken()}`
-        }
-      }).then(res => {
-        categoryUrl = res.data.url
-      })
+      if (this.category) {
+        await this.$axios.post(`${this.$dwiApi}achievements/category/`, {
+          title: this.category,
+        }, {
+          headers: {
+            Authorization: `Token ${this.userToken()}`
+          }
+        }).then(res => {
+          categoryUrl = res.data.url
+        })
+      }
       await this.$axios.post(this.$dwiApi + 'achievements/achievement/', {
         title: this.title,
         description: this.description,
         tags: this.tags.map((tag) => {return tag.url}),
-        category: categoryUrl,
+        category: this.category ? categoryUrl: null,
       }, {
         headers: {
           Authorization: `Token ${this.userToken()}`
@@ -149,8 +146,6 @@ export default {
       if (tag && this.tags.length < this.maxTags) {
         this.$axios.post(`${this.$dwiApi}achievements/tag/`, {
           title: tag,
-          slug: tag,
-          description: tag,
         }, {
           headers: {
             Authorization: `Token ${this.token()}`,

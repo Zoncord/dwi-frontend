@@ -1,5 +1,5 @@
 <template>
-  <HeaderComponent/>
+  <UI :limiter="false" :footer="false">
   <q-form
     @validation-success="finish()"
     @submit.prevent=""
@@ -19,21 +19,22 @@
       :stages-count="1"
     />
   </q-form>
+  </UI>
 </template>
 
 <script>
 import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
-import HeaderComponent from "components/Main/Header/HeaderComponent";
 import {mapGetters} from "vuex";
-import TitleInput from "components/Core/Form/TitleInput";
-import TextInput from "components/Core/Form/TextInput";
+import TitleInput from "components/Core/Inputs/TitleInput";
+import TextInput from "components/Core/Inputs/TextInput";
+import UI from "components/Ui/UI";
 export default {
   name: "CreatePost",
   components: {
     ProgressFormBar,
-    HeaderComponent,
     TitleInput,
     TextInput,
+    UI,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),

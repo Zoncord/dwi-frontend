@@ -1,22 +1,19 @@
 <template>
-  <div>
-    <Header/>
-    <div class="limiter">
-      <FeedLayout/>
-    </div>
-
-  </div>
+  <UI>
+    <FeedLayout/>
+  </UI>
 </template>
 
 <script>
-import Header from "components/Main/Header/HeaderComponent";
 import FeedLayout from "layouts/FeedLayout";
+import UI from "components/Ui/UI";
 
 export default {
   name: "Main",
   components: {
-    Header,
     FeedLayout,
+
+    UI,
   },
 }
 </script>

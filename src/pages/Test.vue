@@ -1,15 +1,19 @@
 <template>
-<div class="">
-  <EditableText v-model="a"/>
+  <HeaderComponent/>
+<div class="limiter">
+
+  <ProfileDescription :owner-url="$dwiApi + ''"></ProfileDescription>
 </div>
 </template>
 
 <script>
-import EditableText from "components/Core/EditableText/EditableText";
+import HeaderComponent from "components/Main/Header/HeaderComponent";
+import ProfileDescription from "components/Profile/ProfileDescription";
 export default {
   name: "Test",
   components: {
-    EditableText,
+    HeaderComponent,
+    ProfileDescription,
   },
   data(){
     return {

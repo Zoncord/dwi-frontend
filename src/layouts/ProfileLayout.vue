@@ -3,15 +3,17 @@
     <ProfileDescription
       :owner-url="userUrl"
     />
-    <div class="profile__cards-wrapper">
-      <AddCard v-if="isUserPage"/>
-      <DateCard
-        v-for="dateCard in achievements"
-        :key="dateCard"
-        :owner-url="dateCard.owners[0]"
-        :url="dateCard.url"
-      />
-    </div>
+      <InfiniteScroll :on-load-request="getAchievements">
+        <div class="profile__cards-wrapper">
+          <AddCard v-if="isUserPage"/>
+          <DateCard
+            v-for="dateCard in achievements"
+            :key="dateCard"
+            :owner-url="dateCard.owners[0]"
+            :url="dateCard.url"
+          />
+        </div>
+      </InfiniteScroll>
   </q-layout>
 </template>
 
@@ -20,6 +22,7 @@ import ProfileDescription from "components/Profile/ProfileDescription";
 import AddCard from "components/Core/Cards/AddCard";
 import DateCard from "components/Core/Cards/DateCard/DateCard";
 import {mapGetters} from "vuex";
+import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
 export default {
   name: "ProfileLayout",
@@ -27,44 +30,51 @@ export default {
     ProfileDescription,
     AddCard,
     DateCard,
+    InfiniteScroll,
+  },
+  props: {
+    userId: {
+      required: true,
+    }
   },
   methods: {
-    ...mapGetters('mainStore', ['token'])
+    ...mapGetters('mainStore', ['token']),
+    async getAchievements(index){
+      await this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
+        params: {
+          owners: this.userId,
+          page: index,
+        }
+      }).then(res => {
+        this.achievements = res.data.results
+      })
+    },
+    getUserData(){
+      this.$axios.get(this.$dwiApi + 'users/user/' + this.userId, {
+        headers: {
+          Authorization: `Token ${this.token()}`
+        }
+      }).then(res => {
+        this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
+        this.userUrl = res.data.url
+        this.followersCount = res.data.followers_count
+        this.profileDescription = res.data.description
+      })
+    }
   },
   data() {
-    this.$axios.get(this.$dwiApi + 'users/user/' + this.$route.params.userId, {
-      headers: {
-        Authorization: `Token ${this.token()}`
-      }
-    }).then(res => {
-      this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-      this.userUrl = res.data.url
-      this.followersCount = res.data.followers_count
-      this.profileDescription = res.data.description
-    }).catch(err => {
-      if (err.request) {
-        this.$router.push('/404')
-      }
-    })
-    this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
-      params: {
-        owners: this.$route.params.userId
-      }
-    }).then(res => {
-      this.achievements = res.data.results
-    })
+    this.getUserData()
     return {
       userName: null,
       userImage: null,
       userUrl: null,
-      isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
+      isUserPage: this.userId.toString() === this.$userId.toString(),
       isSubscribed: false,
       achievements: null,
       followersCount: null,
       profileDescription: null,
     }
   },
-
 }
 </script>
 
