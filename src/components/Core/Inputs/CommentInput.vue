@@ -1,17 +1,18 @@
 <template>
   <q-input
-    borderless
+    dense
+    outlined
     autogrow
-    :placeholder="$t('createAchievement.firstStage.title') + ' *'"
+    :placeholder="$t('comment') + '...'"
     :maxlength="this.maxLength"
-    :rules="[ val => val && val.length > 0 || $t('errors.inputs.emptyField')]"
-    class="title-input"
-    v-model="title"
-    :model-value="title"
+    class="comment-input"
+    input-class="comment-input__input"
+    v-model="comment"
+    :model-value="comment"
   >
-    <template v-slot:counter>
+    <template v-slot:append>
       <p class="text-input__chars-counter">
-        {{ this.maxLength - title.length }}
+        {{ this.maxLength - comment.length }}
       </p>
     </template>
   </q-input>
@@ -31,20 +32,22 @@ export default {
   },
   data() {
     return {
-      title: this.modelValue,
+      comment: this.modelValue,
     }
   },
   watch: {
-    title() {
-      this.$emit('update:modelValue', this.title)
+    comment() {
+      this.$emit('update:modelValue', this.comment)
     },
     modelValue(){
-      this.title = this.modelValue
+      this.comment = this.modelValue
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .comment-input{
+      padding-bottom: 0;
+    }
 </style>

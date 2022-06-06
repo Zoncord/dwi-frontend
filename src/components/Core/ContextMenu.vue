@@ -55,7 +55,7 @@ export default {
     ...mapGetters('mainStore', ['token']),
     async delete() {
       this.$q.dialog({
-        title: this.$t('dialog.title.sure'),
+        comment: this.$t('dialog.title.sure'),
         message: this.$t(`dialog.message.delete.${this.type}`),
         cancel: true,
         persistent: true,
@@ -74,6 +74,8 @@ export default {
             }
           })
           document.location.reload()
+        } else if (this.type === 'comment') {
+          //TODO add action
         }
       })
     },
@@ -82,11 +84,13 @@ export default {
         this.$router.push(`/achievement/edit/${this.parentId}`)
       } else if (this.type === 'post') {
         this.$router.push(`/post/edit/${this.parentId}`)
+      } else if (this.type === 'comment') {
+        this.$router.push(`/comment/edit/${this.parentId}`)
       }
     },
     reset() {
       this.$q.dialog({
-        title: this.$t('dialog.title.sure'),
+        comment: this.$t('dialog.title.sure'),
         message: this.$t('dialog.message.reset.achievement'),
         cancel: true,
         persistent: true,
@@ -107,7 +111,7 @@ export default {
     let items
     if (this.type === 'achievement') {
       items = ['reset', 'edit', 'delete']
-    } else if (this.type === 'post') {
+    } else if (this.type === 'post' || this.type === 'comment') {
       items = ['edit', 'delete']
     }
     return {

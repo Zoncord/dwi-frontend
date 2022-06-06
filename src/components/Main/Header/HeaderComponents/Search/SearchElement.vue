@@ -75,9 +75,6 @@ export default {
     this.getAchievements()
   },
   data() {
-    setInterval(() => {
-      console.log(this.$q.screen.gt.sm)
-    }, 100)
     return {
       query: '',
       searchFocused: false,

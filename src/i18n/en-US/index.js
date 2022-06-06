@@ -21,6 +21,7 @@ export default {
   profile: {
     followers: 'follower | followers'
   },
+  comment: 'Comment',
   subscribeButton: {
     subscribe: 'Subscribe',
     unsubscribe: 'Unsubscribe',
@@ -71,6 +72,7 @@ export default {
       delete: {
         achievement: 'Your achievement and all posts in it will be deleted',
         post: 'Your post will be deleted',
+        comment: 'Your comment will be deleted',
       }
     },
     variant: {
@@ -78,6 +80,5 @@ export default {
       no: 'no',
     }
   },
-  // description: 'Description'
   noDescription: 'This person has not description'
 }

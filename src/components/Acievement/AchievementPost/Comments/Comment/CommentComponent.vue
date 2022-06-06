@@ -14,6 +14,7 @@
       </p>
     </div>
     <q-separator/>
+    <ContextMenu type="comment" parent-id=""/>
   </div>
 
 </template>
@@ -22,6 +23,7 @@
 import UserImage from "components/Core/User/UserImage";
 import UserName from "components/Core/User/UserName";
 import DateComponent from "components/Core/DateComponent/DateComponent";
+import ContextMenu from "components/Core/ContextMenu";
 
 export default {
   name: "CommentComponent",
@@ -29,6 +31,7 @@ export default {
     UserImage,
     UserName,
     DateComponent,
+    ContextMenu,
   }
 }
 </script>

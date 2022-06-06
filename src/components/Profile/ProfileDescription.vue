@@ -197,10 +197,6 @@ export default {
   width: 100%;
 }
 
-a {
-  color: black;
-}
-
 .profile-description {
   border-radius: 15px;
 }
@@ -248,6 +244,9 @@ a {
   &:hover .profile-description__user-part__text-edit {
     opacity: 1;
   }
+}
+.profile-description__user-part__editable-text{
+  word-break: break-word;
 }
 
 

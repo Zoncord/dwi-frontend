@@ -10,7 +10,7 @@
         class="achievement__blog__post__text-skeleton q-my-xl"
         v-else
       />
-      <div class="flex justify-between">
+      <div class="flex justify-between q-mb-md">
         <a class="flex items-center" :href="`/profile/${ownerId}`">
           <UserImage
             class="achievement__blog__post__user-logo"
@@ -44,14 +44,18 @@
     <div
       class="achievement__blog__post__comments"
       :style="{
-          animation: commentsActive ? 'slideInDown .25s normal 1  both' : commentsFirstToggle ? null: 'backInDown .25s normal 1 forwards',
-          height: ' 0'
+          'height': commentsActive ? '300px' : '0',
       }"
     >
       <q-separator/>
       <CommentsComponent/>
     </div>
+    <q-separator/>
+    <AddComment
+      class="achievement__blog__post__add-comment q-mx-lg q-my-md"
+    />
     <ContextMenu v-if="ownerId === this.$userId" type="post" :parent-id="id"/>
+
   </div>
 </template>
 
@@ -63,6 +67,7 @@ import UserName from "components/Core/User/UserName";
 import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
 import CommentsComponent from "components/Acievement/AchievementPost/Comments/CommentsComponent";
 import DateComponent from "components/Core/DateComponent/DateComponent";
+import AddComment from "components/Acievement/AchievementPost/Comments/AddComment/AddComment";
 
 export default {
   name: "AchievementPost",
@@ -73,6 +78,7 @@ export default {
     RandomSkeletonDescription,
     CommentsComponent,
     DateComponent,
+    AddComment,
   },
   props: {
     url: {
@@ -191,8 +197,9 @@ export default {
       commentsActive: false,
       creationDate: null,
       commentsFirstToggle: true,
+      commentsDisplayed: false,
     }
-  }
+  },
 }
 </script>
 
@@ -207,10 +214,8 @@ export default {
 
 
 .achievement__blog__post {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 20px;
   width: 100%;
-
 }
 
 .achievement__blog__post__title {
@@ -248,27 +253,37 @@ export default {
 
 .achievement__blog__post__comments {
   overflow: hidden;
-  transition: transform .25s;
+  transition: all .25s;
   transform-origin: top;
   border-radius: 0 !important;
 }
 
+
 </style>
-<style>
-@keyframes slideInDown {
-  from{
-    height: 0;
+<style lang="scss">
+.achievement__blog__post__add-comment {
+  .add-comment__user-image{
+    width: 32px;
   }
-  to{
-    height: 350px;
-  }
-}
-@keyframes backInDown {
-  from{
-    height: 350px;
-  }
-  to{
-    height: 0;
+
+  .comment-input {
+    flex-grow: 2;
+    .q-field__inner{
+      .q-field__control{
+        min-height: 30px;
+        .q-field__append{
+          height: 32px;
+        }
+        .q-field__control-container{
+          padding: 0 !important;
+          .comment-input__input{
+            min-height: 16px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+          }
+        }
+      }
+    }
   }
 }
 </style>

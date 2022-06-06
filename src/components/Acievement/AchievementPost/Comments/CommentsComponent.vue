@@ -7,21 +7,18 @@
         </InfiniteScroll>
       </q-list>
     </q-scroll-area>
-    <AddComment/>
   </div>
 </template>
 
 <script>
 import CommentComponent from "components/Acievement/AchievementPost/Comments/Comment/CommentComponent";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
-import AddComment from "components/Acievement/AchievementPost/Comments/AddComment/AddComment";
-
 export default {
   name: "CommentsComponents",
   components: {
     CommentComponent,
     InfiniteScroll,
-    AddComment,
+    // AddComment,
   },
   data() {
     return {
@@ -32,12 +29,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comments{
-  max-height: 350px;
-  height: 100%;
-}
 .comments__field {
-  //flex-grow: 2;
+  height: 300px;
 }
 
+</style>
+<style lang="scss">
+.comments__field__input {
+  .comment-input {
+    flex-grow: 2;
+  }
+}
 </style>
