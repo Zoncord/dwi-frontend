@@ -7,6 +7,7 @@
           :key="post"
           :url="post.url"
           :owner-url="post.ownerUrl"
+          :to-achievement="true"
         />
       </InfiniteScroll>
     </div>

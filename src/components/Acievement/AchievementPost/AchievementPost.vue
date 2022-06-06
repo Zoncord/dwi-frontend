@@ -1,6 +1,10 @@
 <template>
-  <div class="achievement__blog__post q-card  q-mb-md">
-    <div class="q-mx-lg">
+  <div class="achievement__blog__post q-card q-mb-md">
+    <div class="achievement__blog__post__to-achievement" v-if="toAchievement">
+      <ToAchievement class="q-mx-lg" :achievement-id="achievementId"/>
+      <q-separator/>
+    </div>
+    <div class="q-mx-lg q-mt-md">
       <h4 class="achievement__blog__post__title" v-if="title">{{ title }}</h4>
       <q-skeleton width="200px" height="40px" class="achievement__blog__post__title-skeleton q-mb-md" v-else/>
       <DateComponent :full-date="creationDate"/>
@@ -68,6 +72,7 @@ import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDe
 import CommentsComponent from "components/Acievement/AchievementPost/Comments/CommentsComponent";
 import DateComponent from "components/Core/DateComponent/DateComponent";
 import AddComment from "components/Acievement/AchievementPost/Comments/AddComment/AddComment";
+import ToAchievement from "components/Acievement/AchievementPost/ToAchievement/ToAchievement";
 
 export default {
   name: "AchievementPost",
@@ -79,6 +84,7 @@ export default {
     CommentsComponent,
     DateComponent,
     AddComment,
+    ToAchievement,
   },
   props: {
     url: {
@@ -87,6 +93,9 @@ export default {
     ownerUrl: {
       required: true,
     },
+    toAchievement: {
+      default: false,
+    }
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
@@ -111,18 +120,17 @@ export default {
         this.id = res.data.id
         this.title = res.data.title
         this.description = res.data.description
+        this.likesCount = res.data.likes_count
+        this.achievementUrl = res.data.achievement
       })
     },
-    async getLikesData() {
-      await this.$axios.get(`${this.$dwiApi}rating/post/`, {
-        params: {
-          post: this.id
-        },
+    async getAchievementData(){
+      await this.$axios.get(this.achievementUrl, {
         headers: {
           Authorization: 'Token ' + this.token()
         }
       }).then(res => {
-        this.likesCount = res.data.count
+        this.achievementId = res.data.id
       })
     },
     async getIsLiked() {
@@ -179,7 +187,7 @@ export default {
   async mounted() {
     await this.getUserData()
     await this.getPostData()
-    await this.getLikesData()
+    await this.getAchievementData()
     await this.getIsLiked()
   },
   data() {
@@ -198,6 +206,8 @@ export default {
       creationDate: null,
       commentsFirstToggle: true,
       commentsDisplayed: false,
+      achievementUrl: null,
+      achievementId: null,
     }
   },
 }
@@ -214,7 +224,6 @@ export default {
 
 
 .achievement__blog__post {
-  padding-top: 20px;
   width: 100%;
 }
 

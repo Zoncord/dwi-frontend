@@ -42,6 +42,9 @@ export default {
     description: 'Description',
     addNewPost: 'Add new post',
   },
+  post: {
+    toAchievement: 'Back to the achievement',
+  },
   progressFormBar: {
     cancel: 'Cancel',
     back: 'Back',
