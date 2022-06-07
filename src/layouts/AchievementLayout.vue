@@ -18,16 +18,24 @@
         </h6>
       </div>
 
-      <div class="achievement__navigation__controls q-card  flex">
-        <q-btn icon="arrow_back_ios" class="achievement__navigation__controls__button" :ripple="false"
-               @click="$router.back()"></q-btn>
-        <q-btn icon="favorite"
-               class="achievement__navigation__controls__button like-btn"
-               :class="{liked: isLiked}"
-               :ripple="false"
-               @click="handleAchievementLike()"
-        ></q-btn>
-        <q-btn icon="chat" class="achievement__navigation__controls__button" :ripple="false"></q-btn>
+      <div class="achievement__navigation__controls q-card flex justify-between">
+        <q-btn
+          icon="arrow_back_ios"
+          class="achievement__navigation__controls__button"
+          :ripple="false"
+          @click="$router.back()"
+        />
+        <div class="flex items-center">
+          <p>{{likesCount}}</p>
+          <q-btn
+            icon-right="favorite"
+            class="achievement__navigation__controls__button like-btn"
+            :class="{liked: isLiked}"
+            :ripple="false"
+            @click="handleAchievementLike()"
+          />
+        </div>
+
       </div>
     </nav>
     <div class="achievement__blog column"
@@ -94,11 +102,13 @@ export default {
         this.achievementUrl = res.data.url
         this.achievementOwner = res.data.owners[0]
         this.achievementDescription = res.data.description
+        this.likesCount = res.data.likes_count
       })
     },
     handleAchievementLike() {
       this.isLiked = !this.isLiked
       if (this.isLiked) {
+        this.likesCount += 1
         this.$axios.post(this.$dwiApi + `rating/achievement/`, {
           achievement: this.achievementUrl
         }, {
@@ -107,6 +117,7 @@ export default {
           }
         })
       } else {
+        this.likesCount -= 1
         this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$userId}&achievement=${this.$route.params.id}`, {
           headers: {
             Authorization: 'Token ' + this.token()
@@ -153,6 +164,7 @@ export default {
       achievementUrl: null,
       achievementOwner: null,
       achievementDescription: null,
+      likesCount: null,
     }
   },
   computed: {
@@ -164,11 +176,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 1024px){
-  .achievement__blog{
+@media (max-width: 1024px) {
+  .achievement__blog {
     width: 100%;
   }
 }
+
 .achievement__navigation__controls {
   border-radius: 10px;
   padding-top: 5px;

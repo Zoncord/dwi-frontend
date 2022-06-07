@@ -192,7 +192,6 @@ export default {
   },
   data() {
     return {
-      likesUnit: '',
       isLiked: false,
       likesCount: null,
       image: null,
