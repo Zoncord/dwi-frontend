@@ -27,6 +27,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getAchievements(index) {
+      // console.log(this.achievements)
       await this.$axios.get(this.$dwiApi + 'achievements/achievement', {
         params: {
           ordering: '-date_time_of_creation',

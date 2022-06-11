@@ -3,17 +3,17 @@
     <ProfileDescription
       :owner-url="userUrl"
     />
-      <InfiniteScroll :on-load-request="getAchievements">
-        <div class="profile__cards-wrapper">
-          <AddCard v-if="isUserPage"/>
-          <DateCard
-            v-for="dateCard in achievements"
-            :key="dateCard"
-            :owner-url="dateCard.owners[0]"
-            :url="dateCard.url"
-          />
-        </div>
-      </InfiniteScroll>
+    <InfiniteScroll :on-load-request="getAchievements">
+      <div class="profile__cards-wrapper">
+        <AddCard v-if="isUserPage"/>
+        <DateCard
+          v-for="dateCard in achievements"
+          :key="dateCard"
+          :owner-url="dateCard.ownerUrl"
+          :url="dateCard.url"
+        />
+      </div>
+    </InfiniteScroll>
   </q-layout>
 </template>
 
@@ -39,17 +39,23 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    async getAchievements(index){
+    async getAchievements(index) {
       await this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
         params: {
           owners: this.userId,
           page: index,
         }
       }).then(res => {
-        this.achievements = res.data.results
+        for (let achievement of res.data.results) {
+          console.log(achievement)
+          this.achievements.push({
+            url: achievement.url,
+            ownerUrl: achievement.owners[0],
+          })
+        }
       })
     },
-    getUserData(){
+    getUserData() {
       this.$axios.get(this.$dwiApi + 'users/user/' + this.userId, {
         headers: {
           Authorization: `Token ${this.token()}`
@@ -70,7 +76,7 @@ export default {
       userUrl: null,
       isUserPage: this.userId.toString() === this.$userId.toString(),
       isSubscribed: false,
-      achievements: null,
+      achievements: [],
       followersCount: null,
       profileDescription: null,
     }
