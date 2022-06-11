@@ -41,9 +41,11 @@ export default {
     at: 'at',
     description: 'Description',
     addNewPost: 'Add new post',
+    edit: 'Edit Achievement',
   },
   post: {
     toAchievement: 'Back to the achievement',
+    edit: 'Edit Post',
   },
   progressFormBar: {
     cancel: 'Cancel',

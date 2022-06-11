@@ -1,48 +1,39 @@
 <template>
   <UI :limiter="false" :footer="false">
-  <q-form
-    @validation-success="finish()"
-    @submit.prevent=""
-    class="create-post flex column text-center"
-  >
-    <h5 class="create-post__title q-my-xl">Create Post</h5>
-    <q-tab-panels v-model="activeTab">
-      <q-tab-panel :name="1" class="limiter create-post__fist-stage">
+    <ProgressForm
+      @finish="finish"
+      :stages-count="1"
+      v-model="activeTab"
+    >
+      <template v-slot:Title>
+        <h5 class="create-post__title q-my-xl">Create Post</h5>
+      </template>
+
+      <template v-slot:Stage1>
         <TitleInput v-model="title" class="create-post__title-input"/>
         <TextInput v-model="description"/>
-      </q-tab-panel>
-    </q-tab-panels>
-    <ProgressFormBar
-      @checkValidation="checkValidation()"
-      @finish="finish()"
-      :active-stage="activeTab"
-      :stages-count="1"
-    />
-  </q-form>
+      </template>
+    </ProgressForm>
   </UI>
 </template>
 
 <script>
-import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 import {mapGetters} from "vuex";
 import TitleInput from "components/Core/Inputs/TitleInput";
 import TextInput from "components/Core/Inputs/TextInput";
 import UI from "components/Ui/UI";
+import ProgressForm from "components/Core/Forms/ProgressForm/ProgressForm";
+
 export default {
   name: "CreatePost",
   components: {
-    ProgressFormBar,
+    ProgressForm,
     TitleInput,
     TextInput,
     UI,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    checkValidation() {
-      if (this.isValid) {
-        this.finish()
-      }
-    },
     async finish() {
       await this.$axios.post(this.$dwiApi + 'blog/post/', {
         achievement: this.$dwiApi + `achievements/achievement/${this.$route.query.achievement_id}/`,
@@ -59,7 +50,6 @@ export default {
   data() {
     return {
       activeTab: 1,
-      isValid: false,
       title: '',
       description: '',
     }
@@ -68,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.create-post__title-input{
+.create-post__title-input {
   margin-bottom: 20px;
 }
 </style>

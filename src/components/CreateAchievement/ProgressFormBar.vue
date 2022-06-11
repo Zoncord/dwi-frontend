@@ -11,13 +11,15 @@
       <q-btn class="progress-form-bar__cancel-btn col-2 q-mr-md"
              no-caps
              @click="$router.go(-1)"
+             :disable="isFinished"
       >
         {{ $t('progressFormBar.cancel') }}
       </q-btn>
       <q-btn class="progress-form-bar__back-btn col-2"
              no-caps
-             @click="$emit('previousStage')"
+             @click="previousStage()"
              v-if="activeStage > 1"
+             :disable="isFinished"
       >
         {{ $t('progressFormBar.back') }}
       </q-btn>
@@ -26,7 +28,7 @@
              no-caps
              color="highlight"
              type="submit"
-             v-if="activeStage !== stagesCount"
+             v-if="activeStage < stagesCount"
       >
         {{ $t('progressFormBar.next') }}
       </q-btn>
@@ -35,6 +37,7 @@
              color="highlight"
              @click="finish"
              v-else
+             :disable="isFinished"
       >
         {{ $t('progressFormBar.finish') }}
       </q-btn>
@@ -49,30 +52,41 @@ export default {
     stagesCount: {
       required: true,
     },
-    activeStage: {
-      required: true,
-    },
     fromSkipId: {
       default: null,
     },
+    modelValue: {},
   },
-  data(){
+  data() {
     return {
-      coefficient: 1,
+      activeStage: this.modelValue,
+      isFinished: false,
     }
   },
   methods: {
-    finish(){
-      //TODO remove coefficient kludge
-      this.coefficient = 0
+    previousStage() {
+      this.activeStage -= 1
+
+    },
+    finish() {
+      this.isFinished = true
+      this.activeStage += 1
       this.$emit('finish')
     }
   },
   computed: {
     progress() {
-      return this.activeStage / (this.stagesCount + this.coefficient)
+      return this.activeStage/ (this.stagesCount + 1)
     }
-  }
+  },
+  watch: {
+    activeStage() {
+      this.$emit('update:modelValue', this.activeStage)
+    },
+    modelValue() {
+      this.activeStage = this.modelValue
+    }
+  },
 }
 </script>
 
@@ -80,6 +94,8 @@ export default {
 .progress-form-bar {
   height: 80px;
   position: fixed;
+  width: 100vw;
+  left: 0;
   bottom: 0;
 }
 

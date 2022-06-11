@@ -1,45 +1,41 @@
 <template>
   <UI :limiter="false" :footer="false">
-    <q-form
-      @validation-success="finish()"
-      @submit.prevent=""
-      class="create-post flex column text-center"
+    <ProgressForm
+      @finish="finish"
+      :stages-count="1"
+      v-model="activeTab"
     >
-      <h5 class="create-post__title q-my-xl">Edit Post</h5>
-      <q-tab-panels v-model="activeTab">
-        <q-tab-panel :name="1" class="limiter create-post__fist-stage">
-          <TitleInput v-model="title" class="create-post__title-input"/>
-          <TextInput v-model="description"/>
-        </q-tab-panel>
-      </q-tab-panels>
-      <ProgressFormBar
-        @finish="finish()"
-        :active-stage="activeTab"
-        :stages-count="1"
-      />
-    </q-form>
+      <template v-slot:Title>
+        <h5 class="edit-post__title q-my-xl">{{ $t('post.edit') }}</h5>
+      </template>
+      <template v-slot:Stage1>
+        <TitleInput v-model="title" class="edit-post__title-input"/>
+        <TextInput v-model="description"/>
+      </template>
+    </ProgressForm>
   </UI>
 </template>
 
 <script>
 import TitleInput from "components/Core/Inputs/TitleInput";
 import TextInput from "components/Core/Inputs/TextInput";
-import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
 import {mapGetters} from "vuex";
 import UI from "components/Ui/UI";
+import ProgressForm from "components/Core/Forms/ProgressForm/ProgressForm";
 
 export default {
   name: "EditPost",
   components: {
     TitleInput,
     TextInput,
-    ProgressFormBar,
+    // ProgressFormBar,
     UI,
+    ProgressForm,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
     async finish() {
-      await this.$axios.patch( `${this.$dwiApi}blog/post/${this.$route.params.postId}`, {
+      await this.$axios.patch(`${this.$dwiApi}blog/post/${this.$route.params.postId}`, {
         title: this.title,
         description: this.description,
       }, {
@@ -50,7 +46,7 @@ export default {
       this.$router.go(-1)
     },
     getAchievementsInformation() {
-      this.$axios.get(`${this.$dwiApi}blog/post/${this.$route.params.postId}`,  {
+      this.$axios.get(`${this.$dwiApi}blog/post/${this.$route.params.postId}`, {
         headers: {
           Authorization: `Token ${this.token()}`
         }

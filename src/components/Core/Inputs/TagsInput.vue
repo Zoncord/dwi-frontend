@@ -22,8 +22,15 @@
           {{ '#' + tag.tag }}
         </q-item-section>
 
-        <q-btn icon="close" flat dense class="tags-component__tag__delete-btn" size="10px" :ripple="false"
-               @click="$emit('deleteTag', id)"></q-btn>
+        <q-btn
+          icon="close"
+          flat
+          dense
+          class="tags-component__tag__delete-btn"
+          size="10px"
+          :ripple="false"
+          @click="deleteTag(id)"
+        />
       </q-item>
     </q-list>
 
@@ -31,27 +38,53 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "TagsComponent",
   props: {
-    tags: {
-      required: true,
-    },
+    modelValue: {},
     maxTags: {
-      required: true,
-    }
-  },
-  data() {
-    return {
-      tag: '',
+      default: 20,
     }
   },
   methods: {
-    addTag() {
-      this.$emit('addTag', this.tag)
-      this.tag = ''
+    ...mapGetters('mainStore', ['token']),
+    async addTag() {
+      if (this.tag && this.tags.length < this.maxTags) {
+        await this.$axios.post(`${this.$dwiApi}achievements/tag/`, {
+          title: this.tag,
+        }, {
+          headers: {
+            Authorization: `Token ${this.token()}`,
+          }
+        }).then(res => {
+          this.tags.unshift({
+            tag: this.tag,
+            url: res.data.url,
+          })
+        })
+        this.tag = ''
+      }
+    },
+    async deleteTag(id) {
+      this.tags.splice(id, 1)
+    },
+  },
+  data() {
+    return {
+      tags: this.modelValue,
+      tag: '',
     }
-  }
+  },
+  watch: {
+    tags() {
+      this.$emit('update:modelValue', this.tags)
+    },
+    modelValue() {
+      this.tags = this.modelValue
+    }
+  },
 }
 </script>
 
@@ -76,7 +109,7 @@ export default {
   flex-wrap: nowrap;
 }
 
-.tags-component__tags-counter{
+.tags-component__tags-counter {
   font-size: 15px;
 }
 
