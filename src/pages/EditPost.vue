@@ -28,7 +28,6 @@ export default {
   components: {
     TitleInput,
     TextInput,
-    // ProgressFormBar,
     UI,
     ProgressForm,
   },

@@ -63,6 +63,9 @@
               v-if="isUserPage"
               v-model="ownerDescription"
               @finishEditing="changeDescription"
+              :class="{
+                'mb10': $q.screen.gt.sm,
+             }"
             />
             <p class="profile-description__user-part__text" v-else>
               {{ ownerDescription }}

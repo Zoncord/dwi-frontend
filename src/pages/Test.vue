@@ -30,8 +30,6 @@ import UI from "components/Ui/UI";
 export default {
   name: "Test",
   components: {
-    // HeaderComponent,
-    // ProfileDescription,
     ProgressForm,
     UI,
   },
@@ -53,7 +51,4 @@ export default {
 </script>
 
 <style scoped>
-.progress-form {
-  width: 100%;
-}
 </style>
