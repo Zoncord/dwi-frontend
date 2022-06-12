@@ -28,7 +28,7 @@
 
 <script>
 import UserImage from "components/Core/User/UserImage";
-import ContextMenu from "components/Core/ContextMenu";
+import ContextMenu from "components/Core/ContextMenu/ContextMenu";
 import UserName from "components/Core/User/UserName";
 export default {
   name: "DateCard",

@@ -6,7 +6,7 @@
           v-for="achievement in achievements"
           :key="achievement"
           :url="achievement.url"
-          :owner-url="achievement.ownerUrl"
+          :owner-url="achievement.owner"
         />
       </div>
     </InfiniteScroll>
@@ -27,7 +27,6 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getAchievements(index) {
-      // console.log(this.achievements)
       await this.$axios.get(this.$dwiApi + 'achievements/achievement', {
         params: {
           ordering: '-date_time_of_creation',
@@ -37,11 +36,8 @@ export default {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        for (let achievement of res.data.results) {
-          this.achievements.push({
-            url: achievement.url,
-            ownerUrl: achievement.owners[0],
-          })
+        for (let achievementData of res.data.results) {
+          this.achievements.push(new this.$Achievement(achievementData))
         }
       })
     }

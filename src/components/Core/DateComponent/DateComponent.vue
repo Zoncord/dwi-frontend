@@ -1,9 +1,9 @@
 <template>
 <div class="date">
-  <p v-if="fullDate" class="q-mr-sm">{{ date }}</p>
+  <p v-if="parent.creationDateTime" class="q-mr-sm">{{ parent.date }}</p>
   <q-skeleton width="100px" v-else class="q-mr-sm"/>
   <p class="q-mr-sm"> {{ $t('achievement.at') }}</p>
-  <p v-if="fullDate" class="q-mr-sm">{{ time }}</p>
+  <p v-if="parent.creationDateTime" class="q-mr-sm">{{ parent.time }}</p>
   <q-skeleton width="100px" v-else/>
 </div>
 </template>
@@ -12,21 +12,10 @@
 export default {
   name: "DateComponent",
   props: {
-    fullDate: {
+    parent: {
       required: true,
     }
   },
-  computed: {
-    preparedDate(){
-      return new Date(this.fullDate)
-    },
-    date(){
-      return this.preparedDate.toLocaleDateString()
-    },
-    time(){
-      return this.preparedDate.toLocaleTimeString()
-    }
-  }
 }
 </script>
 

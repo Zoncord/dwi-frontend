@@ -16,7 +16,7 @@
           'items-center': $q.screen.lt.md,
         }"
       >
-        <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="ownerImage"/>
+        <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="owner.generalInfo.image"/>
         <div class="profile-description__user-part__user-container  flex column"
              :class="{
                 'items-center': $q.screen.lt.md,
@@ -34,7 +34,7 @@
                 'q-mr-sm': $q.screen.gt.sm
               }"
               name-class="profile-description__user-part__user-name"
-              :name="ownerName"
+              :name="owner.generalInfo.name"
               skeleton-scale="1.5"
             />
             <q-icon
@@ -43,19 +43,19 @@
                 'edit-icon-hover': $q.screen.gt.sm,
               }"
               name="create"
-              v-if="ownerName"
+              v-if="owner.generalInfo.name"
             />
           </a>
           <UserName
             class="profile-description__user-part__user-name q-mt-md q-mb-sm"
             name-class="profile-description__user-part__user-name"
-            :name="ownerName"
+            :name="owner.generalInfo.name"
             skeleton-scale="1.5"
             v-else
           />
           <div
             :class="{'profile-description__user-part__wrapper-fit': $q.screen.lt.md}"
-            v-if="ownerDescription !== null"
+            v-if="owner.description !== null"
           >
             <EditableText
               class="profile-description__user-part__editable-text"
@@ -68,7 +68,7 @@
              }"
             />
             <p class="profile-description__user-part__text" v-else>
-              {{ ownerDescription }}
+              {{ owner.description }}
             </p>
           </div>
           <RandomSkeletonDescription class="q-mt-md" word-height="15px" v-else/>
@@ -87,9 +87,9 @@
       <div class="flex column text-center">
         <h6 class="profile-description__subscribe-part__subscribe-amount flex items-center"
             :class="{'q-my-sm': $q.screen.lt.lg}">
-          <span v-if="followersCount !== null" class="q-mr-sm">{{ followersCount }} </span>
+          <span v-if="owner.followers !== null" class="q-mr-sm">{{ owner.followers }} </span>
           <q-skeleton width="60px" class="q-mr-sm" v-else/>
-          {{ $tc('profile.followers', followersCount !== null ? followersCount : 0) }}
+          {{ $tc('profile.followers', owner.followers !== null ? owner.followers : 0) }}
         </h6>
 
         <SubscribeButton
@@ -106,7 +106,7 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
-import SubscribeButton from "components/Core/SubscribeButton";
+import SubscribeButton from "components/Profile/ProfileDescription/SubscribeButton/SubscribeButton";
 import EditableText from "components/Core/EditableText/EditableText";
 import UserName from "components/Core/User/UserName";
 import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
@@ -123,6 +123,9 @@ export default {
   props: {
     ownerUrl: {
       required: true,
+    },
+    owner: {
+      required: true,
     }
   },
   methods: {
@@ -131,7 +134,7 @@ export default {
       this.$axios.get(this.$dwiApi + `rating/user/`, {
         params: {
           user: this.$userId,
-          evaluated_user: this.ownerId,
+          evaluated_user: this.owner.id,
         },
         headers: {
           Authorization: 'Token ' + this.token()
@@ -142,15 +145,15 @@ export default {
     },
     toggleSubscribe() {
       if (this.isSubscribed) {
-        this.followersCount -= 1
+        this.owner.decreaseFollowers()
       } else {
-        this.followersCount += 1
+        this.owner.increaseFollowers()
       }
       this.isSubscribed = !this.isSubscribed
     },
     changeDescription() {
       this.$axios.put(`${this.$dwiApi}users/user/${this.$userId}/`, {
-        description: this.ownerDescription,
+        description: this.owner.description,
       }, {
         headers: {
           Authorization: `Token ${this.token()}`
@@ -163,33 +166,18 @@ export default {
   },
   data() {
     return {
-      ownerName: null,
-      ownerImage: null,
-      ownerId: null,
-      ownerDescription: null,
-      followersCount: null,
+      ownerDescription: this.owner.description,
       isSubscribed: null,
       isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
     }
   },
   watch: {
-    ownerUrl() {
-      if (this.ownerUrl) {
-        this.$axios.get(this.ownerUrl, {
-          headers: {
-            Authorization: 'Token ' + this.token()
-          }
-        }).then(res => {
-          this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-          this.ownerImage = res.data.general_user_information.img
-          this.ownerId = res.data.id
-          this.ownerDescription = res.data.description
-          this.followersCount = res.data.followers_count
-          this.getIsSubscribed()
-        })
-      }
+    ownerDescription(){
+      this.owner.changeDescription(this.ownerDescription)
     },
-
+    owner(){
+      this.getIsSubscribed()
+    },
   }
 }
 </script>

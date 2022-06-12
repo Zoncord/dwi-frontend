@@ -5,9 +5,11 @@
         <AchievementPost
           v-for="post in posts"
           :key="post"
-          :url="post.url"
-          :owner-url="post.ownerUrl"
+          :post="post"
           :to-achievement="true"
+
+          :url="post.url"
+          :owner-url="post.owner"
         />
       </InfiniteScroll>
     </div>
@@ -37,11 +39,8 @@ export default {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        for (let post of res.data.results) {
-          this.posts.push({
-            url: post.url,
-            ownerUrl: post.author,
-          })
+        for (let postData of res.data.results) {
+          this.posts.push(new this.$Post(postData))
         }
       })
     },

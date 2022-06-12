@@ -58,6 +58,7 @@
         <AchievementPost
           v-for="post in posts"
           :key="post"
+          :post="post"
           :url="post.url"
           :ownerUrl="post.ownerUrl"
         />
@@ -97,6 +98,7 @@ export default {
     },
     getAchievementData() {
       this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
+        this.achievement = new this.$Achievement(res.data)
         this.achievementTitle = res.data.title
         this.achievementDay = res.data.days_since_the_last_incident
         this.achievementUrl = res.data.url
@@ -143,11 +145,8 @@ export default {
           page: index,
         }
       }).then(res => {
-        for (let post of res.data.results) {
-          this.posts.push({
-            url: post.url,
-            ownerUrl: post.author,
-          })
+        for (let postData of res.data.results) {
+          this.posts.push(new this.$Post(postData))
         }
       })
     },
@@ -156,6 +155,7 @@ export default {
     this.getAchievementData()
     this.getIsLiked()
     return {
+      // achievement: new this
       achievementTitle: null,
       achievementDay: null,
       isAchievementLiked: false,

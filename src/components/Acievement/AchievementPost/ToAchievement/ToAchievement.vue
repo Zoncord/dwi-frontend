@@ -4,7 +4,7 @@
     class="to-achievement__btn"
     icon="keyboard_backspace"
     no-caps
-    :to="`/achievement/${achievementId}`"
+    :to="`/achievement/${achievement.id}`"
     :label="$t('post.toAchievement')"
     :ripple="false"
   />
@@ -15,7 +15,7 @@
 export default {
   name: "ToAchievement",
   props: {
-    achievementId: {
+    achievement: {
       required: true,
     }
   }

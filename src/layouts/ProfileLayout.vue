@@ -2,15 +2,16 @@
   <q-layout>
     <ProfileDescription
       :owner-url="userUrl"
+      :owner="owner"
     />
     <InfiniteScroll :on-load-request="getAchievements">
       <div class="profile__cards-wrapper">
         <AddCard v-if="isUserPage"/>
         <DateCard
-          v-for="dateCard in achievements"
-          :key="dateCard"
-          :owner-url="dateCard.ownerUrl"
-          :url="dateCard.url"
+          v-for="achievement in achievements"
+          :key="achievement"
+          :owner-url="achievement.owner"
+          :url="achievement.url"
         />
       </div>
     </InfiniteScroll>
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-import ProfileDescription from "components/Profile/ProfileDescription";
+import ProfileDescription from "components/Profile/ProfileDescription/ProfileDescription";
 import AddCard from "components/Core/Cards/AddCard";
 import DateCard from "components/Core/Cards/DateCard/DateCard";
 import {mapGetters} from "vuex";
@@ -46,12 +47,8 @@ export default {
           page: index,
         }
       }).then(res => {
-        for (let achievement of res.data.results) {
-          console.log(achievement)
-          this.achievements.push({
-            url: achievement.url,
-            ownerUrl: achievement.owners[0],
-          })
+        for (let achievementData of res.data.results) {
+          this.achievements.push(new this.$Achievement(achievementData))
         }
       })
     },
@@ -61,8 +58,8 @@ export default {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-        this.userUrl = res.data.url
+        this.owner = new this.$User(res.data)
+       this.userUrl = res.data.url
         this.followersCount = res.data.followers_count
         this.profileDescription = res.data.description
       })
@@ -71,9 +68,9 @@ export default {
   data() {
     this.getUserData()
     return {
-      userName: null,
       userImage: null,
       userUrl: null,
+      owner: new this.$BlankUser(),
       isUserPage: this.userId.toString() === this.$userId.toString(),
       isSubscribed: false,
       achievements: [],

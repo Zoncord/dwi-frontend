@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Logo from "components/Core/Logo";
+import Logo from "components/Core/Logo/Logo";
 import Search from "components/Main/Header/HeaderComponents/Search/SearchElement";
 import UserEntry from "components/Main/Header/HeaderComponents/UserEntry/UserEntry";
 

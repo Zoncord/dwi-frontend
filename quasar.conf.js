@@ -27,6 +27,7 @@ module.exports = configure(function (ctx) {
       'Notify',
       'User',
       'NumWords',
+      'Classes/Classes',
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

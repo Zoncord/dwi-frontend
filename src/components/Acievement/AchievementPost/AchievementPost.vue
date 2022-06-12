@@ -1,26 +1,27 @@
 <template>
   <div class="achievement__blog__post q-card q-mb-md">
     <div class="achievement__blog__post__to-achievement" v-if="toAchievement">
-      <ToAchievement class="q-mx-lg" :achievement-id="achievementId"/>
+      <ToAchievement class="q-mx-lg" :achievement="achievement"/>
       <q-separator/>
     </div>
     <div class="q-mx-lg q-mt-md">
-      <h4 class="achievement__blog__post__title" v-if="title">{{ title }}</h4>
+      <h4 class="achievement__blog__post__title" v-if="post.title">{{ post.title }}</h4>
       <q-skeleton width="200px" height="40px" class="achievement__blog__post__title-skeleton q-mb-md" v-else/>
-      <DateComponent :full-date="creationDate"/>
+      <DateComponent :parent="post"/>
 
-      <article class="achievement__blog__post__text" v-if="description">{{ description }}</article>
+      <article class="achievement__blog__post__text" v-if="post.description">{{ post.description }}</article>
       <RandomSkeletonDescription
         class="achievement__blog__post__text-skeleton q-my-xl"
         v-else
       />
       <div class="flex justify-between q-mb-md">
-        <a class="flex items-center" :href="`/profile/${ownerId}`">
+        <a class="flex items-center" :href="`/profile/${owner.id}`">
           <UserImage
             class="achievement__blog__post__user-logo"
-            :url="ownerImage"
+            :url="owner.generalInfo.image"
+            :user="owner"
           />
-          <UserName :name="ownerName"/>
+          <UserName :name="owner.generalInfo.name"/>
         </a>
 
         <nav class="achievement__blog__controls flex items-center ">
@@ -38,8 +39,8 @@
             :class="{liked: this.isLiked}"
             @click="handleLiking()"
           />
-          <h5 class="achievement__blog__controls__likes" v-if="likesCount !== null">
-            {{ likesCount }}
+          <h5 class="achievement__blog__controls__likes" v-if="post.likes !== null">
+            {{ post.likes }}
           </h5>
           <q-skeleton width="40px" v-else/>
         </nav>
@@ -52,13 +53,14 @@
       }"
     >
       <q-separator/>
-      <CommentsComponent/>
+      <CommentsComponent :parent="post"/>
     </div>
     <q-separator/>
     <AddComment
       class="achievement__blog__post__add-comment q-mx-lg q-my-md"
+      :parent-post="post"
     />
-    <ContextMenu v-if="ownerId === this.$userId" type="post" :parent-id="id"/>
+    <ContextMenu v-if="owner.id === this.$userId" type="post" :parent-id="post.id"/>
 
   </div>
 </template>
@@ -66,7 +68,7 @@
 <script>
 import UserImage from "components/Core/User/UserImage";
 import {mapGetters} from "vuex";
-import ContextMenu from "components/Core/ContextMenu";
+import ContextMenu from "components/Core/ContextMenu/ContextMenu";
 import UserName from "components/Core/User/UserName";
 import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
 import CommentsComponent from "components/Acievement/AchievementPost/Comments/CommentsComponent";
@@ -95,52 +97,40 @@ export default {
     },
     toAchievement: {
       default: false,
+    },
+    post: {
+      required: true,
     }
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getUserData() {
-      await this.$axios.get(this.ownerUrl, {
+      await this.$axios.get(this.post.owner, {
         headers: {
-          Authorization: 'Token ' + this.token()
+          Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        this.ownerId = res.data.id
-        this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-        this.ownerImage = res.data.general_user_information.img
+        this.owner = new this.$User(res.data)
       })
     },
-    async getPostData() {
-      await this.$axios.get(this.url, {
-        headers: {
-          Authorization: 'Token ' + this.token()
-        }
-      }).then(res => {
-        this.creationDate = new Date(res.data.date_time_of_creation)
-        this.id = res.data.id
-        this.title = res.data.title
-        this.description = res.data.description
-        this.likesCount = res.data.likes_count
-        this.achievementUrl = res.data.achievement
-      })
-    },
+
     async getAchievementData(){
-      await this.$axios.get(this.achievementUrl, {
+      await this.$axios.get(this.post.achievement, {
         headers: {
-          Authorization: 'Token ' + this.token()
+          Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        this.achievementId = res.data.id
+        this.achievement = new this.$Achievement(res.data)
       })
     },
     async getIsLiked() {
       await this.$axios.get(this.$dwiApi + 'rating/post', {
         params: {
-          post: this.id,
+          post: this.post.id,
           user: this.$userId,
         },
         headers: {
-          Authorization: 'Token ' + this.token()
+          Authorization: `Token ${this.token()}`
         }
       }).then(res => {
         this.isLiked = Boolean(res.data.count)
@@ -150,63 +140,49 @@ export default {
       if (this.isLiked) {
         await this.$axios.get(this.$dwiApi + 'rating/post/', {
           params: {
-            post: this.id,
+            post: this.post.id,
             user: this.$userId,
           },
           headers: {
-            Authorization: 'Token ' + this.token()
+            Authorization: `Token ${this.token()}`
           }
         }).then(async res => {
           await this.$axios.delete(res.data.results[0].url, {
             headers: {
-              Authorization: 'Token ' + this.token()
+              Authorization: `Token ${this.token()}`
             }
           })
         })
-        this.likesCount -= 1
+        this.post.decreaseLikes()
       } else {
         await this.$axios.post(this.$dwiApi + 'rating/post/', {
             user: this.$userUrl,
-            post: this.$dwiApi + `blog/post/${this.id}/`,
+            post: this.post.url
           },
           {
             headers: {
-              Authorization: 'Token ' + this.token()
+              Authorization: `Token ${this.token()}`
             }
           })
-        this.likesCount += 1
+        this.post.increaseLikes()
       }
       this.isLiked = !this.isLiked
     },
     toggleComments() {
       this.commentsActive = !this.commentsActive
-      this.commentsFirstToggle = false
     }
-
   },
   async mounted() {
     await this.getUserData()
-    await this.getPostData()
     await this.getAchievementData()
     await this.getIsLiked()
   },
   data() {
     return {
       isLiked: false,
-      likesCount: null,
-      image: null,
-      ownerName: null,
-      ownerImage: null,
-      ownerId: null,
-      title: null,
-      description: null,
-      id: null,
+      owner: new this.$User({}),
       commentsActive: false,
-      creationDate: null,
-      commentsFirstToggle: true,
-      commentsDisplayed: false,
-      achievementUrl: null,
-      achievementId: null,
+      achievement: new this.$Achievement({}),
     }
   },
 }
