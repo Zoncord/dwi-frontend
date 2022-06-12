@@ -2,15 +2,12 @@
   <div class="comment-wrapper">
     <div class="comment  q-my-md q-mx-lg">
       <div class="comment__user-data flex items-end">
-        <UserImage class="comment__user-data__user-image" url=""/>
-        <UserName class="comment__user-data__user-name" name="User Name"/>
+        <UserImage class="comment__user-data__user-image" :url="owner.generalInfo.image"/>
+        <UserName class="comment__user-data__user-name" :name="owner.generalInfo.name"/>
       </div>
-      <DateComponent class="q-my-sm" full-date="2022-06-03T14:18:42.696283"></DateComponent>
+      <DateComponent class="q-my-sm" :parent="comment"/>
       <p class="comment__user-text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus esse facere labore officia quia sequi
-        soluta.
-        Accusantium animi commodi corporis dignissimos doloremque dolorum exercitationem laudantium non rerum, totam,
-        unde, veniam!
+        {{comment.text}}
       </p>
     </div>
     <q-separator/>
@@ -23,7 +20,8 @@
 import UserImage from "components/Core/User/UserImage";
 import UserName from "components/Core/User/UserName";
 import DateComponent from "components/Core/DateComponent/DateComponent";
-import ContextMenu from "components/Core/ContextMenu";
+import ContextMenu from "components/Core/ContextMenu/ContextMenu";
+import {mapGetters} from "vuex";
 
 export default {
   name: "CommentComponent",
@@ -32,6 +30,30 @@ export default {
     UserName,
     DateComponent,
     ContextMenu,
+  },
+  props: {
+    comment: {
+      required: true,
+    }
+  },
+  methods: {
+    ...mapGetters('mainStore', ['token']),
+    async getOwnerData() {
+      await this.$axios.get(this.comment.owner, {
+        headers: {
+          Authorization: `Token ${this.token()}`
+        }
+      }).then(res => {
+        this.owner = new this.$User(res.data)
+      })
+    }
+  },
+  data(){
+    this.getOwnerData()
+    console.log(this.comment.creationDateTime)
+    return {
+      owner: new this.$User({})
+    }
   }
 }
 </script>
