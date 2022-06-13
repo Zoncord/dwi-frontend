@@ -31,7 +31,7 @@ export default {
     },
     async toggleSubscribe() {
       if (this.isSubscribed) {
-        await this.$axios.get(this.$dwiApi + `rating/user/?user=${this.$userId}&evaluated_user=${this.$route.params.userId}`, {
+        await this.$axios.get(this.$dwiApi + `rating/user/?user=${this.$user.id}&evaluated_user=${this.$route.params.userId}`, {
           headers: {
             Authorization: 'Token ' + this.token()
           }
@@ -50,9 +50,7 @@ export default {
             headers: {
               Authorization: 'Token ' + this.token()
             }
-          }).then(res => {
-          console.log(res)
-        })
+          })
       }
       this.$emit('toggleSubscribe')
     }

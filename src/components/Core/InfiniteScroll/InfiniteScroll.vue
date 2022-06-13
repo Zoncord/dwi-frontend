@@ -1,5 +1,5 @@
 <template>
-  <q-infinite-scroll class="infinite-scroll flex column" @load="handleLoad" :disable="disable">
+  <q-infinite-scroll class="infinite-scroll flex column" @load="handleLoad">
     <slot/>
     <template class="infinite-scroll__spinner" v-slot:loading>
       <div class="row justify-center q-my-md">
@@ -24,7 +24,7 @@ export default {
         done()
       } catch (err){
         if (err.response && err.response.status === 404){
-          this.disable = true
+          done(true)
         }
       }
     }

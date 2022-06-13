@@ -58,17 +58,14 @@ export default {
         persistent: true,
       }).onOk(async () => {
         if (this.type === 'achievement') {
-          await this.$axios.delete( `${this.$dwiApi}achievements/achievement//${this.parent.id}`, {
+          await this.$axios.delete( `${this.$dwiApi}achievements/achievement/${this.parent.id}/`, {
             headers: {
               Authorization: `Token ${this.token()}`
             },
-            params: {
-              id: this.parent.id,
-            }
           })
           document.location.reload()
         } else if (this.type === 'post') {
-          await this.$axios.delete(`${this.$dwiApi}blog/post//${this.parent.id}`, {
+          await this.$axios.delete(`${this.$dwiApi}blog/post/${this.parent.id}/`, {
             headers: {
               Authorization: `Token ${this.token()}`
             },

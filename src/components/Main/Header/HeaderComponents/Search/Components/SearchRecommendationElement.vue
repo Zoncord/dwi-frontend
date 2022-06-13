@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/achievement/${achievement.id}`">
+  <router-link :to="`/achievement/${achievement.id}`">
     <q-item clickable class="search-recommendation fit flex items-center">
       <q-item-section class="search-recommendation__section fit q-px-md">
         <div class="search-recommendation__section__content flex justify-between fit items-center ">
@@ -15,18 +15,21 @@
             </div>
           </div>
 
-          <a :href="`getUser${owner.id}`" class="search-recommendation__section__content__user-info flex items-center">
+          <router-link
+            :to="`/profile/${this.owner.id}/`"
+            class="search-recommendation__section__content__user-info flex items-center"
+          >
             <UserName
               class="q-mr-md"
               name-class="search-recommendation__section__content__user-info__username"
               :name="owner.generalInfo.name"
             />
             <UserImage class="search__advice-list__user-image" :owner="owner"/>
-          </a>
+          </router-link>
         </div>
       </q-item-section>
     </q-item>
-  </a>
+  </router-link>
 </template>
 
 <script>

@@ -10,8 +10,8 @@
       </template>
 
       <template v-slot:Stage1>
-        <TitleInput v-model="title"/>
-        <TextInput v-model="description"/>
+        <TitleInput v-model="title" max-length="64"/>
+        <TextInput v-model="description" max-length="256"/>
       </template>
 
       <template v-slot:Stage2>

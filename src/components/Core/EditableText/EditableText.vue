@@ -24,6 +24,7 @@
     :input-class="`editable-text__wrapper__input ${inputClass}`"
     @keydown="inputHandler"
     bottom-slots
+    :maxlength="maxLength"
   >
     <template v-slot:counter class="text-input__chars-counter">
       <p class="text-input__chars-counter">

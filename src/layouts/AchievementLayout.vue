@@ -87,7 +87,7 @@ export default {
           Authorization: 'Token ' + this.token()
         },
         params: {
-          user: this.$userId,
+          user: this.$user.id,
           achievement: this.$route.params.id,
         }
       }).then(res => {
@@ -120,7 +120,7 @@ export default {
         })
       } else {
         this.likesCount -= 1
-        this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$userId}&achievement=${this.$route.params.id}`, {
+        this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$user.id}&achievement=${this.$route.params.id}`, {
           headers: {
             Authorization: 'Token ' + this.token()
           }

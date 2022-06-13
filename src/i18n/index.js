@@ -1,7 +1,9 @@
 import enUS from './en-US'
-import ru from './ru'
+import ruRU from './ru-RU'
+import czCZ from './cz-CZ'
 
 export default {
   'en-US': enUS,
-  'ru-RU': ru,
+  'ru-RU': ruRU,
+  'cs-CZ': czCZ,
 }

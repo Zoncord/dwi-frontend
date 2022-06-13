@@ -149,7 +149,7 @@ export default {
       this.isSubscribed = !this.isSubscribed
     },
     changeDescription() {
-      this.$axios.put(`${this.$dwiApi}users/user/${this.$userId}/`, {
+      this.$axios.put(`${this.$dwiApi}users/user/${this.$user.id}/`, {
         description: this.owner.description,
       }, {
         headers: {
@@ -169,10 +169,10 @@ export default {
     }
   },
   watch: {
-    ownerDescription(){
+    ownerDescription() {
       this.owner.changeDescription(this.ownerDescription)
     },
-    owner(){
+    owner() {
       this.ownerDescription = this.owner.description
       this.getIsSubscribed()
     },
@@ -234,7 +234,8 @@ export default {
     opacity: 1;
   }
 }
-.profile-description__user-part__editable-text{
+
+.profile-description__user-part__editable-text {
   word-break: break-word;
 }
 
@@ -242,7 +243,7 @@ export default {
 </style>
 <style lang="scss">
 @media (max-width: 1024px) {
-  .profile-description__user-part__editable-text__input{
+  .profile-description__user-part__editable-text__input {
     text-align: center;
   }
 }
