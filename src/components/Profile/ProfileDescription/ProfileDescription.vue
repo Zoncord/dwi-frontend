@@ -55,7 +55,7 @@
           />
           <div
             :class="{'profile-description__user-part__wrapper-fit': $q.screen.lt.md}"
-            v-if="owner.description !== null"
+            v-if="owner.description !== null && owner.description !== undefined"
           >
             <EditableText
               class="profile-description__user-part__editable-text"
@@ -66,7 +66,13 @@
               :class="{
                 'mb10': $q.screen.gt.sm,
              }"
-            />
+            >
+              <template v-slot:nullDescription>
+                <p v-if="isUserPage">
+                  {{$t('profile.addDescription')}}
+                </p>
+              </template>
+            </EditableText>
             <p class="profile-description__user-part__text" v-else>
               {{ owner.description }}
             </p>

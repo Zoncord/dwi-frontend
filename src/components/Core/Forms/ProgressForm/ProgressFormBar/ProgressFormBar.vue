@@ -11,14 +11,13 @@
       <q-btn class="progress-form-bar__cancel-btn col-2 q-mr-md"
              no-caps
              @click="$router.go(-1)"
-             :disable="isFinished"
       >
         {{ $t('progressFormBar.cancel') }}
       </q-btn>
       <q-btn class="progress-form-bar__back-btn col-2"
              no-caps
              @click="previousStage()"
-             v-if="activeStage > 1"
+             v-if="activeStage > 1 && activeStage <= stagesCount"
              :disable="isFinished"
       >
         {{ $t('progressFormBar.back') }}

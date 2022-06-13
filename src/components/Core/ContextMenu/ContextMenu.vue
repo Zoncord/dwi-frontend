@@ -86,8 +86,6 @@ export default {
         this.$router.push(`/achievement/edit/${this.parent.id}`)
       } else if (this.type === 'post') {
         this.$router.push(`/post/edit/${this.parent.id}`)
-      } else if (this.type === 'comment') {
-        this.$router.push(`/comment/edit/${this.parent.id}`)
       }
     },
     reset() {
@@ -120,7 +118,7 @@ export default {
       items = ['edit', 'delete']
     } else if (this.parent instanceof this.$Comment) {
       this.type = 'comment'
-      items = ['edit', 'delete']
+      items = ['delete']
     }
     return {
       items: items,

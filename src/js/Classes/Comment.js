@@ -5,5 +5,8 @@ export default class Comment extends BaseComment {
     super(props);
     this.post = props.post
   }
+  changeText(newText){
+    this.text = newText
+  }
 }
 

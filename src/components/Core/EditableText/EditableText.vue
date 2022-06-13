@@ -1,10 +1,11 @@
 <template>
   <p
     v-if="!isEditing"
-    class="editable-text"
+    class="editable-text flex"
     @click="isEditing = true"
   >
-    {{ text ? text : this.$t('noDescription') }}
+    <slot name="nullDescription" v-if="!text || text.length === 0"/>
+    <span v-else>{{ text }}</span>
     <q-icon
       :class="{
       'editable-text__edit-icon-hover': $q.screen.gt.sm
@@ -100,6 +101,7 @@ export default {
 
 .editable-text__input__ready-icon {
   font-size: 30px;
+
   &:hover {
     color: $highlight;
     cursor: pointer;

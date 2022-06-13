@@ -19,7 +19,8 @@ export default {
     }
   },
   profile: {
-    followers: 'подписчиков | подписчик | подписчика | подписчиков'
+    addDescription: 'Добавить описание',
+    followers: 'подписчиков | подписчик | подписчика | подписчиков',
   },
   comment: 'Комментарий',
   subscribeButton: {
