@@ -1,11 +1,10 @@
-import BaseInformation from "src/js/ParenClasses/BaseInformation";
+import TimeObject from "src/js/ParenClasses/TimeObject";
 
-export default class BaseComment extends BaseInformation{
+export default class BaseComment extends TimeObject{
   constructor(props) {
     super(props ? props : {});
     this.owner = props.author
     this.text = props.text
-    this.creationDateTime = new Date(props.date_time_of_creation)
   }
   get time(){
     return this.creationDateTime.toLocaleTimeString()

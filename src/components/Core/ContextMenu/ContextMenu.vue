@@ -77,6 +77,7 @@ export default {
               Authorization: `Token ${this.token()}`
             },
           })
+          this.$emit('deleteComment')
         }
       })
     },

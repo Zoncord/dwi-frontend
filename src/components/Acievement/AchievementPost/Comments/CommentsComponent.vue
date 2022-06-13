@@ -3,7 +3,12 @@
     <q-scroll-area class="comments__field column">
       <q-list class="comments__field__list">
         <InfiniteScroll :on-load-request="getComments">
-          <CommentComponent v-for="comment in comments" :key="comment" :comment="comment"/>
+          <CommentComponent
+            v-for="(comment, id) in comments"
+            :key="comment"
+            :comment="comment"
+            @deleteComment="deleteComment(id)"
+          />
         </InfiniteScroll>
       </q-list>
     </q-scroll-area>
@@ -44,6 +49,9 @@ export default {
     },
     addComment(comment){
       this.comments.push(comment)
+    },
+    deleteComment(id){
+      this.comments.splice(id, 1)
     }
   },
   data() {

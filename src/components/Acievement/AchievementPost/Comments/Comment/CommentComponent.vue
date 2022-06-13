@@ -11,7 +11,7 @@
       </p>
     </div>
     <q-separator/>
-    <ContextMenu :parent="comment"/>
+    <ContextMenu :parent="comment" @deleteComment="$emit('deleteComment')"/>
   </div>
 
 </template>
