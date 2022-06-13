@@ -9,6 +9,7 @@
     input-class="comment-input__input"
     v-model="comment"
     :model-value="comment"
+    @keydown="inputHandler"
   >
     <template v-slot:append>
       <p class="text-input__chars-counter">
@@ -27,8 +28,18 @@ export default {
       default: false,
     },
     maxLength: {
-      default: 256,
+      default: 4096,
     },
+  },
+  methods: {
+    inputHandler(e) {
+      if (this.$q.screen.gt.xs) {
+        if (e.keyCode === 13 && !e.shiftKey) {
+          e.preventDefault()
+          this.$emit('addComment')
+        }
+      }
+    }
   },
   data() {
     return {

@@ -15,13 +15,13 @@
         v-else
       />
       <div class="flex justify-between q-mb-md">
-        <a class="flex items-center" :href="`/profile/${owner.id}`">
+        <router-link class="flex items-center" :to="`/profile/${owner.id}`">
           <UserImage
             class="achievement__blog__post__user-logo"
             :owner="owner"
           />
           <UserName :name="owner.generalInfo.name"/>
-        </a>
+        </router-link>
 
         <nav class="achievement__blog__controls flex items-center ">
           <q-btn

@@ -105,8 +105,9 @@ export default {
               Authorization: `Token ${this.token()}`
             }
           })
-        document.location.reload()
+
       })
+      this.parent.resetDays()
     }
   },
   data() {

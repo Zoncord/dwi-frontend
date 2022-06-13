@@ -10,7 +10,10 @@ export default class Achievement extends GeneralInformation {
   increaseLikes() {
     this.likes++
   }
-  descreaseLikes(){
+  decreaseLikes(){
     this.likes--
+  }
+  resetDays(){
+    this.days = 0
   }
 }

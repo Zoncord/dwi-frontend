@@ -1,12 +1,12 @@
 <template>
-  <a :href="achievement.id !== null ? `/achievement/${achievement.id}` : null" class="date-card-wrapper">
+  <router-link :to="achievement.id !== null ? `/achievement/${achievement.id}` : null" class="date-card-wrapper">
     <q-card class="date-card card flex column justify-center items-center">
       <div class="date-card__container flex column justify-between items-center">
-        <a :href="'/profile/' + owner.id"
+        <router-link :to="'/profile/' + owner.id"
            class="date-card__container__user-info flex column justify-center items-center">
           <UserImage class="date-card__user-image q-mb-md" :owner="owner"/>
           <UserName class="date-card__container__user-name" :name="owner.generalInfo.name"/>
-        </a>
+        </router-link>
         <div class="date-card__container__content flex column justify-between items-center q-mt-md">
           <h5 class="title q-px-md" v-if="achievement.title  !== null">
             {{ achievement.title }}
@@ -27,7 +27,7 @@
         @deleteAchievement="$emit('deleteAchievement')"
       />
     </q-card>
-  </a>
+  </router-link>
 </template>
 
 <script>

@@ -4,6 +4,7 @@
     <CommentInput
       class="q-mx-md"
       v-model="comment"
+      @addComment="addComment"
     />
     <q-btn
       class="add-comment__button"
