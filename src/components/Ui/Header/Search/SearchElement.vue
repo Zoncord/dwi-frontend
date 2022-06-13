@@ -61,7 +61,7 @@
 
 <script>
 import SearchRecommendsElement
-  from "components/Main/Header/HeaderComponents/Search/Components/SearchRecommendationElement";
+  from "components/Ui/Header/Search/SearchRecommendation/SearchRecommendationElement";
 import {mapGetters} from "vuex";
 
 export default {

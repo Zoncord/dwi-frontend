@@ -34,8 +34,8 @@
 
 <script>
 import Logo from "components/Core/Logo/Logo";
-import Search from "components/Main/Header/HeaderComponents/Search/SearchElement";
-import UserEntry from "components/Main/Header/HeaderComponents/UserEntry/UserEntry";
+import Search from "components/Ui/Header/Search/SearchElement";
+import UserEntry from "components/Ui/Header/UserEntry/UserEntry";
 
 export default {
   name: "Header",

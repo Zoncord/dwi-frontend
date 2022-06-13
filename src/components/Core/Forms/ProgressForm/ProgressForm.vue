@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
+import ProgressFormBar from "components/Core/Forms/ProgressForm/ProgressFormBar/ProgressFormBar";
 
 export default {
   name: "ProgressForm",

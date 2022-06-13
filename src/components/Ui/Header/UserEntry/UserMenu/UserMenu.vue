@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import UserImage from "components/Core/User/UserImage";
-import OnlineDisplay from "components/Core/User/OnlineDisplay";
-import UserMenuTab from "components/Main/Header/HeaderComponents/UserEntry/Components/UserMenu/Components/UserMenuTab";
-import UserName from "components/Core/User/UserName";
+import UserImage from "src/components/Core/User/UserImage.vue"
+import OnlineDisplay from "src/components/Core/User/OnlineDisplay";
+import UserMenuTab from "src/components/Ui/Header/UserEntry/UserMenu/MenuTab/UserMenuTab"
+import UserName from "src/components/Core/User/UserName";
 export default {
   name: "Menu",
   components: {

@@ -64,6 +64,7 @@
     <ContextMenu
       v-if="owner.id === this.$user.id"
       :parent="post"
+      @deletePost="$emit('deletePost')"
     />
 
   </div>
@@ -75,10 +76,10 @@ import {mapGetters} from "vuex";
 import ContextMenu from "components/Core/ContextMenu/ContextMenu";
 import UserName from "components/Core/User/UserName";
 import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
-import CommentsComponent from "components/Acievement/AchievementPost/Comments/CommentsComponent";
+import CommentsComponent from "components/Core/Achievement/AchievementPost/Comments/CommentsComponent";
 import DateComponent from "components/Core/DateComponent/DateComponent";
-import AddComment from "components/Acievement/AchievementPost/Comments/AddComment/AddComment";
-import ToAchievement from "components/Acievement/AchievementPost/ToAchievement/ToAchievement";
+import AddComment from "components/Core/Achievement/AchievementPost/Comments/AddComment/AddComment";
+import ToAchievement from "components/Core/Achievement/AchievementPost/ToAchievement/ToAchievement";
 
 export default {
   name: "AchievementPost",

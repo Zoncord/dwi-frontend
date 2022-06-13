@@ -3,9 +3,10 @@
     <InfiniteScroll class="" :on-load-request="getAchievements">
       <div class="date-cards-wrapper">
         <DateCard
-          v-for="achievement in achievements"
+          v-for="(achievement, id) in achievements"
           :key="achievement"
           :achievement="achievement"
+          @deleteAchievement="deleteAchievement(id)"
         />
       </div>
     </InfiniteScroll>
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-import DateCard from "components/Core/Cards/DateCard/DateCard";
+import DateCard from "components/Core/Achievement/AchievementCard";
 import {mapGetters} from "vuex";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
@@ -39,6 +40,9 @@ export default {
           this.achievements.push(new this.$Achievement(achievementData))
         }
       })
+    },
+    deleteAchievement(id){
+      this.achievements.splice(id, 1)
     }
   },
   data() {

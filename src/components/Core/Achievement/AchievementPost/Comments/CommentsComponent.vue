@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import CommentComponent from "components/Acievement/AchievementPost/Comments/Comment/CommentComponent";
+import CommentComponent from "components/Core/Achievement/AchievementPost/Comments/Comment/CommentComponent";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 import {mapGetters} from "vuex";
 export default {

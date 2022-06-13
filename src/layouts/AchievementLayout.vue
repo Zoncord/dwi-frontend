@@ -56,9 +56,10 @@
       </q-btn>
       <InfiniteScroll :on-load-request="getPosts">
         <AchievementPost
-          v-for="post in posts"
+          v-for="(post, id) in posts"
           :key="post"
           :post="post"
+          @deletePost="deletePost(id)"
         />
       </InfiniteScroll>
     </div>
@@ -66,7 +67,7 @@
 </template>
 
 <script>
-import AchievementPost from "components/Acievement/AchievementPost/AchievementPost";
+import AchievementPost from "components/Core/Achievement/AchievementPost/AchievementPost";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 import {mapGetters} from "vuex";
 
@@ -79,6 +80,9 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
+    deletePost(id){
+      this.posts.splice(id, 1)
+    },
     getIsLiked() {
       this.$axios.get(this.$dwiApi + `rating/achievement/`, {
         headers: {

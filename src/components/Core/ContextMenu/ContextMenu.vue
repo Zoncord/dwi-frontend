@@ -50,29 +50,29 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    async delete() {
+    delete() {
       this.$q.dialog({
         comment: this.$t('dialog.title.sure'),
         message: this.$t(`dialog.message.delete.${this.type}`),
         cancel: true,
         persistent: true,
-      }).onOk(async () => {
+      }).onOk(() => {
         if (this.type === 'achievement') {
-          await this.$axios.delete( `${this.$dwiApi}achievements/achievement/${this.parent.id}/`, {
+          this.$axios.delete( `${this.$dwiApi}achievements/achievement/${this.parent.id}/`, {
             headers: {
               Authorization: `Token ${this.token()}`
             },
           })
-          document.location.reload()
+          this.$emit('deleteAchievement')
         } else if (this.type === 'post') {
-          await this.$axios.delete(`${this.$dwiApi}blog/post/${this.parent.id}/`, {
+          this.$axios.delete(`${this.$dwiApi}blog/post/${this.parent.id}/`, {
             headers: {
               Authorization: `Token ${this.token()}`
             },
           })
-          document.location.reload()
+          this.$emit('deletePost')
         } else if (this.type === 'comment') {
-          await this.$axios.delete(`${this.$dwiApi}blog/comment/${this.parent.id}`, {
+          this.$axios.delete(`${this.$dwiApi}blog/comment/${this.parent.id}`, {
             headers: {
               Authorization: `Token ${this.token()}`
             },

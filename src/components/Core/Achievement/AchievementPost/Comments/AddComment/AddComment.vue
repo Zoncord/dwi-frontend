@@ -13,7 +13,7 @@
       "
       icon="send"
       :ripple="false"
-      @click="sendComment"
+      @click="addComment"
     />
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     ...mapGetters("mainStore", ["token"]),
-    sendComment(){
+    addComment(){
       this.$axios.post(`${this.$dwiApi}blog/comment/`, {
         text: this.comment,
         post: this.parentPost.url,

@@ -18,8 +18,8 @@
 
 <script>
 import ProfileDescription from "components/Profile/ProfileDescription/ProfileDescription";
-import AddCard from "components/Core/Cards/AddCard";
-import DateCard from "components/Core/Cards/DateCard/DateCard";
+import AddCard from "components/Core/Achievement/AddAchievement/AddAchievement";
+import DateCard from "components/Core/Achievement/AchievementCard";
 import {mapGetters} from "vuex";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 

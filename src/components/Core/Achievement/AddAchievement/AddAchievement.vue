@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Plus from "components/Core/Cards/Components/Plus";
+import Plus from "components/Core/Plus/Plus";
 export default {
   name: "AddCard",
   components: {

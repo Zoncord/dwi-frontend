@@ -24,6 +24,7 @@
       <ContextMenu
         v-if="this.owner.id === this.$user.id"
         :parent="achievement"
+        @deleteAchievement="$emit('deleteAchievement')"
       />
     </q-card>
   </a>

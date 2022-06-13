@@ -3,13 +3,11 @@
     <div class="q-mt-md">
       <InfiniteScroll :on-load-request="getPosts">
         <AchievementPost
-          v-for="post in posts"
+          v-for="(post, id) in posts"
           :key="post"
           :post="post"
           :to-achievement="true"
-
-          :url="post.url"
-          :owner-url="post.owner"
+          @deletePost="deletePost(id)"
         />
       </InfiniteScroll>
     </div>
@@ -17,7 +15,7 @@
 </template>
 
 <script>
-import AchievementPost from "components/Acievement/AchievementPost/AchievementPost";
+import AchievementPost from "components/Core/Achievement/AchievementPost/AchievementPost";
 import {mapGetters} from "vuex";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
@@ -44,6 +42,9 @@ export default {
         }
       })
     },
+    deletePost(id){
+      this.posts.splice(id, 1)
+    }
   },
   data() {
     return {

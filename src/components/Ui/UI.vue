@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import HeaderComponent from "components/Main/Header/HeaderComponent";
-import FooterNavigation from "components/Ui/FooterNavigation/FooterNavigation";
+import HeaderComponent from "components/Ui/Header/HeaderComponent";
+import FooterNavigation from "components/Ui/Footer/FooterNavigation";
 
 export default {
   name: "UI",

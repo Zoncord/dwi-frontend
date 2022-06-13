@@ -8,7 +8,7 @@
 
 <script>
 import UserImage from "components/Core/User/UserImage";
-import UserMenu from "components/Main/Header/HeaderComponents/UserEntry/Components/UserMenu/UserMenu";
+import UserMenu from "components/Ui/Header/UserEntry/UserMenu/UserMenu";
 import UserName from "components/Core/User/UserName";
 export default {
   name: "UserEntry",
