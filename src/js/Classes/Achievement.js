@@ -7,4 +7,10 @@ export default class Achievement extends GeneralInformation {
     this.category = props.category
     this.days = props.days_since_the_last_incident
   }
+  increaseLikes() {
+    this.likes++
+  }
+  descreaseLikes(){
+    this.likes--
+  }
 }

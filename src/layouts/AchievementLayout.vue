@@ -8,13 +8,13 @@
     }">
       <div class="q-card achievement__navigation__card-info flex column text-center q-mb-md">
         <div class="achievement__navigation__card-info__wrapper">
-          <h5 class="achievement__navigation__card-info__title">{{ achievementTitle }}</h5>
-          <h1 class="achievement__navigation__card-info__day">{{ achievementDay }}</h1>
-          <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievementDay) }}</h5>
+          <h5 class="achievement__navigation__card-info__title">{{ achievement.title }}</h5>
+          <h1 class="achievement__navigation__card-info__day">{{ achievement.days }}</h1>
+          <h5 class="achievement__navigation__card-info__unit">{{ $tc('days', achievement.days) }}</h5>
         </div>
         <q-separator class="achievement__navigation__card-info__separator"/>
         <h6 class="achievement__navigation__card-info__description q-ma-sm">
-          {{ achievementDescription }}
+          {{ achievement.description }}
         </h6>
       </div>
 
@@ -26,7 +26,7 @@
           @click="$router.back()"
         />
         <div class="flex items-center">
-          <p>{{likesCount}}</p>
+          <p>{{ achievement.likes}}</p>
           <q-btn
             icon-right="favorite"
             class="achievement__navigation__controls__button like-btn"
@@ -48,7 +48,7 @@
         class="achievement__blog__create-post q-mb-md"
         @click="$router.push('/create-post/?achievement_id=' + this.$route.params.id)"
         no-caps
-        v-if="isUserOwner"
+        v-if="this.achievement.owner === this.$user.url"
         :ripple="false"
       >
         {{ $t('achievement.addNewPost') }}
@@ -59,8 +59,6 @@
           v-for="post in posts"
           :key="post"
           :post="post"
-          :url="post.url"
-          :ownerUrl="post.ownerUrl"
         />
       </InfiniteScroll>
     </div>
@@ -96,30 +94,24 @@ export default {
         console.log(err)
       })
     },
-    getAchievementData() {
+    getAchievement() {
       this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
         this.achievement = new this.$Achievement(res.data)
-        this.achievementTitle = res.data.title
-        this.achievementDay = res.data.days_since_the_last_incident
-        this.achievementUrl = res.data.url
-        this.achievementOwner = res.data.owners[0]
-        this.achievementDescription = res.data.description
-        this.likesCount = res.data.likes_count
       })
     },
     handleAchievementLike() {
       this.isLiked = !this.isLiked
       if (this.isLiked) {
-        this.likesCount += 1
+        this.achievement.increaseLikes()
         this.$axios.post(this.$dwiApi + `rating/achievement/`, {
-          achievement: this.achievementUrl
+          achievement: this.achievement.url
         }, {
           headers: {
             Authorization: 'Token ' + this.token()
           }
         })
       } else {
-        this.likesCount -= 1
+        this.achievement.descreaseLikes()
         this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$user.id}&achievement=${this.$route.params.id}`, {
           headers: {
             Authorization: 'Token ' + this.token()
@@ -152,26 +144,14 @@ export default {
     },
   },
   data() {
-    this.getAchievementData()
+    this.getAchievement()
     this.getIsLiked()
     return {
-      // achievement: new this
-      achievementTitle: null,
-      achievementDay: null,
-      isAchievementLiked: false,
+      achievement: new this.$Achievement({}),
       posts: [],
       isLiked: null,
-      achievementUrl: null,
-      achievementOwner: null,
-      achievementDescription: null,
-      likesCount: null,
     }
   },
-  computed: {
-    isUserOwner() {
-      return this.achievementOwner === this.$userUrl
-    }
-  }
 }
 </script>
 

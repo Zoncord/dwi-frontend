@@ -93,12 +93,6 @@ export default {
     ToAchievement,
   },
   props: {
-    url: {
-      required: true,
-    },
-    ownerUrl: {
-      required: true,
-    },
     toAchievement: {
       default: false,
     },

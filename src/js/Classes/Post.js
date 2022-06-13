@@ -1,10 +1,10 @@
-import GeneralInformation from "src/js/ParenClasses/GeneralInformation";
+import TimeObject from "src/js/ParenClasses/TimeObject"
 
-export default class Post extends GeneralInformation {
+export default class Post extends TimeObject {
   constructor(props) {
     super(props ? props : {})
     this.achievement = props.achievement
-    this.creationDateTime = new Date(props.date_time_of_creation)
+
   }
 
   get time() {
@@ -14,10 +14,12 @@ export default class Post extends GeneralInformation {
   get date() {
     return this.creationDateTime.toLocaleDateString()
   }
-  increaseLikes(){
+
+  increaseLikes() {
     this.likes++
   }
-  decreaseLikes(){
+
+  decreaseLikes() {
     this.likes--
   }
 }
