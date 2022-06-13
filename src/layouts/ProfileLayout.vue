@@ -5,7 +5,7 @@
     />
     <InfiniteScroll :on-load-request="getAchievements">
       <div class="profile__cards-wrapper">
-        <AddCard v-if="this.userId.toString() === this.$user.id.toString()"/>
+        <AddCard v-if="this.$.vnode.key.toString() === this.$user.id.toString()"/>
         <DateCard
           v-for="achievement in achievements"
           :key="achievement"
@@ -31,17 +31,12 @@ export default {
     DateCard,
     InfiniteScroll,
   },
-  props: {
-    userId: {
-      required: true,
-    }
-  },
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getAchievements(index) {
       await this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
         params: {
-          owners: this.userId,
+          owners: this.$.vnode.key,
           page: index,
         }
       }).then(res => {
@@ -51,7 +46,7 @@ export default {
       })
     },
     getUser() {
-      this.$axios.get(`${this.$dwiApi}users/user/${this.userId}`, {
+      this.$axios.get(`${this.$dwiApi}users/user/${this.$.vnode.key}`, {
         headers: {
           Authorization: `Token ${this.token()}`
         }

@@ -1,6 +1,6 @@
 <template>
   <UI>
-    <AchievementLayout/>
+    <AchievementLayout :key="this.$route.params.id"/>
   </UI>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   components: {
     AchievementLayout,
     UI,
+  },
+  beforeRouteUpdate(){
+    console.log(this.$route.params.id)
   }
 }
 </script>

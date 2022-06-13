@@ -1,6 +1,6 @@
 <template>
   <UI>
-    <ProfileLayout :user-id="userId" :key="userId"/>
+    <ProfileLayout :key="userId"/>
   </UI>
 </template>
 
