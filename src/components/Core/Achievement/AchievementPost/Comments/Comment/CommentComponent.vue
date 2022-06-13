@@ -11,7 +11,10 @@
       </p>
     </div>
     <q-separator/>
-    <ContextMenu :parent="comment" @deleteComment="$emit('deleteComment')"/>
+    <ContextMenu
+      :parent="comment"
+      @deleteComment="$emit('deleteComment')"
+    />
   </div>
 
 </template>
@@ -58,6 +61,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.comment__user-text{
+  white-space: pre-line;
+}
 .comment__user-data__user-image {
   width: 50px;
   margin-right: 7px;
