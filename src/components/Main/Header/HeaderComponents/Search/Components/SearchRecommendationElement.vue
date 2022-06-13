@@ -1,22 +1,27 @@
 <template>
-  <a :href="`/achievement/${id}`">
+  <a :href="`/achievement/${achievement.id}`">
     <q-item clickable class="search-recommendation fit flex items-center">
       <q-item-section class="search-recommendation__section fit q-px-md">
         <div class="search-recommendation__section__content flex justify-between fit items-center ">
           <div class="search-recommendation__section__content__wrapper">
-            <p v-if="title" class="search-recommendation__section__content__wrapper__title q-mr-sm">{{ title }}</p>
+            <p v-if="achievement.title" class="search-recommendation__section__content__wrapper__title q-mr-sm">
+              {{ achievement.title }}</p>
             <q-skeleton class="title-skeleton m-r" v-else/>
             <div class="search-recommendation__section__content__wrapper__title__days">
               <p class="m-r">{{ $t('header.search.already') }}</p>
-              <p v-if="days !== null" class="m-r">{{ days }}</p>
+              <p v-if="achievement.days !== null" class="m-r">{{ achievement.days }}</p>
               <q-skeleton class="days-skeleton m-r" width="40px" v-else/>
-              <p>{{ $tc('days', days) }}</p>
+              <p>{{ $tc('days', achievement.days) }}</p>
             </div>
           </div>
 
-          <a :href="'profile/' + ownerId" class="search-recommendation__section__content__user-info flex items-center">
-            <UserName class="q-mr-md" name-class="search-recommendation__section__content__user-info__username" :name="ownerName"/>
-            <UserImage class="search__advice-list__user-image" :url="ownerImage"/>
+          <a :href="`getUser${owner.id}`" class="search-recommendation__section__content__user-info flex items-center">
+            <UserName
+              class="q-mr-md"
+              name-class="search-recommendation__section__content__user-info__username"
+              :name="owner.generalInfo.name"
+            />
+            <UserImage class="search__advice-list__user-image" :owner="owner"/>
           </a>
         </div>
       </q-item-section>
@@ -36,112 +41,105 @@ export default {
     UserName,
   },
   props: {
-    url: {
+    achievement: {
       required: true,
     }
   },
   methods: {
-    ...mapGetters('mainStore', ['token'])
+    ...mapGetters('mainStore', ['token']),
+    getUser() {
+      this.$axios.get(this.achievement.owner, {
+        headers: {
+          Authorization: `Token ${this.token()}`
+        }
+      }).then(res => {
+        this.owner = new this.$User(res.data)
+      })
+    }
   },
-  async mounted() {
-    await this.$axios.get(this.url, {
-      headers: {
-        Authorization: 'Token ' + this.token()
-      }
-    }).then(res => {
-      this.title = res.data.title
-      this.id = res.data.id
-      this.days = res.data.days_since_the_last_incident
-      this.ownerUrl = res.data.owners[0]
-    })
-    await this.$axios.get(this.ownerUrl, {
-      headers: {
-        Authorization: 'Token ' + this.token()
-      }
-    }).then(res => {
-      this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-      this.ownerImage = res.data.general_user_information.img
-      this.ownerId = res.data.id
-    })
+  mounted() {
+    this.getUser()
   },
   data() {
     return {
-      id: null,
-      title: null,
-      days: null,
-      ownerName: null,
-      ownerImage: null,
-      ownerId: null,
+      owner: new this.$User({})
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@media(max-width: 500px){
+@media(max-width: 500px) {
   .search-recommendation {
     flex-wrap: wrap !important;
 
   }
-  .search-recommendation__section{
-    flex-wrap:  wrap !important;
+  .search-recommendation__section {
+    flex-wrap: wrap !important;
   }
-  .search-recommendation__section__content{
-    flex-wrap:  wrap !important;
+  .search-recommendation__section__content {
+    flex-wrap: wrap !important;
     justify-content: center !important;
 
-    .search-recommendation__section__content__user-info{
-      flex-wrap:  wrap !important;
+    .search-recommendation__section__content__user-info {
+      flex-wrap: wrap !important;
     }
   }
-  .search-recommendation__section__content__wrapper__title__days{
+  .search-recommendation__section__content__wrapper__title__days {
     //flex-basis: 100% !important;
     //display: contents;
   }
-  .search-recommendation__section__content{
+  .search-recommendation__section__content {
     flex-direction: column;
   }
-  .search-recommendation__section__content__wrapper{
+  .search-recommendation__section__content__wrapper {
     flex-direction: column;
     margin-right: 0 !important;
   }
-  .search-recommendation__section__content__wrapper__title{
+  .search-recommendation__section__content__wrapper__title {
     margin-right: 0 !important;
   }
 }
-.title-skeleton{
+
+.title-skeleton {
   width: 80px;
 }
-.days-skeleton{
+
+.days-skeleton {
   width: 15px;
 }
+
 .search-recommendation {
   border-bottom: solid 1px $border_color;
   flex-wrap: nowrap;
 }
-.search-recommendation__section{
+
+.search-recommendation__section {
   flex-wrap: nowrap;
 }
-.search-recommendation__section__content{
+
+.search-recommendation__section__content {
   flex-wrap: nowrap;
-  .search-recommendation__section__content__user-info{
+
+  .search-recommendation__section__content__user-info {
     flex-wrap: nowrap;
   }
 }
 
 
-.search-recommendation__section__content__wrapper{
+.search-recommendation__section__content__wrapper {
   flex-wrap: nowrap;
   align-items: center;
   display: flex;
   margin-right: 40px;
-  .search-recommendation__section__content__wrapper__title{
+
+  .search-recommendation__section__content__wrapper__title {
     word-break: break-word;
     padding-top: 5px;
     padding-bottom: 5px;
   }
 
-  *{
+  * {
     vertical-align: middle;
     display: inline-block;
   }
@@ -153,12 +151,13 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.m-r{
+
+.m-r {
   margin-right: 3px;
 }
 </style>
 <style lang="scss">
-.search-recommendation__section__content__user-info__username{
+.search-recommendation__section__content__user-info__username {
   white-space: nowrap;
 }
 </style>

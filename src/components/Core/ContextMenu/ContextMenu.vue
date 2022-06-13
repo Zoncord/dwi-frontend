@@ -44,10 +44,7 @@ import {mapGetters} from "vuex";
 export default {
   name: "ContextMenu",
   props: {
-    type: {
-      required: true,
-    },
-    parentId: {
+    parent: {
       required: true,
     }
   },
@@ -61,31 +58,38 @@ export default {
         persistent: true,
       }).onOk(async () => {
         if (this.type === 'achievement') {
-          await this.$axios.delete(this.$dwiApi + 'achievements/achievement/' + this.parentId, {
+          await this.$axios.delete( `${this.$dwiApi}achievements/achievement//${this.parent.id}`, {
             headers: {
               Authorization: `Token ${this.token()}`
+            },
+            params: {
+              id: this.parent.id,
             }
           })
           document.location.reload()
         } else if (this.type === 'post') {
-          await this.$axios.delete(this.$dwiApi + 'blog/post/' + this.parentId, {
+          await this.$axios.delete(`${this.$dwiApi}blog/post//${this.parent.id}`, {
             headers: {
               Authorization: `Token ${this.token()}`
-            }
+            },
           })
           document.location.reload()
         } else if (this.type === 'comment') {
-          //TODO add action
+          await this.$axios.delete(`${this.$dwiApi}blog/comment/${this.parent.id}`, {
+            headers: {
+              Authorization: `Token ${this.token()}`
+            },
+          })
         }
       })
     },
     edit() {
       if (this.type === 'achievement') {
-        this.$router.push(`/achievement/edit/${this.parentId}`)
+        this.$router.push(`/achievement/edit/${this.parent.id}`)
       } else if (this.type === 'post') {
-        this.$router.push(`/post/edit/${this.parentId}`)
+        this.$router.push(`/post/edit/${this.parent.id}`)
       } else if (this.type === 'comment') {
-        this.$router.push(`/comment/edit/${this.parentId}`)
+        this.$router.push(`/comment/edit/${this.parent.id}`)
       }
     },
     reset() {
@@ -96,7 +100,7 @@ export default {
         persistent: true,
       }).onOk(async () => {
         await this.$axios.post(`${this.$dwiApi}achievements/incident/`, {
-            achievement: `${this.$dwiApi}achievements/achievement/${this.parentId}/`,
+            achievement: `${this.$dwiApi}achievements/achievement/${this.parent.id}/`,
           },
           {
             headers: {
@@ -109,9 +113,14 @@ export default {
   },
   data() {
     let items
-    if (this.type === 'achievement') {
+    if (this.parent instanceof this.$Achievement) {
+      this.type = 'achievement'
       items = ['reset', 'edit', 'delete']
-    } else if (this.type === 'post' || this.type === 'comment') {
+    } else if (this.parent instanceof this.$Post) {
+      this.type = 'post'
+      items = ['edit', 'delete']
+    } else if (this.parent instanceof this.$Comment) {
+      this.type = 'comment'
       items = ['edit', 'delete']
     }
     return {

@@ -38,6 +38,7 @@ export default {
     modelValue: {},
   },
   data() {
+    //TODO remake to class
     return {
       activeStage: this.modelValue,
     }

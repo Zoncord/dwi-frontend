@@ -24,18 +24,10 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     changeText() {
-      if (this.isSubscribed) {
-        this.text = this.$t('subscribeButton.unsubscribe')
-      } else {
-        this.text = this.$t('subscribeButton.subscribe')
-      }
+      this.text = this.isSubscribed ? this.$t('subscribeButton.unsubscribe') : this.$t('subscribeButton.subscribe')
     },
     changeColor() {
-      if (this.isSubscribed) {
-        this.color = 'grey'
-      } else {
-        this.color = 'highlight'
-      }
+      this.color = this.isSubscribed ? 'grey' : 'highlight'
     },
     async toggleSubscribe() {
       if (this.isSubscribed) {

@@ -18,8 +18,7 @@
         <a class="flex items-center" :href="`/profile/${owner.id}`">
           <UserImage
             class="achievement__blog__post__user-logo"
-            :url="owner.generalInfo.image"
-            :user="owner"
+            :owner="owner"
           />
           <UserName :name="owner.generalInfo.name"/>
         </a>
@@ -32,6 +31,7 @@
             :ripple="false"
             @click="toggleComments"
           />
+
           <q-btn
             icon="favorite"
             class="achievement__blog__controls__btn like-btn"
@@ -53,14 +53,18 @@
       }"
     >
       <q-separator/>
-      <CommentsComponent :parent="post"/>
+      <CommentsComponent :parent="post" ref="CommentComponent"/>
     </div>
     <q-separator/>
     <AddComment
       class="achievement__blog__post__add-comment q-mx-lg q-my-md"
       :parent-post="post"
+      @addComment="addComment"
     />
-    <ContextMenu v-if="owner.id === this.$userId" type="post" :parent-id="post.id"/>
+    <ContextMenu
+      v-if="owner.id === this.$user.id"
+      :parent="post"
+    />
 
   </div>
 </template>
@@ -104,6 +108,9 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
+    addComment(comment){
+      this.$refs.CommentComponent.addComment(comment)
+    },
     async getUserData() {
       await this.$axios.get(this.post.owner, {
         headers: {
@@ -127,7 +134,7 @@ export default {
       await this.$axios.get(this.$dwiApi + 'rating/post', {
         params: {
           post: this.post.id,
-          user: this.$userId,
+          user: this.$user.id,
         },
         headers: {
           Authorization: `Token ${this.token()}`
@@ -141,7 +148,7 @@ export default {
         await this.$axios.get(this.$dwiApi + 'rating/post/', {
           params: {
             post: this.post.id,
-            user: this.$userId,
+            user: this.$user.id,
           },
           headers: {
             Authorization: `Token ${this.token()}`

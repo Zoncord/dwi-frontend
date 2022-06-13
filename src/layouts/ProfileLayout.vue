@@ -1,17 +1,15 @@
 <template>
   <q-layout>
     <ProfileDescription
-      :owner-url="userUrl"
       :owner="owner"
     />
     <InfiniteScroll :on-load-request="getAchievements">
       <div class="profile__cards-wrapper">
-        <AddCard v-if="isUserPage"/>
+        <AddCard v-if="this.userId.toString() === this.$user.id.toString()"/>
         <DateCard
           v-for="achievement in achievements"
           :key="achievement"
-          :owner-url="achievement.owner"
-          :url="achievement.url"
+          :achievement="achievement"
         />
       </div>
     </InfiniteScroll>
@@ -52,30 +50,21 @@ export default {
         }
       })
     },
-    getUserData() {
-      this.$axios.get(this.$dwiApi + 'users/user/' + this.userId, {
+    getUser() {
+      this.$axios.get(`${this.$dwiApi}users/user/${this.userId}`, {
         headers: {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
         this.owner = new this.$User(res.data)
-       this.userUrl = res.data.url
-        this.followersCount = res.data.followers_count
-        this.profileDescription = res.data.description
       })
     }
   },
   data() {
-    this.getUserData()
+    this.getUser()
     return {
-      userImage: null,
-      userUrl: null,
-      owner: new this.$BlankUser(),
-      isUserPage: this.userId.toString() === this.$userId.toString(),
-      isSubscribed: false,
+      owner: new this.$User({}),
       achievements: [],
-      followersCount: null,
-      profileDescription: null,
     }
   },
 }

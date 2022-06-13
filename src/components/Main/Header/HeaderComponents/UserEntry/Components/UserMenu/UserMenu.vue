@@ -2,10 +2,10 @@
   <q-menu class="user-entry__menu flex column justify-center items-center" anchor="bottom right" self="top right">
     <div class="q-pa-md">
       <div class="flex">
-        <UserImage class="user-entry__menu__user-image q-mr-md" :url="this.$userImage"/>
+        <UserImage class="user-entry__menu__user-image q-mr-md" :owner="this.$user"/>
         <div class="flex column">
           <div class="user-entry__menu__user-information flex column justify-center">
-            <UserName name-class="user-entry__menu__user-name" :name="userName"/>
+            <UserName name-class="user-entry__menu__user-name" :name="this.$user.generalInfo.name"/>
             <OnlineDisplay/>
           </div>
           <q-list class="user-entry__menu-list flex column" >
@@ -33,11 +33,6 @@ import UserMenuTab from "components/Main/Header/HeaderComponents/UserEntry/Compo
 import UserName from "components/Core/User/UserName";
 export default {
   name: "Menu",
-  props: {
-    userName: {
-      required: true
-    }
-  },
   components: {
     UserImage,
     OnlineDisplay,
@@ -49,7 +44,7 @@ export default {
       menuTabs: {
         profile: {
           icon: 'person',
-          to: '/profile/' + this.$userId
+          to: '/profile/' + this.$user.id
         },
         exit: {
           icon: 'logout',

@@ -16,7 +16,7 @@
           'items-center': $q.screen.lt.md,
         }"
       >
-        <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :url="owner.generalInfo.image"/>
+        <UserImage class="profile-description__user-part__user-image q-mx-lg q-my-md" :owner="owner"/>
         <div class="profile-description__user-part__user-container  flex column"
              :class="{
                 'items-center': $q.screen.lt.md,
@@ -121,9 +121,6 @@ export default {
     RandomSkeletonDescription,
   },
   props: {
-    ownerUrl: {
-      required: true,
-    },
     owner: {
       required: true,
     }
@@ -162,13 +159,13 @@ export default {
     }
   },
   beforeUpdate() {
-    this.isUserPage = this.$route.params.userId.toString() === this.$userId.toString()
+    this.isUserPage = this.$route.params.userId.toString() === this.$user.id.toString()
   },
   data() {
     return {
       ownerDescription: this.owner.description,
       isSubscribed: null,
-      isUserPage: this.$route.params.userId.toString() === this.$userId.toString(),
+      isUserPage: this.$route.params.userId.toString() === this.$user.id.toString(),
     }
   },
   watch: {
@@ -176,6 +173,7 @@ export default {
       this.owner.changeDescription(this.ownerDescription)
     },
     owner(){
+      this.ownerDescription = this.owner.description
       this.getIsSubscribed()
     },
   }

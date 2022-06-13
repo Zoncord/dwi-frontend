@@ -41,6 +41,9 @@ export default {
           this.comments.push(new this.$Comment(commentData))
         }
       })
+    },
+    addComment(comment){
+      this.comments.push(comment)
     }
   },
   data() {

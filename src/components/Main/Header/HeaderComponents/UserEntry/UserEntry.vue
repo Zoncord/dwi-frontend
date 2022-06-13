@@ -1,8 +1,8 @@
 <template>
   <div class="user-entry flex items-center justify-center">
-    <UserName class="user-entry__user-name" :name="userName"/>
-    <UserImage class="user-entry__user-image" :url="this.$userImage"/>
-    <UserMenu :user-name="userName"></UserMenu>
+    <UserName class="user-entry__user-name" :name="this.$user.generalInfo.name"/>
+    <UserImage class="user-entry__user-image" :owner="this.$user"/>
+    <UserMenu/>
   </div>
 </template>
 
@@ -17,11 +17,6 @@ export default {
     UserMenu,
     UserName,
   },
-  computed: {
-    userName(){
-      return this.$userName
-    }
-  }
 }
 </script>
 
@@ -37,6 +32,7 @@ export default {
 
 .user-entry__user-image {
   width: 40px;
+  height: 40px;
 }
 </style>
 <style lang="scss">

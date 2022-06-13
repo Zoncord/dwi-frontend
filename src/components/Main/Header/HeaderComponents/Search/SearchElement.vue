@@ -44,10 +44,10 @@
     >
       <div v-if="achievements.length !== 0">
         <div
-          v-for="(resp, id) in achievements" :key="resp"
+          v-for="(achievement, id) in achievements" :key="achievement"
         >
           <SearchRecommendsElement
-            :url="resp.url"
+            :achievement="achievement"
             v-if="id < ($q.screen.gt.sm ? 6: 3)"
           />
         </div>
@@ -56,9 +56,7 @@
         <p>Ничего не найдено</p>
       </div>
     </q-list>
-
   </div>
-
 </template>
 
 <script>
@@ -101,9 +99,7 @@ export default {
       }).then(res => {
         this.achievements = []
         for (let result in res.data.results) {
-            this.achievements.push({
-              url: res.data.results[result].url,
-            })
+            this.achievements.push(new this.$Achievement(res.data.results[result]))
         }
       })
     }

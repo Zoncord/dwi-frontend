@@ -19,7 +19,6 @@ export default {
   },
   methods: {
     async handleLoad(index, done) {
-      console.log(index)
       try {
         await this.onLoadRequest(index)
         done()

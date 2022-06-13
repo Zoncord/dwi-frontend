@@ -34,7 +34,7 @@
         </q-route-tab>
         <q-route-tab
           icon="account_circle"
-          :to="`/profile/${this.$userId}`"
+          :to="`/profile/${this.$user.id}`"
           exact
           class="nav-footer__wrapper__tabs__tab"
           content-class="nav-footer__wrapper__tabs__tab__content"

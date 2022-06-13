@@ -2,7 +2,7 @@
   <div class="comment-wrapper">
     <div class="comment  q-my-md q-mx-lg">
       <div class="comment__user-data flex items-end">
-        <UserImage class="comment__user-data__user-image" :url="owner.generalInfo.image"/>
+        <UserImage class="comment__user-data__user-image" :owner="owner"/>
         <UserName class="comment__user-data__user-name" :name="owner.generalInfo.name"/>
       </div>
       <DateComponent class="q-my-sm" :parent="comment"/>
@@ -11,7 +11,7 @@
       </p>
     </div>
     <q-separator/>
-    <ContextMenu type="comment" parent-id=""/>
+    <ContextMenu :parent="comment"/>
   </div>
 
 </template>
@@ -50,7 +50,6 @@ export default {
   },
   data(){
     this.getOwnerData()
-    console.log(this.comment.creationDateTime)
     return {
       owner: new this.$User({})
     }

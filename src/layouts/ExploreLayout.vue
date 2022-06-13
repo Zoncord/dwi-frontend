@@ -5,8 +5,7 @@
         <DateCard
           v-for="achievement in achievements"
           :key="achievement"
-          :url="achievement.url"
-          :owner-url="achievement.owner"
+          :achievement="achievement"
         />
       </div>
     </InfiniteScroll>

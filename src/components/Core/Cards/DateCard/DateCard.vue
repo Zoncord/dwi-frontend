@@ -1,27 +1,30 @@
 <template>
-  <a :href="this.id !== null ? `/achievement/${this.id}` : null" class="date-card-wrapper">
+  <a :href="achievement.id !== null ? `/achievement/${achievement.id}` : null" class="date-card-wrapper">
     <q-card class="date-card card flex column justify-center items-center">
       <div class="date-card__container flex column justify-between items-center">
-        <a :href="'/profile/' + ownerId"
+        <a :href="'/profile/' + owner.id"
            class="date-card__container__user-info flex column justify-center items-center">
-          <UserImage class="date-card__user-image q-mb-md" :url="ownerImage"/>
-          <UserName class="date-card__container__user-name" :name="ownerName"/>
+          <UserImage class="date-card__user-image q-mb-md" :owner="owner"/>
+          <UserName class="date-card__container__user-name" :name="owner.generalInfo.name"/>
         </a>
         <div class="date-card__container__content flex column justify-between items-center q-mt-md">
-          <h5 class="title q-px-md" v-if="title !== null">
-            {{ title }}
+          <h5 class="title q-px-md" v-if="achievement.title  !== null">
+            {{ achievement.title }}
           </h5>
           <q-skeleton width="150px" height="20px" class="q-mt-md" v-else/>
-          <h1 class="days" v-if="days !== null">
-            {{ days }}
+          <h1 class="days" v-if="achievement.days !== null">
+            {{achievement.days }}
           </h1>
           <q-skeleton width="60px" height="80px" v-else/>
           <h5 class="days-unit">
-            {{ $tc('days', days !== null ? days : 5) }}
+            {{ $tc('days', achievement.days !== null ? achievement.days : 0) }}
           </h5>
         </div>
       </div>
-     <ContextMenu type="achievement" :parent-id="this.id" v-if="this.ownerId === this.$userId"/>
+      <ContextMenu
+        v-if="this.owner.id === this.$user.id"
+        :parent="achievement"
+      />
     </q-card>
   </a>
 </template>
@@ -30,6 +33,7 @@
 import UserImage from "components/Core/User/UserImage";
 import ContextMenu from "components/Core/ContextMenu/ContextMenu";
 import UserName from "components/Core/User/UserName";
+
 export default {
   name: "DateCard",
   components: {
@@ -38,44 +42,29 @@ export default {
     ContextMenu,
   },
   props: {
-    ownerUrl: {
-      required: true,
-    },
-    url: {
+    achievement: {
       required: true,
     }
   },
   data() {
-    this.$axios.get(this.ownerUrl).then(res => {
-      this.ownerName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-      this.ownerImage = res.data.general_user_information.img
-      this.ownerId = res.data.id
-    })
-    this.$axios.get(this.url).then(res => {
-      this.title = res.data.title
-      this.days = res.data.days_since_the_last_incident
-      this.id = res.data.id
+    this.$axios.get(this.achievement.owner).then(res => {
+      this.owner = new this.$User(res.data)
     })
     return {
-      ownerName: null,
-      ownerImage: null,
-      ownerId: null,
-      title: null,
-      days: null,
-      id: null,
+      owner: new this.$User({})
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@media(max-width: 1024px){
-  .date-card-wrapper{
+@media(max-width: 1024px) {
+  .date-card-wrapper {
     width: 100%;
   }
 }
 
-.title{
+.title {
   overflow-wrap: anywhere;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="add-comment flex">
-    <UserImage class="add-comment__user-image" :url="this.$userImage"/>
+    <UserImage class="add-comment__user-image" :owner="this.$user"/>
     <CommentInput
       class="q-mx-md"
       v-model="comment"
@@ -38,7 +38,6 @@ export default {
   methods: {
     ...mapGetters("mainStore", ["token"]),
     sendComment(){
-      console.log(this.parentPost, this.comment)
       this.$axios.post(`${this.$dwiApi}blog/comment/`, {
         text: this.comment,
         post: this.parentPost.url,
@@ -47,25 +46,9 @@ export default {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        console.log(res.data)
-      }) .catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
+        this.$emit('addComment', new this.$Comment(res.data))
+        this.comment = ''
+      })
     }
   },
   data() {
