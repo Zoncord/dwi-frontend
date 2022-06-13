@@ -19,7 +19,7 @@ export default {
     }
   },
   profile: {
-    followers: 'sledujicí'
+    followers: 'sledující'
   },
   comment: 'Komentář',
   subscribeButton: {
@@ -65,7 +65,7 @@ export default {
       emptyField: 'Prosím, napište něco'
     }
   },
-  days: 'den | dnů',
+  days: 'den | dny | dne | dní',
   dialog: {
     title: {
       sure: 'Jste jistý/á?',

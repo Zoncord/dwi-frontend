@@ -19,7 +19,7 @@ export default {
     }
   },
   profile: {
-    followers: 'follower | followers'
+    followers: 'подписчиков | подписчик | подписчика | подписчиков'
   },
   comment: 'Комментарий',
   subscribeButton: {
@@ -65,7 +65,7 @@ export default {
       emptyField: 'Пожалуйста введите что-нибудь'
     }
   },
-  days: 'day | days',
+  days: 'дней | день | дня | дней',
   dialog: {
     title: {
       sure: 'Вы уверены?',
