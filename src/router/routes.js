@@ -32,10 +32,6 @@ const routes = [
     component: () => import('pages/EditPost.vue'),
   },
   {
-    path: '/edit/:type/:id',
-    component: () => import('pages/EditPage.vue'),
-  },
-  {
     path: '/achievement/:id',
     component: () => import('pages/AchievementPage.vue'),
   },
