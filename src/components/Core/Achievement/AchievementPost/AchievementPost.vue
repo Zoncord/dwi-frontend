@@ -49,11 +49,15 @@
     <div
       class="achievement__blog__post__comments"
       :style="{
-          'height': commentsActive ? '300px' : '0',
+          'height': commentsHeight,
       }"
     >
       <q-separator/>
-      <CommentsComponent :parent="post" ref="CommentComponent"/>
+      <CommentsComponent
+        :parent="post"
+        ref="CommentComponent"
+        @change-comments-height="changeCommentsHeight"
+      />
     </div>
     <q-separator/>
     <AddComment
@@ -103,7 +107,8 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    addComment(comment){
+    addComment(comment) {
+      this.openComments()
       this.$refs.CommentComponent.addComment(comment)
     },
     async getUserData() {
@@ -116,7 +121,7 @@ export default {
       })
     },
 
-    async getAchievementData(){
+    async getAchievementData() {
       await this.$axios.get(this.post.achievement, {
         headers: {
           Authorization: `Token ${this.token()}`
@@ -172,7 +177,13 @@ export default {
     },
     toggleComments() {
       this.commentsActive = !this.commentsActive
-    }
+    },
+    openComments() {
+      this.commentsActive = true
+    },
+    changeCommentsHeight(newHeight){
+      this.allCommentsHeight = newHeight
+    },
   },
   async mounted() {
     await this.getUserData()
@@ -181,12 +192,24 @@ export default {
   },
   data() {
     return {
+      allCommentsHeight: 0,
       isLiked: false,
       owner: new this.$User({}),
       commentsActive: false,
       achievement: new this.$Achievement({}),
     }
   },
+  computed: {
+    commentsHeight(){
+      if (this.commentsActive){
+        if (this.allCommentsHeight < 300){
+          return this.allCommentsHeight + 'px'
+        }
+        return 300 + 'px'
+      }
+      return 0
+    }
+  }
 }
 </script>
 
@@ -248,21 +271,25 @@ export default {
 </style>
 <style lang="scss">
 .achievement__blog__post__add-comment {
-  .add-comment__user-image{
+  .add-comment__user-image {
     width: 32px;
   }
 
   .comment-input {
     flex-grow: 2;
-    .q-field__inner{
-      .q-field__control{
+
+    .q-field__inner {
+      .q-field__control {
         min-height: 30px;
-        .q-field__append{
+
+        .q-field__append {
           height: 32px;
         }
-        .q-field__control-container{
+
+        .q-field__control-container {
           padding: 0 !important;
-          .comment-input__input{
+
+          .comment-input__input {
             min-height: 16px;
             padding-top: 7px;
             padding-bottom: 7px;

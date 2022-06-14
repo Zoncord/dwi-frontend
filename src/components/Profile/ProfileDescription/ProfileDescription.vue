@@ -69,7 +69,7 @@
             >
               <template v-slot:nullDescription>
                 <p v-if="isUserPage">
-                  {{$t('profile.addDescription')}}
+                  {{$t('profile.addDescription') + '...'}}
                 </p>
               </template>
             </EditableText>

@@ -70,7 +70,6 @@ export default {
 }
 
 .date-card {
-  max-width: 300px;
   width: 100%;
   height: 500px;
   font-size: 10px;

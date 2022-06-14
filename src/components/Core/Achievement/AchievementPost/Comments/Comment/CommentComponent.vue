@@ -18,7 +18,6 @@
       @deleteComment="$emit('deleteComment')"
     />
   </div>
-
 </template>
 
 <script>

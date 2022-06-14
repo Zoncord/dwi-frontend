@@ -88,6 +88,7 @@ export default {
   white-space: pre-line;
   line-height: 15px;
   min-height: 15px;
+  word-break: break-word;
 
   .editable-text__edit-icon-hover {
     opacity: 0;
