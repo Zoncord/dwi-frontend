@@ -28,6 +28,7 @@ module.exports = configure(function (ctx) {
       'User',
       'NumWords',
       'Classes/Classes',
+      'Api'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
