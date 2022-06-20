@@ -1,7 +1,14 @@
 <template>
   <header class="flex items-center">
     <div class="limiter flex justify-between items-center">
-      <Logo class="header-elem" color="highlight" link="/feed">DWI</Logo>
+      <Logo
+        class="header-elem"
+        color="highlight"
+        link="/feed"
+        v-if=" $q.screen.gt.xs || !searchFocused"
+      >
+        DWI
+      </Logo>
       <q-tabs
         class="header-tabs flex items-center gt-sm"
         active-color="highlight"
@@ -26,7 +33,7 @@
           :ripple="false"
         />
       </q-tabs>
-      <Search :class="{'header-elem': $q.screen.gt.sm, }"/>
+      <Search :class="{'header-elem': $q.screen.gt.sm, }" v-model="searchFocused"/>
       <UserEntry class="gt-sm"/>
     </div>
   </header>
@@ -44,6 +51,11 @@ export default {
     Search,
     UserEntry
   },
+  data(){
+    return {
+      searchFocused: false,
+    }
+  }
 }
 </script>
 
@@ -56,7 +68,8 @@ header {
   border-bottom: 1px solid #B8B8B8;
   background-color: white;
 }
-.limiter{
+
+.limiter {
   flex-wrap: nowrap;
 }
 
@@ -74,6 +87,7 @@ header {
 
   .tab {
     height: 100%;
+
     * {
       font-weight: 400;
       font-size: 16px;
@@ -95,13 +109,14 @@ header {
 .header-elem {
   margin-right: 40px;
 }
-@media(max-width: 1024px){
+
+@media(max-width: 1024px) {
   .header-elem {
     margin-right: 15px;
   }
 }
 
-.user-entry{
+.user-entry {
   min-height: 55px;
 }
 
@@ -126,7 +141,8 @@ header {
   border: 1px solid $border_color;
   margin-top: -1px !important;
 }
-.user-entry{
+
+.user-entry {
   margin-right: 0;
 }
 

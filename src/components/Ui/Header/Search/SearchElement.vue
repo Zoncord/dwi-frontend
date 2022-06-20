@@ -1,8 +1,5 @@
 <template>
-  <div class="search-wrapper"
-       @focusin="searchFocused = true"
-       @focusout="searchFocused = false"
-  >
+  <div class="search-wrapper">
     <q-input
       class="search"
       dense
@@ -14,6 +11,7 @@
       :style="{
         borderRadius: searchFocused  ? '5px 5px 0px 0px': '5px 5px 5px 5px'
       }"
+      @focusin="searchFocused = true"
     >
       <!--Search icon-->
       <template v-slot:prepend>
@@ -21,6 +19,14 @@
       </template>
       <!--Clear Cross icon-->
       <template v-slot:append>
+        <q-icon
+          v-if="searchFocused && $q.screen.lt.md"
+          name="expand_less"
+          class="cursor-pointer"
+          @click="() => {
+            this.searchFocused = false
+          }"
+        />
         <q-icon
           v-if="query !== ''"
           name="clear"
@@ -42,19 +48,24 @@
         transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
       }"
     >
-      <div v-if="achievements.length !== 0">
-        <div
-          v-for="(achievement, id) in achievements" :key="achievement"
+      <q-scroll-area class="search__scroll-wrapper">
+        <div class="flex justify-center q-my-md" v-if="!isLoading && !achievements.length">
+          <p>Ничего не найдено</p>
+        </div>
+        <InfiniteScroll
+          class="search__scroll-wrapper__scroll"
+          :on-load-request="getAchievements"
+          ref="InfiniteScroll"
+          v-model="isLoading"
         >
           <SearchRecommendsElement
+            v-for="achievement in achievements" :key="achievement"
             :achievement="achievement"
-            v-if="id < ($q.screen.gt.sm ? 6: 3)"
+            @click="searchFocused = false"
           />
-        </div>
-      </div>
-      <div class="flex justify-center q-my-md" v-else>
-        <p>Ничего не найдено</p>
-      </div>
+        </InfiniteScroll>
+      </q-scroll-area>
+
     </q-list>
   </div>
 </template>
@@ -63,14 +74,16 @@
 import SearchRecommendsElement
   from "components/Ui/Header/Search/SearchRecommendation/SearchRecommendationElement";
 import {mapGetters} from "vuex";
+import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
 export default {
   name: "Search",
   components: {
     SearchRecommendsElement,
+    InfiniteScroll,
   },
-  mounted() {
-    this.getAchievements()
+  props: {
+    modelValue: {}
   },
   data() {
     return {
@@ -79,35 +92,49 @@ export default {
       borderRadius: null,
       adviceListHeight: null,
       achievements: [],
+      isLoading: true,
     }
   },
   watch: {
-    query() {
-      this.getAchievements()
+    async query() {
+      this.achievements = []
+      await this.$refs.InfiniteScroll.restart()
     },
+    searchFocused() {
+      this.$emit('update:modelValue', this.searchFocused)
+    }
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    getAchievements() {
-      this.$axios.get(`${this.$dwiApi}achievements/achievement/`, {
+    async getAchievements(index) {
+      await this.$axios.get(`${this.$dwiApi}achievements/achievement/`, {
         params: {
           search: this.query,
+          page: index,
         },
         headers: {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        this.achievements = []
+        // crutch that put away outsider information
+        if (index === 1) {
+          this.achievements = []
+        }
         for (let result in res.data.results) {
-            this.achievements.push(new this.$Achievement(res.data.results[result]))
+          this.achievements.push(new this.$Achievement(res.data.results[result]))
         }
       })
-    }
+    },
   },
+
 }
 </script>
 
 <style lang="scss">
+.search__scroll-wrapper {
+  height: 300px;
+}
+
 .search-wrapper {
   position: relative;
 
@@ -142,7 +169,7 @@ export default {
   width: 100%;
   padding: 0;
   border-radius: 0 0 5px 5px;
-  overflow: hidden;
+  //overflow: hidden;
   border-top: none !important;
   transition: transform .25s;
   transform-origin: top;

@@ -12,7 +12,7 @@ export default boot(({app}) => {
     locale: Quasar.lang.getLocale(),
     messages,
     pluralizationRules: {
-      'ru': function (choice, choicesLength) {
+      'ru-RU': function (choice, choicesLength) {
         if (choice === 0) {
           return 0;
         }

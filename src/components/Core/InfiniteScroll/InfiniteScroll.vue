@@ -1,12 +1,12 @@
 <template>
-  <q-infinite-scroll class="infinite-scroll flex column" @load="handleLoad">
-    <slot/>
-    <template class="infinite-scroll__spinner" v-slot:loading>
-      <div class="row justify-center q-my-md">
-        <q-spinner color="highlight" size="40px"/>
-      </div>
-    </template>
-  </q-infinite-scroll>
+    <q-infinite-scroll class="infinite-scroll flex column" @load="handleLoad" ref="InfiniteScroll">
+      <slot/>
+      <template class="infinite-scroll__spinner" v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner color="highlight" size="40px"/>
+        </div>
+      </template>
+    </q-infinite-scroll>
 </template>
 
 <script>
@@ -16,25 +16,37 @@ export default {
     onLoadRequest: {
       required: true,
     },
+    modelValue: {}
   },
   methods: {
     async handleLoad(index, done) {
+      this.handlingLoad = true
       try {
         await this.onLoadRequest(index)
         done()
-      } catch (err){
-        if (err.response && err.response.status === 404){
+      } catch (err) {
+        if (err.response && err.response.status === 404) {
           done(true)
         }
       }
+      this.handlingLoad = false
+    },
+    async restart(){
+      this.$refs.InfiniteScroll.reset()
+      this.$refs.InfiniteScroll.resume()
+      this.$refs.InfiniteScroll.poll()
     }
   },
-  data() {
+  data(){
     return {
-      isStopped: true,
-      disable: false
+      handlingLoad: false,
     }
   },
+  watch: {
+    handlingLoad(){
+      this.$emit('update:modelValue', this.handlingLoad)
+    }
+  }
 }
 </script>
 

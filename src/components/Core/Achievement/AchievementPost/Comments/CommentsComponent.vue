@@ -4,7 +4,7 @@
       class="comments__field column"
       :style="{
         height: commentsHeight > 300 ? '300px' : commentsHeight + 'px'
-        }"
+      }"
     >
       <q-list class="comments__field__list">
         <InfiniteScroll :on-load-request="getComments">
