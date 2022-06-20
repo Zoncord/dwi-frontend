@@ -33,6 +33,7 @@ yarn-error.log*
 *.sln
 
 .quasar.env.json
-
-.quasar.env.json
 .env
+
+**/pages/Test.vue
+**/layouts/TestLayout.vue
