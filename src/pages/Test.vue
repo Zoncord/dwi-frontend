@@ -2,6 +2,7 @@
   <UI :footer="false">
     <TestLayout/>
   </UI>
+
 </template>
 
 <script>
@@ -18,4 +19,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

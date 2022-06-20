@@ -1,27 +1,16 @@
 <template>
-<div class="">
-
-</div>
+  <Error404/>
 </template>
 
 <script>
+import Error404 from "pages/Error404";
 export default {
   name: "TestLayout",
-  data(){
-    class A{
-      constructor(props) {
-       this.b = props.asdf
-      }
-    }
-    let a = new A({})
-    console.log(a.b)
-    return {
-
-    }
+  components: {
+    Error404,
   }
 }
 </script>
 
 <style scoped>
-
 </style>
