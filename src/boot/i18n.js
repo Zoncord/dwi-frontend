@@ -11,6 +11,9 @@ export default boot(({app}) => {
   const i18n = createI18n({
     locale: Quasar.lang.getLocale(),
     messages,
+    fallbackLocale: {
+      'ru': ['en-US']
+    },
     pluralizationRules: {
       'ru-RU': function (choice, choicesLength) {
         if (choice === 0) {
