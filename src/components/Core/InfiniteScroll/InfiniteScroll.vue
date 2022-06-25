@@ -1,8 +1,8 @@
 <template>
     <q-infinite-scroll class="infinite-scroll flex column" @load="handleLoad" ref="InfiniteScroll">
       <slot/>
-      <template class="infinite-scroll__spinner" v-slot:loading>
-        <div class="row justify-center q-my-md">
+      <template class="infinite-scroll__spinner" v-if="loadingSpinner" v-slot:loading>
+        <div class="row justify-center q-py-md">
           <q-spinner color="highlight" size="40px"/>
         </div>
       </template>
@@ -16,7 +16,10 @@ export default {
     onLoadRequest: {
       required: true,
     },
-    modelValue: {}
+    modelValue: {},
+    loadingSpinner: {
+      default: true,
+    }
   },
   methods: {
     async handleLoad(index, done) {
@@ -32,6 +35,7 @@ export default {
       this.handlingLoad = false
     },
     async restart(){
+      this.$emit('changeContent')
       this.$refs.InfiniteScroll.reset()
       this.$refs.InfiniteScroll.resume()
       this.$refs.InfiniteScroll.poll()
@@ -46,7 +50,7 @@ export default {
     handlingLoad(){
       this.$emit('update:modelValue', this.handlingLoad)
     }
-  }
+  },
 }
 </script>
 

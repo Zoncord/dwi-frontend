@@ -1,6 +1,6 @@
 <template>
   <div class="comment-wrapper">
-    <div class="comment  q-my-md q-mx-lg">
+    <div class="comment  q-py-md q-px-lg">
       <div class="comment__user-data flex items-end">
         <UserImage class="comment__user-data__user-image" :owner="owner"/>
         <UserName class="comment__user-data__user-name" :name="owner.generalInfo.name"/>

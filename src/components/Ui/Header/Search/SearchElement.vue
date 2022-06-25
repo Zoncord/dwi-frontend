@@ -48,23 +48,26 @@
         transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
       }"
     >
-      <q-scroll-area class="search__scroll-wrapper">
-        <div class="flex justify-center q-my-md" v-if="!isLoading && !achievements.length">
-          <p>Ничего не найдено</p>
-        </div>
-        <InfiniteScroll
-          class="search__scroll-wrapper__scroll"
-          :on-load-request="getAchievements"
-          ref="InfiniteScroll"
-          v-model="isLoading"
-        >
-          <SearchRecommendsElement
-            v-for="achievement in achievements" :key="achievement"
-            :achievement="achievement"
-            @click="searchFocused = false"
-          />
-        </InfiniteScroll>
-      </q-scroll-area>
+      <AutoHeightScroll
+        :on-load-request="getAchievements"
+        ref="AutoHeightScroll"
+        v-model="isLoading"
+      >
+        <template v-slot:up>
+          <p
+            class="q-py-md text-center"
+            v-if="!isLoading && achievements.length === 0"
+          >
+            Ничего не найдено
+          </p>
+        </template>
+
+        <SearchRecommendsElement
+          v-for="achievement in achievements" :key="achievement"
+          :achievement="achievement"
+          @click="searchFocused = false"
+        />
+      </AutoHeightScroll>
 
     </q-list>
   </div>
@@ -74,13 +77,13 @@
 import SearchRecommendsElement
   from "components/Ui/Header/Search/SearchRecommendation/SearchRecommendationElement";
 import {mapGetters} from "vuex";
-import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
+import AutoHeightScroll from "components/Core/AutoHeightScroll/AutoHeightScroll";
 
 export default {
   name: "Search",
   components: {
     SearchRecommendsElement,
-    InfiniteScroll,
+    AutoHeightScroll,
   },
   props: {
     modelValue: {}
@@ -98,7 +101,7 @@ export default {
   watch: {
     async query() {
       this.achievements = []
-      await this.$refs.InfiniteScroll.restart()
+      await this.$refs.AutoHeightScroll.restart()
     },
     searchFocused() {
       this.$emit('update:modelValue', this.searchFocused)

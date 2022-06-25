@@ -1,36 +1,31 @@
 <template>
   <div class="comments">
-    <q-scroll-area
-      class="comments__field column"
-      :style="{
-        height: commentsHeight > 300 ? '300px' : commentsHeight + 'px'
-      }"
+    <AutoHeightScroll
+      class="comments__field"
+      :on-load-request="getComments"
     >
-      <q-list class="comments__field__list">
-        <InfiniteScroll :on-load-request="getComments">
-          <CommentComponent
-            v-for="(comment, id) in comments"
-            :key="comment"
-            :comment="comment"
-            :ref="'Comment' + comment.id + id"
-            @deleteComment="deleteComment(id)"
-          />
-        </InfiniteScroll>
-      </q-list>
-    </q-scroll-area>
+      <CommentComponent
+        v-for="(comment, id) in comments"
+        :key="comment"
+        :comment="comment"
+        :ref="'Comment' + comment.id + id"
+        @deleteComment="deleteComment(id)"
+      />
+    </AutoHeightScroll>
   </div>
 </template>
 
 <script>
 import CommentComponent from "components/Core/Achievement/AchievementPost/Comments/Comment/CommentComponent";
-import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 import {mapGetters} from "vuex";
+import AutoHeightScroll from "components/Core/AutoHeightScroll/AutoHeightScroll";
 
 export default {
   name: "CommentsComponents",
   components: {
     CommentComponent,
-    InfiniteScroll,
+    // InfiniteScroll,
+    AutoHeightScroll,
   },
   props: {
     parent: {
