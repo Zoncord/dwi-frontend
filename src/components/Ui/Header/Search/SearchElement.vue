@@ -213,7 +213,7 @@ export default {
   background-color: white;
   width: 100%;
   padding: 0;
-  //border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
   //overflow: hidden;
   border-top: none !important;
   transition: transform .25s;
