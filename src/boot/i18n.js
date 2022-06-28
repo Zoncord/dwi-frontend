@@ -1,7 +1,7 @@
 import {boot} from 'quasar/wrappers'
 import {createI18n} from 'vue-i18n/index'
 import messages from 'src/i18n'
-import {Quasar} from 'quasar'
+import {russianPluralization} from "src/js/Pluralization/RussianPluralization";
 
 function isFloat(n) {
   return Number(n) === n && n % 1 !== 0;
@@ -9,32 +9,15 @@ function isFloat(n) {
 
 export default boot(({app}) => {
   const i18n = createI18n({
-    locale: Quasar.lang.getLocale(),
+    locale:'ru',
     messages,
     fallbackLocale: {
-      'ru': ['en-US']
+      'ru': ['en-US'],
+      'ru-RU': ['en-US'],
     },
     pluralizationRules: {
-      'ru-RU': function (choice, choicesLength) {
-        if (choice === 0) {
-          return 0;
-        }
-
-        const teen = choice > 10 && choice < 20;
-        const endsWithOne = choice % 10 === 1;
-
-        if (choicesLength < 4) {
-          return (!teen && endsWithOne) ? 1 : 2;
-        }
-        if (!teen && endsWithOne) {
-          return 1;
-        }
-        if (!teen && choice % 10 >= 2 && choice % 10 <= 4) {
-          return 2;
-        }
-
-        return (choicesLength < 4) ? 2 : 3;
-      },
+      'ru-RU': russianPluralization,
+      'ru': russianPluralization,
 
       'cs-CZ': function (choice) {
         if (choice === 1) {
