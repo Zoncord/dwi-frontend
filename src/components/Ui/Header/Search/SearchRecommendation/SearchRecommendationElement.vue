@@ -1,35 +1,35 @@
 <template>
-  <router-link :to="`/achievement/${achievement.id}`">
-    <q-item clickable class="search-recommendation fit flex items-center">
-      <q-item-section class="search-recommendation__section fit q-px-md">
-        <div class="search-recommendation__section__content flex justify-between fit items-center ">
-          <div class="search-recommendation__section__content__wrapper">
+
+  <q-item clickable class="search-recommendation fit flex items-center">
+    <q-item-section class="search-recommendation__section fit q-px-md">
+      <div class="search-recommendation__section__content flex justify-between fit items-center ">
+        <router-link  class="search-recommendation__section__content__wrapper" :to="`/achievement/${achievement.id}`">
             <p v-if="achievement.title" class="search-recommendation__section__content__wrapper__title q-mr-sm">
               {{ achievement.title }}</p>
-            <q-skeleton class="title-skeleton m-r" v-else/>
+            <q-skeleton class="title-skeleton mr3" v-else/>
             <div class="search-recommendation__section__content__wrapper__title__days">
-              <p class="m-r">{{ $t('header.search.already') }}</p>
-              <p v-if="achievement.days !== null" class="m-r">{{ achievement.days }}</p>
-              <q-skeleton class="days-skeleton m-r" width="40px" v-else/>
+              <p class="mr3">{{ $t('header.search.already') }}</p>
+              <p v-if="achievement.days !== null" class="mr3">{{ achievement.days }}</p>
+              <q-skeleton class="days-skeleton pr3" width="40px" v-else/>
               <p>{{ $tc('days', achievement.days) }}</p>
             </div>
-          </div>
+        </router-link>
 
-          <router-link
-            :to="`/profile/${this.owner.id}/`"
-            class="search-recommendation__section__content__user-info flex items-center"
-          >
-            <UserName
-              class="q-mr-md"
-              name-class="search-recommendation__section__content__user-info__username"
-              :name="owner.generalInfo.name"
-            />
-            <UserImage class="search__advice-list__user-image" :owner="owner"/>
-          </router-link>
-        </div>
-      </q-item-section>
-    </q-item>
-  </router-link>
+        <router-link
+          :to="`/profile/${this.owner.id}/`"
+          class="search-recommendation__section__content__user-info flex items-center"
+        >
+          <UserName
+            class="q-mr-md"
+            name-class="search-recommendation__section__content__user-info__username"
+            :name="owner.generalInfo.name"
+          />
+          <UserImage class="search__advice-list__user-image" :owner="owner"/>
+        </router-link>
+      </div>
+    </q-item-section>
+  </q-item>
+
 </template>
 
 <script>
@@ -126,6 +126,9 @@ export default {
 
   .search-recommendation__section__content__user-info {
     flex-wrap: nowrap;
+    &:hover{
+      color: $highlight;
+    }
   }
 }
 
@@ -134,7 +137,11 @@ export default {
   flex-wrap: nowrap;
   align-items: center;
   display: flex;
-  margin-right: 40px;
+  padding-right: 40px;
+  flex-grow: 1;
+  &:hover{
+    color: $highlight;
+  }
 
   .search-recommendation__section__content__wrapper__title {
     word-break: break-word;
@@ -155,9 +162,6 @@ export default {
   margin-bottom: 10px;
 }
 
-.m-r {
-  margin-right: 3px;
-}
 </style>
 <style lang="scss">
 .search-recommendation__section__content__user-info__username {
