@@ -120,7 +120,7 @@ header {
   min-height: 55px;
 }
 
-.search-wrapper {
+.search__wrapper {
   flex-grow: 10;
 }
 

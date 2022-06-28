@@ -1,76 +1,86 @@
 <template>
-  <div class="search-wrapper">
-    <q-input
-      class="search"
-      dense
-      borderless
-      v-model="query"
-      :model-value="query"
-      :placeholder="$t('header.search.label')"
-      color="border-color" hide-bottom-space label-color="black"
-      :style="{
+  <div class="search"
+
+  >
+    <div
+      class="search__wrapper"
+      @focusin="openSearch"
+      @focusout="() => {
+        closeSearch()
+        removeHash()
+      }"
+    >
+      <q-input
+        class="search__wrapper__input"
+        dense
+        borderless
+        v-model="query"
+        :model-value="query"
+        :placeholder="$t('header.search.label')"
+        color="border-color" hide-bottom-space label-color="black"
+        :style="{
         borderRadius: searchFocused  ? '5px 5px 0px 0px': '5px 5px 5px 5px'
       }"
-      @focusin="searchFocused = true"
-    >
-      <!--Search icon-->
-      <template v-slot:prepend>
-        <q-icon name="search"/>
-      </template>
-      <!--Clear Cross icon-->
-      <template v-slot:append>
-        <q-icon
-          v-if="searchFocused && $q.screen.lt.md"
-          name="expand_less"
-          class="cursor-pointer"
-          @click="() => {
-            this.searchFocused = false
-          }"
-        />
-        <q-icon
-          v-if="query !== ''"
-          name="clear"
-          class="cursor-pointer"
-          @click="() => {
-            this.query = ''
-            this.achievements = []
-          }"
-        />
-      </template>
-    </q-input>
-    <q-list
-      dense
-      bordered
-      padding
-      class="search__advice-list rounded-borders"
-      :style="{
+        ref="searchInput"
+      >
+        <!--Search icon-->
+        <template v-slot:prepend>
+          <q-icon name="search"/>
+        </template>
+        <!--Clear Cross icon-->
+        <template v-slot:append>
+          <q-icon
+            v-if="query !== ''"
+            name="clear"
+            class="cursor-pointer"
+            @click="() => {
+              clearInput()
+              focusInput()
+            }"
+          />
+        </template>
+
+      </q-input>
+
+      <q-list
+        dense
+        bordered
+        padding
+        class="search__advice-list rounded-borders"
+        :style="{
         border: searchFocused ? 'solid 1px #B8B8B8': 'none',
         transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
       }"
-    >
-      <AutoHeightScroll
-        :on-load-request="getAchievements"
-        ref="AutoHeightScroll"
-        v-model="isLoading"
       >
-        <template v-slot:up>
-          <p
-            class="q-py-md text-center"
-            v-if="!isLoading && achievements.length === 0"
-          >
-            Ничего не найдено
-          </p>
-        </template>
+        <AutoHeightScroll
+          :on-load-request="getAchievements"
+          ref="AutoHeightScroll"
+          v-model="isLoading"
+        >
+          <template v-slot:up>
+            <p
+              class="q-py-md text-center"
+              v-if="!isLoading && achievements.length === 0"
+            >
+              Ничего не найдено
+            </p>
+          </template>
 
-        <SearchRecommendsElement
-          v-for="achievement in achievements" :key="achievement"
-          :achievement="achievement"
-          @click="searchFocused = false"
-        />
-      </AutoHeightScroll>
+          <SearchRecommendsElement
+            v-for="achievement in achievements" :key="achievement"
+            :achievement="achievement"
+            @click="() => {
+              closeSearch()
+              clearInput()
+            }"
+          />
+        </AutoHeightScroll>
 
-    </q-list>
+      </q-list>
+
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -89,6 +99,7 @@ export default {
     modelValue: {}
   },
   data() {
+    // console.log(this.$route)
     return {
       query: '',
       searchFocused: false,
@@ -105,6 +116,12 @@ export default {
     },
     searchFocused() {
       this.$emit('update:modelValue', this.searchFocused)
+    },
+    '$route.hash': function () {
+      if (!this.$route.hash) {
+        this.closeSearch()
+        this.blurInput()
+      }
     }
   },
   methods: {
@@ -128,18 +145,42 @@ export default {
         }
       })
     },
+    clearInput() {
+      this.query = ''
+    },
+    focusInput() {
+      this.$refs.searchInput.focus()
+    },
+    blurInput(){
+      this.$refs.searchInput.blur()
+    },
+    openSearch() {
+      this.searchFocused = true
+      this.$router.push({hash: '#searching'})
+    },
+    closeSearch() {
+      this.searchFocused = false
+    },
+    removeHash() {
+      this.$router.push({hash: ''})
+      this.$refs.searchInput.blur()
+    },
   },
 
 }
 </script>
 
 <style lang="scss">
-.search__scroll-wrapper {
-  height: 300px;
-}
 
-.search-wrapper {
+.search {
   position: relative;
+  flex-grow: 1;
+  height: 30px;
+
+  .search__wrapper {
+    position: absolute;
+    width: 100%;
+  }
 
   .q-field {
     .q-field__inner {
@@ -157,6 +198,7 @@ export default {
       }
     }
   }
+
 }
 
 .search-recommendation__section {
@@ -166,12 +208,12 @@ export default {
 
 <style lang="scss" scoped>
 .search__advice-list {
-  position: absolute;
+  //position: absolute;
   z-index: 100;
   background-color: white;
   width: 100%;
   padding: 0;
-  border-radius: 0 0 5px 5px;
+  //border-radius: 0 0 5px 5px;
   //overflow: hidden;
   border-top: none !important;
   transition: transform .25s;
@@ -182,7 +224,7 @@ export default {
   width: 32px;
 }
 
-.search {
+.search__wrapper__input {
   padding-left: 10px;
   padding-right: 10px;
   border: solid 1px $border-color;
