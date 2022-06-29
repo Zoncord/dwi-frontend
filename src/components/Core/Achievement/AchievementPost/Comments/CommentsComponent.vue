@@ -24,7 +24,6 @@ export default {
   name: "CommentsComponents",
   components: {
     CommentComponent,
-    // InfiniteScroll,
     AutoHeightScroll,
   },
   props: {
@@ -55,27 +54,12 @@ export default {
     deleteComment(id) {
       this.comments.splice(id, 1)
     },
-    calcCommentsHeight() {
-      let heightSum = 0
-      for (let id in this.comments) {
-        heightSum += this.$refs['Comment' + this.comments[id].id + id][0]['$el']['clientHeight']
-      }
-      return heightSum
-    }
   },
   data() {
     return {
-      commentsHeight: this.calcCommentsHeight(),
       comments: [],
     }
   },
-  watch: {
-    'comments.length': async function () {
-      await this.$nextTick()
-      this.commentsHeight = this.calcCommentsHeight()
-      this.$emit('changeCommentsHeight', this.calcCommentsHeight())
-    }
-  }
 }
 </script>
 

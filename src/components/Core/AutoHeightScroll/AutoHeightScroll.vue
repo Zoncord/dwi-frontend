@@ -1,18 +1,18 @@
 <template>
   <q-scroll-area
-    class="comments__field column"
+    class="auto-height-scroll column"
     :style="{
         height: contentHeight > 300 ? '300px' : contentHeight + 'px'
     }"
   >
-    <q-list class="comments__field__list">
+    <q-list class="auto-height-scroll__list">
       <InfiniteScroll
         :on-load-request="onLoadRequest"
         ref="InfiniteScroll"
         v-model="isLoading"
         :loading-spinner="false"
       >
-        <div class="content-wrapper" ref="contentWrapper">
+        <div class="auto-height-scroll__list__content-wrapper" ref="contentWrapper">
           <slot name="up"/>
           <slot ref="slot"/>
           <slot name="down"/>
@@ -74,5 +74,7 @@ export default {
 </script>
 
 <style scoped>
-
+.auto-height-scroll {
+  transition: height .25s;
+}
 </style>

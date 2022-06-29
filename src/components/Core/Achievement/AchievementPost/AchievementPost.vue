@@ -25,14 +25,6 @@
 
         <nav class="achievement__blog__controls flex items-center ">
           <q-btn
-            icon="chat"
-            class="achievement__blog__controls__btn"
-            :text-color="commentsActive ? 'highlight' : null"
-            :ripple="false"
-            @click="toggleComments"
-          />
-
-          <q-btn
             icon="favorite"
             class="achievement__blog__controls__btn like-btn"
             :ripple="false"
@@ -48,15 +40,11 @@
     </div>
     <div
       class="achievement__blog__post__comments"
-      :style="{
-          'height': commentsHeight,
-      }"
     >
       <q-separator/>
       <CommentsComponent
         :parent="post"
         ref="CommentComponent"
-        @change-comments-height="changeCommentsHeight"
       />
     </div>
     <q-separator/>
