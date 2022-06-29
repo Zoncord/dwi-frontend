@@ -3,14 +3,13 @@
     class="comments__field column"
     :style="{
         height: contentHeight > 300 ? '300px' : contentHeight + 'px'
-      }"
+    }"
   >
     <q-list class="comments__field__list">
       <InfiniteScroll
         :on-load-request="onLoadRequest"
         ref="InfiniteScroll"
         v-model="isLoading"
-        @changeContent="changeContent"
         :loading-spinner="false"
       >
         <div class="content-wrapper" ref="contentWrapper">
@@ -45,15 +44,8 @@ export default {
     async restart() {
       await this.$refs.InfiniteScroll.restart()
     },
-    changeContent() {
-      console.log('asdf')
-
-    }
   },
   mounted() {
-    setInterval(() => {
-      // this.contentHeight = this.$refs.contentWrapper.clientHeight
-    })
     this.slotObserver = new MutationObserver(function () {
       this.contentHeight = this.$refs.contentWrapper.clientHeight
     }.bind(this))
@@ -67,9 +59,6 @@ export default {
     this.slotObserver.disconnect();
   },
   data() {
-    setInterval(() => {
-      // console.log(this.$refs.contentWrapper.children)
-    }, 100)
     return {
       contentHeight: 0,
       isLoading: false,
@@ -79,16 +68,8 @@ export default {
   watch: {
     isLoading() {
       this.$emit('update:modelValue', this.isLoading)
-      // this.contentHeight = this.$refs.contentWrapper.clientHeight + (this.$refs.InfiniteScroll.$el.children[1] ? this.$refs.InfiniteScroll.$el.children[1].clientHeight : 0)
-
-      // this.contentHeight = this.$refs.contentWrapper.clientHeight
     },
   },
-  computed: {
-    // heightLocker(){
-    //   return this.isLoading
-    // }
-  }
 }
 </script>
 

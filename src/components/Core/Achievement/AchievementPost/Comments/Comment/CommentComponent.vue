@@ -10,7 +10,14 @@
         v-model="commentText"
         class="comment__user-text"
         @finishEditing="changeComment"
+        v-if="this.comment.owner=== this.$user.url"
       />
+      <p
+        class="comment__user-text"
+        v-else
+      >
+        {{ commentText }}
+      </p>
     </div>
     <q-separator/>
     <ContextMenu
@@ -53,7 +60,7 @@ export default {
         this.owner = new this.$User(res.data)
       })
     },
-    changeComment(){
+    changeComment() {
       this.$axios.put(`${this.$dwiApi}blog/comment/${this.comment.id}`, {
         text: this.commentText,
         post: this.comment.post,
@@ -65,6 +72,7 @@ export default {
     }
   },
   data() {
+    console.log()
     this.getOwnerData()
     return {
       owner: new this.$User({}),

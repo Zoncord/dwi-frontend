@@ -115,7 +115,7 @@ export default {
           }
         })
       } else {
-        this.achievement.descreaseLikes()
+        this.achievement.decreaseLikes()
         this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$user.id}&achievement=${this.$route.params.id}`, {
           headers: {
             Authorization: 'Token ' + this.token()

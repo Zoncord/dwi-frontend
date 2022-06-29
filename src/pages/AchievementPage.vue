@@ -14,9 +14,6 @@ export default {
     AchievementLayout,
     UI,
   },
-  beforeRouteUpdate(){
-    console.log(this.$route.params.id)
-  }
 }
 </script>
 

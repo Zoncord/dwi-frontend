@@ -4,11 +4,15 @@
   >
     <div
       class="search__wrapper"
+      :style="{
+        height: searchFocused ? 'auto' : '30px'
+      }"
       @focusin="openSearch"
       @focusout="() => {
         closeSearch()
         removeHash()
       }"
+
     >
       <q-input
         class="search__wrapper__input"
@@ -19,8 +23,8 @@
         :placeholder="$t('header.search.label')"
         color="border-color" hide-bottom-space label-color="black"
         :style="{
-        borderRadius: searchFocused  ? '5px 5px 0px 0px': '5px 5px 5px 5px'
-      }"
+          borderRadius: searchFocused || animationRunning ? '5px 5px 0px 0px': '5px 5px 5px 5px'
+        }"
         ref="searchInput"
       >
         <!--Search icon-->
@@ -48,8 +52,8 @@
         padding
         class="search__advice-list rounded-borders"
         :style="{
-        border: searchFocused ? 'solid 1px #B8B8B8': 'none',
-        transform: searchFocused? 'scaleY(1)' : 'scaleY(0)'
+        border: searchFocused || animationRunning ? 'solid 1px #B8B8B8': 'none',
+        transform: searchFocused ? 'scaleY(1)': 'scaleY(0)',
       }"
       >
         <AutoHeightScroll
@@ -99,7 +103,6 @@ export default {
     modelValue: {}
   },
   data() {
-    // console.log(this.$route)
     return {
       query: '',
       searchFocused: false,
@@ -107,6 +110,9 @@ export default {
       adviceListHeight: null,
       achievements: [],
       isLoading: true,
+      animationFinished: false,
+      animationRunning: false,
+      transform: 'scale(0)',
     }
   },
   watch: {
@@ -116,6 +122,13 @@ export default {
     },
     searchFocused() {
       this.$emit('update:modelValue', this.searchFocused)
+      if (this.$q.screen.lt.md) {
+        if (this.searchFocused) {
+          this.$router.replace({hash: '#searching'})
+        } else {
+          this.$router.replace({hash: ''})
+        }
+      }
     },
     '$route.hash': function () {
       if (!this.$route.hash) {
@@ -151,19 +164,28 @@ export default {
     focusInput() {
       this.$refs.searchInput.focus()
     },
-    blurInput(){
+    blurInput() {
       this.$refs.searchInput.blur()
     },
     openSearch() {
+      this.startAnimation()
       this.searchFocused = true
-      this.$router.push({hash: '#searching'})
+
     },
     closeSearch() {
+      this.startAnimation()
       this.searchFocused = false
+      this.animationFinished = false
     },
     removeHash() {
-      this.$router.push({hash: ''})
       this.$refs.searchInput.blur()
+
+    },
+    startAnimation() {
+      this.animationRunning = true
+      setTimeout(() => {
+        this.animationRunning = false
+      }, 250)
     },
   },
 
@@ -171,7 +193,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .search {
   position: relative;
   flex-grow: 1;
