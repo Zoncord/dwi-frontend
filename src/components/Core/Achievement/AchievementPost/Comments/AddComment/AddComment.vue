@@ -2,6 +2,7 @@
   <div class="add-comment flex">
     <UserImage class="add-comment__user-image" :owner="this.$user"/>
     <CommentInput
+      ref="commentInput"
       class="q-mx-md"
       v-model="comment"
       @addComment="addComment"
@@ -50,6 +51,12 @@ export default {
         this.$emit('addComment', new this.$Comment(res.data))
         this.comment = ''
       })
+    },
+    reply(user){
+      this.comment = `${user.generalInfo.name}, ` + this.comment
+    },
+    focus(){
+      this.$refs.commentInput.focus()
     }
   },
   data() {

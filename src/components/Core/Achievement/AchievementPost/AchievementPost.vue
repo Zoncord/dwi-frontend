@@ -47,12 +47,6 @@
         ref="CommentComponent"
       />
     </div>
-    <q-separator/>
-    <AddComment
-      class="achievement__blog__post__add-comment q-mx-lg q-my-md"
-      :parent-post="post"
-      @addComment="addComment"
-    />
     <ContextMenu
       v-if="owner.id === this.$user.id"
       :parent="post"
@@ -70,7 +64,6 @@ import UserName from "components/Core/User/UserName";
 import RandomSkeletonDescription from "components/Core/Skeleton/RandomSkeletonDescription";
 import CommentsComponent from "components/Core/Achievement/AchievementPost/Comments/CommentsComponent";
 import DateComponent from "components/Core/DateComponent/DateComponent";
-import AddComment from "components/Core/Achievement/AchievementPost/Comments/AddComment/AddComment";
 import ToAchievement from "components/Core/Achievement/AchievementPost/ToAchievement/ToAchievement";
 
 export default {
@@ -82,7 +75,7 @@ export default {
     RandomSkeletonDescription,
     CommentsComponent,
     DateComponent,
-    AddComment,
+    // AddComment,
     ToAchievement,
   },
   props: {
@@ -96,7 +89,6 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     addComment(comment) {
-      this.openComments()
       this.$refs.CommentComponent.addComment(comment)
     },
     async getUserData() {
@@ -163,15 +155,6 @@ export default {
       }
       this.isLiked = !this.isLiked
     },
-    toggleComments() {
-      this.commentsActive = !this.commentsActive
-    },
-    openComments() {
-      this.commentsActive = true
-    },
-    changeCommentsHeight(newHeight){
-      this.allCommentsHeight = newHeight
-    },
   },
   async mounted() {
     await this.getUserData()
@@ -183,21 +166,9 @@ export default {
       allCommentsHeight: 0,
       isLiked: false,
       owner: new this.$User({}),
-      commentsActive: false,
       achievement: new this.$Achievement({}),
     }
   },
-  computed: {
-    commentsHeight(){
-      if (this.commentsActive){
-        if (this.allCommentsHeight < 300){
-          return this.allCommentsHeight + 'px'
-        }
-        return 300 + 'px'
-      }
-      return 0
-    }
-  }
 }
 </script>
 

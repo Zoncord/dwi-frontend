@@ -10,6 +10,7 @@
     v-model="comment"
     :model-value="comment"
     @keydown="inputHandler"
+    ref="commentInput"
   >
     <template v-slot:append>
       <p class="text-input__chars-counter">
@@ -39,6 +40,9 @@ export default {
           this.$emit('addComment')
         }
       }
+    },
+    focus(){
+      this.$refs.commentInput.focus()
     }
   },
   data() {

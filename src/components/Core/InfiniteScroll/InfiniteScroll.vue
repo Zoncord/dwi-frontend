@@ -39,7 +39,7 @@ export default {
       this.$refs.InfiniteScroll.reset()
       this.$refs.InfiniteScroll.resume()
       this.$refs.InfiniteScroll.poll()
-    }
+    },
   },
   data(){
     return {

@@ -21,7 +21,6 @@
           </div>
         </div>
       </InfiniteScroll>
-
     </q-list>
   </q-scroll-area>
 </template>

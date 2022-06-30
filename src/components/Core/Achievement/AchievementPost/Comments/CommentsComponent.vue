@@ -10,8 +10,16 @@
         :comment="comment"
         :ref="'Comment' + comment.id + id"
         @deleteComment="deleteComment(id)"
+        @reply="reply"
       />
     </AutoHeightScroll>
+    <q-separator/>
+    <AddComment
+        class="achievement__blog__post__add-comment q-mx-lg q-my-md"
+        :parent-post="parent"
+        @addComment="addComment"
+        ref="addComment"
+    />
   </div>
 </template>
 
@@ -19,12 +27,14 @@
 import CommentComponent from "components/Core/Achievement/AchievementPost/Comments/Comment/CommentComponent";
 import {mapGetters} from "vuex";
 import AutoHeightScroll from "components/Core/AutoHeightScroll/AutoHeightScroll";
+import AddComment from "components/Core/Achievement/AchievementPost/Comments/AddComment/AddComment";
 
 export default {
   name: "CommentsComponents",
   components: {
     CommentComponent,
     AutoHeightScroll,
+    AddComment,
   },
   props: {
     parent: {
@@ -54,6 +64,12 @@ export default {
     deleteComment(id) {
       this.comments.splice(id, 1)
     },
+    reply(user){
+      if (user.generalInfo.name){
+        this.$refs.addComment.reply(user)
+        this.$refs.addComment.focus()
+      }
+    }
   },
   data() {
     return {

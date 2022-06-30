@@ -1,6 +1,5 @@
 <template>
   <div class="search"
-
   >
     <div
       class="search__wrapper"
@@ -188,7 +187,6 @@ export default {
       }, 250)
     },
   },
-
 }
 </script>
 

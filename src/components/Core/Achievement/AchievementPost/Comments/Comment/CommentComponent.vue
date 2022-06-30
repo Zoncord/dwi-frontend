@@ -1,24 +1,35 @@
 <template>
   <div class="comment-wrapper">
-    <div class="comment  q-py-md q-px-lg">
-      <router-link :to="'/profile/' + owner.id" class="comment__user-data flex items-end">
-        <UserImage class="comment__user-data__user-image" :owner="owner"/>
-        <UserName class="comment__user-data__user-name" :name="owner.generalInfo.name"/>
-      </router-link>
-      <DateComponent class="q-my-sm" :parent="comment"/>
-      <EditableText
-        v-model="commentText"
-        class="comment__user-text"
-        @finishEditing="changeComment"
-        v-if="this.comment.owner=== this.$user.url"
-      />
-      <p
-        class="comment__user-text"
-        v-else
-      >
-        {{ commentText }}
-      </p>
+    <div class="comment-wrapper__content flex justify-between q-py-md q-px-lg">
+      <div class="comment-wrapper__content__comment">
+        <router-link :to="'/profile/' + owner.id" class="comment__user-data flex items-end">
+          <UserImage class="comment__user-data__user-image" :owner="owner"/>
+          <UserName class="comment__user-data__user-name" :name="owner.generalInfo.name"/>
+        </router-link>
+
+        <DateComponent class="q-my-sm" :parent="comment"/>
+        <EditableText
+          v-model="commentText"
+          class="comment-wrapper__content__comment__user-text"
+          @finishEditing="changeComment"
+          v-if="this.comment.owner=== this.$user.url"
+        />
+        <p
+          class="comment-wrapper__content__comment__user-text"
+          v-else
+        >
+          {{ commentText }}
+        </p>
+      </div>
+      <nav class="comment-wrapper__content__navigation flex">
+        <q-icon
+          name="reply"
+          class="comment-wrapper__content__navigation__btn"
+          @click="reply"
+        />
+      </nav>
     </div>
+
     <q-separator/>
     <ContextMenu
       :parent="comment"
@@ -69,10 +80,12 @@ export default {
           Authorization: `Token ${this.token()}`
         }
       })
+    },
+    reply(){
+      this.$emit('reply', this.owner)
     }
   },
   data() {
-    console.log()
     this.getOwnerData()
     return {
       owner: new this.$User({}),
@@ -88,9 +101,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment__user-text {
-  white-space: pre-line;
+.comment-wrapper__content__comment{
+  flex-grow: 1;
+
+  .comment-wrapper__content__comment__user-text {
+    white-space: pre-line;
+  }
 }
+
 
 .comment__user-data__user-image {
   width: 50px;
@@ -99,5 +117,12 @@ export default {
 
 .comment__user-data__user-name {
   font-size: 25px;
+}
+.comment-wrapper__content__navigation__btn{
+  font-size: 20px;
+  cursor: pointer;
+  &:hover{
+    color: $highlight;
+  }
 }
 </style>
