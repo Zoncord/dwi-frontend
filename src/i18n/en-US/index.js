@@ -85,5 +85,11 @@ export default {
       no: 'no',
     }
   },
-  noDescription: 'This person has not description'
+  noDescription: 'This person has not description',
+  contextMenu: {
+    reply: 'Reply',
+    edit: 'Edit',
+    delete: 'Delete',
+    reset: 'Reset',
+  }
 }

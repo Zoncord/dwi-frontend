@@ -18,6 +18,7 @@
         class="achievement__blog__post__add-comment q-mx-lg q-my-md"
         :parent-post="parent"
         @addComment="addComment"
+        @cancelReply="cancelReply"
         ref="addComment"
     />
   </div>
@@ -54,6 +55,7 @@ export default {
         }
       }).then(res => {
         for (let commentData of res.data.results) {
+          commentData['ctx'] = this
           this.comments.push(new this.$Comment(commentData))
         }
       })
@@ -69,11 +71,15 @@ export default {
         this.$refs.addComment.reply(user)
         this.$refs.addComment.focus()
       }
+    },
+    cancelReply(){
+
     }
   },
   data() {
     return {
       comments: [],
+      replying: false,
     }
   },
 }

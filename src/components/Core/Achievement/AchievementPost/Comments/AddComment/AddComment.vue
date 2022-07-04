@@ -1,17 +1,30 @@
 <template>
-  <div class="add-comment flex">
+  <div class="add-comment flex items-center">
     <UserImage class="add-comment__user-image" :owner="this.$user"/>
     <CommentInput
       ref="commentInput"
       class="q-mx-md"
-      v-model="comment"
+      v-model="commentText"
       @addComment="addComment"
-    />
+    >
+      <template v-slot:before>
+        <div
+          class="add-comment__reply-name-wrapper flex items-center no-wrap"
+          @click="cancelReply"
+          v-if="replying"
+        >
+          <p class="add-comment__reply-name-wrapper__name">
+            To {{ this.$user.generalInfo.name }}
+          </p>
+          <q-icon name="close" class="add-comment__reply-name-wrapper__close"/>
+        </div>
+      </template>
+    </CommentInput>
     <q-btn
       class="add-comment__button"
       text-color="$border-color"
       :disable="
-        !this.comment.split('\n').some((elem) => elem.split(' ').some((elem) => elem))
+        !this.commentText.split('\n').some((elem) => elem.split(' ').some((elem) => elem))
       "
       icon="send"
       :ripple="false"
@@ -39,48 +52,57 @@ export default {
   },
   methods: {
     ...mapGetters("mainStore", ["token"]),
-    addComment(){
-      this.$axios.post(`${this.$dwiApi}blog/comment/`, {
-        text: this.comment,
-        post: this.parentPost.url,
-      }, {
-        headers: {
-          Authorization: `Token ${this.token()}`
-        }
-      }).then(res => {
-        this.$emit('addComment', new this.$Comment(res.data))
-        this.comment = ''
-      })
+    async addComment() {
+      let comment = new this.$Comment({ctx: this, text: this.commentText, post: this.parentPost.url})
+      await comment.create()
+      this.$emit('addComment', comment)
+      this.commentText = ''
     },
-    reply(user){
-      this.comment = `${user.generalInfo.name}, ` + this.comment
+    reply(user) {
+      this.replying = true
+      this.commentText = `${user.generalInfo.name}, ` + this.commentText
     },
-    focus(){
+    cancelReply() {
+      this.replying = false
+    },
+    focus() {
       this.$refs.commentInput.focus()
     }
   },
   data() {
     return {
-      comment: '',
+      replying: false,
+      commentText: '',
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.add-comment{
+.add-comment {
   flex-wrap: nowrap;
-}
-.add-comment__user-image {
-  width: 50px;
-  height: 32px;
+
+  .add-comment__user-image {
+    width: 32px;
+    height: 32px;
+  }
+
+  .add-comment__button {
+    min-height: auto;
+    height: 32px;
+    padding: 0;
+    border: none !important;
+    color: #989898;
+  }
+
+  .add-comment__reply-name-wrapper {
+    cursor: pointer;
+
+    * {
+      font-size: 15px;
+      color: #8c8c8c;
+    }
+  }
 }
 
-.add-comment__button {
-  min-height: auto;
-  height: 32px;
-  padding: 0;
-  border: none !important;
-  color: #989898;
-}
 </style>

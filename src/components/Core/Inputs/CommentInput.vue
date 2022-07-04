@@ -5,13 +5,17 @@
     autogrow
     :placeholder="$t('comment') + '...'"
     :maxlength="this.maxLength"
-    class="comment-input"
+    class="comment-input flex items-center"
     input-class="comment-input__input"
     v-model="comment"
     :model-value="comment"
     @keydown="inputHandler"
     ref="commentInput"
   >
+    <template v-slot:before>
+      <slot name="before"/>
+    </template>
+
     <template v-slot:append>
       <p class="text-input__chars-counter">
         {{ this.maxLength - comment.length }}

@@ -90,7 +90,9 @@ p {
 .q-btn--actionable.q-btn--standard:before {
   box-shadow: none !important;
 }
-
+.q-field__before{
+  height: auto !important;
+}
 .q-field--outlined .q-field__control {
   border-radius: 5px;
 

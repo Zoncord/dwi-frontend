@@ -8,7 +8,7 @@ import GridStore from './GridStore'
 
 
 export default store(function (/* { ssrContext } */) {
-  const Store = createStore({
+  return createStore({
     modules: {
       mainPageStore,
       mainStore,
@@ -18,6 +18,4 @@ export default store(function (/* { ssrContext } */) {
     plugins: [createPersistedState()],
     strict: process.env.DEBUGGING
   })
-
-  return Store
 })

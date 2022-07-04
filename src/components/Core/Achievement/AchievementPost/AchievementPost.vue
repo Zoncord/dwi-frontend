@@ -110,6 +110,7 @@ export default {
         this.achievement = new this.$Achievement(res.data)
       })
     },
+
     async getIsLiked() {
       await this.$axios.get(this.$dwiApi + 'rating/post', {
         params: {

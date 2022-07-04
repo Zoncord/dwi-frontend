@@ -7,11 +7,20 @@
     <q-list class="date-card-menu__items">
       <q-item
         class="date-card-menu__items__item items-center"
+        v-if="this.items.includes('reply')"
+        clickable
+        @click="this.reset"
+      >
+        <q-item-section>{{ $t('contextMenu.reply') }}</q-item-section>
+        <q-icon name="reply"/>
+      </q-item>
+      <q-item
+        class="date-card-menu__items__item items-center"
         v-if="this.items.includes('reset')"
         clickable
         @click="this.reset"
       >
-        <q-item-section>Reset</q-item-section>
+        <q-item-section>{{ $t('contextMenu.reset') }}</q-item-section>
         <q-icon name="refresh"/>
       </q-item>
 
@@ -21,7 +30,7 @@
         clickable
         @click="this.edit"
       >
-        <q-item-section class="flex items-center no-wrap">Edit</q-item-section>
+        <q-item-section class="flex items-center no-wrap">{{ $t('contextMenu.edit') }}</q-item-section>
         <q-icon name="edit"/>
       </q-item>
 
@@ -31,7 +40,7 @@
         clickable
         @click="this.delete"
       >
-        <q-item-section>Delete</q-item-section>
+        <q-item-section>{{ $t('contextMenu.delete') }}</q-item-section>
         <q-icon name="clear"/>
       </q-item>
     </q-list>
@@ -58,7 +67,7 @@ export default {
         persistent: true,
       }).onOk(() => {
         if (this.type === 'achievement') {
-          this.$axios.delete( `${this.$dwiApi}achievements/achievement/${this.parent.id}/`, {
+          this.$axios.delete(`${this.$dwiApi}achievements/achievement/${this.parent.id}/`, {
             headers: {
               Authorization: `Token ${this.token()}`
             },
@@ -72,11 +81,7 @@ export default {
           })
           this.$emit('deletePost')
         } else if (this.type === 'comment') {
-          this.$axios.delete(`${this.$dwiApi}blog/comment/${this.parent.id}`, {
-            headers: {
-              Authorization: `Token ${this.token()}`
-            },
-          })
+          this.parent.deleteBackEnd(this)
           this.$emit('deleteComment')
         }
       })
@@ -118,7 +123,7 @@ export default {
       items = ['edit', 'delete']
     } else if (this.parent instanceof this.$Comment) {
       this.type = 'comment'
-      items = ['delete']
+      items = ['reply', 'delete']
     }
     return {
       items: items,

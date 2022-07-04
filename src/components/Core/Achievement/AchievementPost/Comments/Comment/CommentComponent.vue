@@ -12,7 +12,7 @@
           v-model="commentText"
           class="comment-wrapper__content__comment__user-text"
           @finishEditing="changeComment"
-          v-if="this.comment.owner=== this.$user.url"
+          v-if="this.comment.owner === this.$user.url"
         />
         <p
           class="comment-wrapper__content__comment__user-text"
@@ -21,17 +21,25 @@
           {{ commentText }}
         </p>
       </div>
-      <nav class="comment-wrapper__content__navigation flex">
-        <q-icon
-          name="reply"
-          class="comment-wrapper__content__navigation__btn"
-          @click="reply"
-        />
+      <nav class="comment-wrapper__content__navigation column justify-between items-end">
+        <div class="comment-wrapper__content__navigation__btns flex">
+          <q-icon
+            name="reply"
+            class="comment-wrapper__content__navigation__btns__btn"
+            @click="reply"
+          />
+          <q-icon
+            name="close"
+            class="comment-wrapper__content__navigation__btns__btn"
+            @click="deleteComment"
+          />
+        </div>
       </nav>
     </div>
 
     <q-separator/>
     <ContextMenu
+      ref="contextMenu"
       :parent="comment"
       @deleteComment="$emit('deleteComment')"
     />
@@ -72,17 +80,14 @@ export default {
       })
     },
     changeComment() {
-      this.$axios.put(`${this.$dwiApi}blog/comment/${this.comment.id}`, {
-        text: this.commentText,
-        post: this.comment.post,
-      }, {
-        headers: {
-          Authorization: `Token ${this.token()}`
-        }
-      })
+      this.comment.change(this)
     },
     reply(){
       this.$emit('reply', this.owner)
+    },
+    deleteComment(){
+      this.comment.delete(this)
+      this.$emit('deleteComment', this.comment.id)
     }
   },
   data() {
@@ -93,7 +98,7 @@ export default {
     }
   },
   watch: {
-    commentMessage() {
+    commentText() {
       this.comment.changeText(this.commentText)
     },
   }
@@ -101,11 +106,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment-wrapper__content__comment{
-  flex-grow: 1;
-
-  .comment-wrapper__content__comment__user-text {
-    white-space: pre-line;
+.comment-wrapper__content{
+  flex-wrap:nowrap;
+  .comment-wrapper__content__comment{
+    flex-grow: 1;
+    .comment-wrapper__content__comment__user-text {
+      white-space: pre-line;
+    }
   }
 }
 
@@ -118,11 +125,14 @@ export default {
 .comment__user-data__user-name {
   font-size: 25px;
 }
-.comment-wrapper__content__navigation__btn{
-  font-size: 20px;
-  cursor: pointer;
-  &:hover{
-    color: $highlight;
+.comment-wrapper__content__navigation__btns{
+  flex-wrap: nowrap;
+  .comment-wrapper__content__navigation__btns__btn{
+    font-size: 20px;
+    cursor: pointer;
+    &:hover{
+      color: $highlight;
+    }
   }
 }
 </style>
