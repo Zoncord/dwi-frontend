@@ -20,8 +20,7 @@ export default class Comment extends BaseComment {
     } else if (data.text && data.post && !data.id) {
       props = await Comment.createBE(data.ctx, data.text, data.post)
     }
-    props['ctx'] = data.ctx
-    return new Comment(props)
+    return new Comment(data.ctx, props)
   }
 
   changeText(newText) {

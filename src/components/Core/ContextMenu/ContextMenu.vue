@@ -9,7 +9,7 @@
         class="date-card-menu__items__item items-center"
         v-if="this.items.includes('reply')"
         clickable
-        @click="this.reset"
+        @click="this.reply"
       >
         <q-item-section>{{ $t('contextMenu.reply') }}</q-item-section>
         <q-icon name="reply"/>
@@ -81,7 +81,7 @@ export default {
           })
           this.$emit('deletePost')
         } else if (this.type === 'comment') {
-          this.parent.deleteBackEnd(this)
+          this.parent.deleteBE()
           this.$emit('deleteComment')
         }
       })
@@ -111,6 +111,9 @@ export default {
 
       })
       this.parent.resetDays()
+    },
+    reply(){
+
     }
   },
   data() {

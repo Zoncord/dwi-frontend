@@ -86,5 +86,11 @@ export default {
       no: 'нет',
     }
   },
-  noDescription: 'У этого человека нет описания'
+  noDescription: 'У этого человека нет описания',
+  contextMenu: {
+    reply: 'Ответить',
+    edit: 'Редактировать',
+    delete: 'Удалить',
+    reset: 'Обнулить',
+  }
 }
