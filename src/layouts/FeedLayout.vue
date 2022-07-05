@@ -28,7 +28,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getPosts(index) {
-      await this.$axios.get(this.$dwiApi + 'blog/post', {
+      return await this.$axios.get(this.$dwiApi + 'blog/post', {
         params: {
           ordering: '-date_of_creation',
           page: index,
@@ -40,6 +40,7 @@ export default {
         for (let postData of res.data.results) {
           this.posts.push(new this.$Post(postData))
         }
+        return res
       })
     },
     deletePost(id){

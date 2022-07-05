@@ -27,7 +27,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getAchievements(index) {
-      await this.$axios.get(this.$dwiApi + 'achievements/achievement', {
+      return await this.$axios.get(this.$dwiApi + 'achievements/achievement', {
         params: {
           ordering: '-date_time_of_creation',
           page: index
@@ -39,6 +39,7 @@ export default {
         for (let achievementData of res.data.results) {
           this.achievements.push(new this.$Achievement(achievementData))
         }
+        return res
       })
     },
     deleteAchievement(id){

@@ -139,7 +139,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getAchievements(index) {
-      await this.$axios.get(`${this.$dwiApi}achievements/achievement/`, {
+      return await this.$axios.get(`${this.$dwiApi}achievements/achievement/`, {
         params: {
           search: this.query,
           page: index,
@@ -155,6 +155,7 @@ export default {
         for (let result in res.data.results) {
           this.achievements.push(new this.$Achievement(res.data.results[result]))
         }
+        return res
       })
     },
     clearInput() {

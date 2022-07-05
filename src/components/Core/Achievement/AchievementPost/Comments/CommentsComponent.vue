@@ -45,7 +45,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getComments(index) {
-      await this.$axios.get(`${this.$dwiApi}blog/comment`, {
+      return await this.$axios.get(`${this.$dwiApi}blog/comment`, {
         headers: {
           Authorization: `Token ${this.token()}`
         },
@@ -58,6 +58,7 @@ export default {
           commentData['ctx'] = this
           this.comments.push(new this.$Comment(commentData))
         }
+        return res
       })
     },
     addComment(comment) {

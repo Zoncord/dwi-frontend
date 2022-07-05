@@ -25,7 +25,14 @@ export default {
     async handleLoad(index, done) {
       this.handlingLoad = true
       try {
-        await this.onLoadRequest(index)
+        await this.onLoadRequest(index).then(res => {
+            if (res.data.next){
+              done()
+            }
+            else{
+              done(true)
+            }
+        })
         done()
       } catch (err) {
         if (err.response && err.response.status === 404) {

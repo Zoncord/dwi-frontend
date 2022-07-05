@@ -131,7 +131,7 @@ export default {
       }
     },
     async getPosts(index) {
-      await this.$axios.get(this.$dwiApi + 'blog/post/', {
+      return await this.$axios.get(this.$dwiApi + 'blog/post/', {
         headers: {
           Authorization: 'Token ' + this.token()
         },
@@ -144,6 +144,7 @@ export default {
         for (let postData of res.data.results) {
           this.posts.push(new this.$Post(postData))
         }
+        return res
       })
     },
   },
