@@ -2,58 +2,68 @@ import BaseComment from "src/js/ParenClasses/BaseComment";
 import axios from "axios";
 
 export default class Comment extends BaseComment {
-  constructor(props) {
+  constructor(ctx, props) {
+    props['ctx'] = ctx
     super(props ? props : {});
+    this.updateInfo(props)
+  }
+
+  updateInfo(props) {
+    super.updateInfo(props);
     this.post = props.post
   }
-  setVars(data){
-    this.id = data.id
-    this.url = data.url
-    this.text = data.text
-    this.owner = data.author
-    this.post = data.post
-    this.creationDateTime = data.date_time_of_creation
+
+  static async build(data) {
+    let props = data
+    if (data.url && !data.id) {
+      props = await Comment.getBE(data.ctx, data.url)
+    } else if (data.text && data.post && !data.id) {
+      props = await Comment.createBE(data.ctx, data.text, data.post)
+    }
+    props['ctx'] = data.ctx
+    return new Comment(props)
   }
 
   changeText(newText) {
     this.text = newText
   }
 
-  async change(ctx) {
+  static async getBE(ctx, url) {
+    let res = await axios.get(url, {
+      headers: {
+        Authorization: `Token ${ctx.token()}`
+      }
+    })
+    return res.data
+  }
 
-    await axios.put(`${ctx.$dwiApi}blog/comment/${this.id}`, {
-      text: this.text,
-      post: this.post,
+  static async createBE(ctx, text, post) {
+    let res = await axios.post(`${ctx.$dwiApi}blog/comment/`, {
+      text: text,
+      post: post,
     }, {
       headers: {
         Authorization: `Token ${ctx.token()}`
       }
     })
+    return res.data
   }
 
-  async get(){
-    await axios.get(this.url, {
-     headers: {
-       Authorization: `Token ${this.ctx.token()}`
-     }
-    }).then(res => this.setVars(res.data))
-  }
-
-  async create() {
-    await axios.post(`${this.ctx.$dwiApi}blog/comment/`, {
+  async changeBE() {
+    await axios.put(`${this.ctx.$dwiApi}blog/comment/${this.id}`, {
       text: this.text,
       post: this.post,
     }, {
       headers: {
         Authorization: `Token ${this.ctx.token()}`
       }
-    }).then(res => this.setVars(res.data))
+    })
   }
 
-  async deleteBackEnd(ctx) {
-    await axios.delete(`${ctx.$dwiApi}blog/comment/${this.id}`, {
+  async deleteBE() {
+    await axios.delete(`${this.ctx.$dwiApi}blog/comment/${this.id}`, {
       headers: {
-        Authorization: `Token ${ctx.token()}`
+        Authorization: `Token ${this.ctx.token()}`
       },
     })
   }

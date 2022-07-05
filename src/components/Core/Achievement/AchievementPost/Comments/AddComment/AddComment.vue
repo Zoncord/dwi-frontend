@@ -53,8 +53,7 @@ export default {
   methods: {
     ...mapGetters("mainStore", ["token"]),
     async addComment() {
-      let comment = new this.$Comment({ctx: this, text: this.commentText, post: this.parentPost.url})
-      await comment.create()
+      let comment = await this.$Comment.build({ctx: this, text: this.commentText, post: this.parentPost.url})
       this.$emit('addComment', comment)
       this.commentText = ''
     },

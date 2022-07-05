@@ -80,13 +80,13 @@ export default {
       })
     },
     changeComment() {
-      this.comment.change(this)
+      this.comment.changeBE()
     },
-    reply(){
+    reply() {
       this.$emit('reply', this.owner)
     },
-    deleteComment(){
-      this.comment.delete(this)
+    deleteComment() {
+      this.comment.deleteBE()
       this.$emit('deleteComment', this.comment.id)
     }
   },
@@ -106,10 +106,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment-wrapper__content{
-  flex-wrap:nowrap;
-  .comment-wrapper__content__comment{
+.comment-wrapper__content {
+  flex-wrap: nowrap;
+
+  .comment-wrapper__content__comment {
     flex-grow: 1;
+
     .comment-wrapper__content__comment__user-text {
       white-space: pre-line;
     }
@@ -125,12 +127,15 @@ export default {
 .comment__user-data__user-name {
   font-size: 25px;
 }
-.comment-wrapper__content__navigation__btns{
+
+.comment-wrapper__content__navigation__btns {
   flex-wrap: nowrap;
-  .comment-wrapper__content__navigation__btns__btn{
+
+  .comment-wrapper__content__navigation__btns__btn {
     font-size: 20px;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
       color: $highlight;
     }
   }

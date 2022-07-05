@@ -1,16 +1,31 @@
 import TimeObject from "src/js/ParenClasses/TimeObject";
 
-export default class BaseComment extends TimeObject{
+export default class BaseComment extends TimeObject {
   constructor(props) {
     super(props ? props : {});
+    this.updateInfo(props)
+  }
+
+  updateInfo(props) {
+    super.updateInfo(props);
     this.owner = props.author
     this.text = props.text
   }
-  get time(){
-    return this.creationDateTime.toLocaleTimeString()
+
+  get time() {
+    try {
+      return this.creationDateTime.toLocaleTimeString()
+    } catch (err) {
+      return null
+    }
   }
-  get date(){
-    return this.creationDateTime.toLocaleDateString()
+
+  get date() {
+    try {
+      return this.creationDateTime.toLocaleDateString()
+    } catch (err) {
+      return null
+    }
   }
 }
 

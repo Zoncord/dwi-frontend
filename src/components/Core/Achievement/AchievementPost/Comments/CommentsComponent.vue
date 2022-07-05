@@ -55,8 +55,7 @@ export default {
         }
       }).then(res => {
         for (let commentData of res.data.results) {
-          commentData['ctx'] = this
-          this.comments.push(new this.$Comment(commentData))
+          this.comments.push(new this.$Comment(this, commentData))
         }
         return res
       })
