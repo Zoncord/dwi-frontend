@@ -37,7 +37,7 @@ export default {
         }
       }).then(res => {
         for (let achievementData of res.data.results) {
-          this.achievements.push(new this.$Achievement(achievementData))
+          this.achievements.push(new this.$Achievement(this, achievementData))
         }
         return res
       })

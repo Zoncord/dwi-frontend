@@ -26,7 +26,7 @@
           @click="$router.back()"
         />
         <div class="flex items-center">
-          <p>{{ achievement.likes}}</p>
+          <p>{{ achievement.likes }}</p>
           <q-btn
             icon-right="favorite"
             class="achievement__navigation__controls__button like-btn"
@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    deletePost(id){
+    deletePost(id) {
       this.posts.splice(id, 1)
     },
     getIsLiked() {
@@ -148,13 +148,20 @@ export default {
       })
     },
   },
+  async setup() {
+    console.log(this.$route.params)
+    let achievement = await this.$Achievement.builder(this, {id: this.$route.params.id,})
+    return {
+      achievement: achievement,
+    }
+  },
   data() {
-    this.getAchievement()
+    console.log('asd')
     this.getIsLiked()
     return {
-      achievement: new this.$Achievement({}),
       posts: [],
       isLiked: null,
+
     }
   },
 }

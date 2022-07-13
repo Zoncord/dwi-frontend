@@ -153,7 +153,7 @@ export default {
           this.achievements = []
         }
         for (let result in res.data.results) {
-          this.achievements.push(new this.$Achievement(res.data.results[result]))
+          this.achievements.push(new this.$Achievement(this, res.data.results[result]))
         }
         return res
       })

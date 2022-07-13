@@ -107,7 +107,7 @@ export default {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        this.achievement = new this.$Achievement(res.data)
+        this.achievement = new this.$Achievement(this, res.data)
       })
     },
 
@@ -161,13 +161,14 @@ export default {
     await this.getUserData()
     await this.getAchievementData()
     await this.getIsLiked()
+    this.achievement = await this.$Achievement.builder({ctx: this, url: this.post.achievement})
   },
   data() {
     return {
       allCommentsHeight: 0,
       isLiked: false,
       owner: new this.$User({}),
-      achievement: new this.$Achievement({}),
+      achievement: new this.$Achievement(this, {}),
     }
   },
 }

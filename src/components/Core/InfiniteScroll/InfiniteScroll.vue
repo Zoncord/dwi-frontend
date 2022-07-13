@@ -35,6 +35,7 @@ export default {
         })
         done()
       } catch (err) {
+        console.log(err)
         if (err.response && err.response.status === 404) {
           done(true)
         }

@@ -74,17 +74,11 @@ export default {
           categoryUrl = res.data.url
         })
       }
-      await this.$axios.post(this.$dwiApi + 'achievements/achievement/', {
+      await this.$Achievement.createBE(this, {
         title: this.title,
         description: this.description,
-        tags: this.tags.map((tag) => {
-          return tag.url
-        }),
-        category: this.category ? categoryUrl : null,
-      }, {
-        headers: {
-          Authorization: `Token ${this.userToken()}`
-        }
+        tags: this.tags,
+        category: categoryUrl
       })
       this.$router.go(-1)
     },
@@ -92,11 +86,6 @@ export default {
       this.tags.splice(id, 1)
     },
   },
-  computed: {
-    userToken() {
-      return this.token
-    }
-  }
 }
 </script>
 <style lang="scss" scoped>
