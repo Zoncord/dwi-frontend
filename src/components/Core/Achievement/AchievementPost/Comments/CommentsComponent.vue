@@ -67,11 +67,9 @@ export default {
     deleteComment(id) {
       this.comments.splice(id, 1)
     },
-    reply(user) {
-      if (user.generalInfo.name) {
-        this.$refs.addComment.reply(user)
+    reply(comment) {
+        this.$refs.addComment.reply(comment)
         this.$refs.addComment.focus()
-      }
     },
     cancelReply() {
 

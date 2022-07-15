@@ -32,7 +32,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-.quasar.env.json
 .env
 
 **/pages/Test.vue

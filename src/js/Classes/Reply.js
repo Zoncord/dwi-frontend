@@ -1,21 +1,23 @@
 import BaseComment from "src/js/ParenClasses/BaseComment";
 import axios from "axios";
 
-export default class Answer extends BaseComment {
+export default class Reply extends BaseComment {
   constructor(props) {
     super(props);
     this.comment = props.comment
   }
+
   /* build function */
   static async build(data) {
     let props = data
     if (data.url && !data.id) {
-      props = await Answer.getBE(data.ctx, data.url)
+      props = await Reply.getBE(data.ctx, data.url)
     } else if (data.text && data.comment && !data.id) {
-      props = await Answer.createBE(data.ctx, data.text, data.comment)
+      props = await Reply.createBE(data.ctx, data.text, data.comment)
     }
-    return new Answer(props)
+    return new Reply(props)
   }
+
   /* getBE function */
   static async getBE(ctx, url) {
     let res = await axios.get(url, {
@@ -25,11 +27,13 @@ export default class Answer extends BaseComment {
     })
     return res.data
   }
+
   /* createBE function */
   static async createBE(ctx, text, comment) {
+    console.log(text, comment.url, ctx.token())
     let res = await axios.post(`${ctx.$dwiApi}blog/answer/`, {
       text: text,
-      comment: comment,
+      comment: comment.url,
     }, {
       headers: {
         Authorization: `Token ${ctx.token()}`
@@ -37,6 +41,7 @@ export default class Answer extends BaseComment {
     })
     return res.data
   }
+
   /* changeBE function */
   async changeBE() {
     await axios.put(`${this.ctx.$dwiApi}blog/answer/${this.id}`, {
@@ -48,6 +53,7 @@ export default class Answer extends BaseComment {
       }
     })
   }
+
   /* deleteBE function */
   async deleteBE() {
     await axios.delete(`${this.ctx.$dwiApi}blog/answer/${this.id}`, {
@@ -56,6 +62,7 @@ export default class Answer extends BaseComment {
       }
     })
   }
+
   /* changeText function */
   changeText(newText) {
     this.text = newText

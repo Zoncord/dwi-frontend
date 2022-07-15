@@ -91,5 +91,6 @@ export default {
     edit: 'Edit',
     delete: 'Delete',
     reset: 'Reset',
-  }
+  },
+  to: 'to',
 }

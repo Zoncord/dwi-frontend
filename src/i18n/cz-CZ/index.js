@@ -85,5 +85,6 @@ export default {
       no: 'ne',
     }
   },
-  noDescription: 'Ten človék nemá popsaní'
+  noDescription: 'Ten človék nemá popsaní',
+  to: 'pro',
 }

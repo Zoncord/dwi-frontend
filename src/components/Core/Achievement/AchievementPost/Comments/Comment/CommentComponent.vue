@@ -32,6 +32,7 @@
             name="close"
             class="comment-wrapper__content__navigation__btns__btn"
             @click="deleteComment"
+            v-if="comment.owner === this.$user.url"
           />
         </div>
       </nav>
@@ -83,7 +84,7 @@ export default {
       this.comment.changeBE()
     },
     reply() {
-      this.$emit('reply', this.owner)
+      this.$emit('reply', this.comment)
     },
     deleteComment() {
       this.comment.deleteBE()

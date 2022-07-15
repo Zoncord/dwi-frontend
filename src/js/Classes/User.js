@@ -1,5 +1,6 @@
 import BaseInformation from "src/js/ParenClasses/BaseInformation";
 import GeneralUserInformation from "src/js/ParenClasses/GeneralUserInformation";
+import axios from "axios";
 
 export default class User extends BaseInformation {
   constructor(props) {
@@ -14,6 +15,16 @@ export default class User extends BaseInformation {
     let props = await User.getBE(data.ctx, data.url)
     return new User(props)
   }
+  /* getBE function */
+  static async getBE(ctx, url) {
+    let res = await axios.get(url, {
+      headers: {
+        Authorization: `Token ${ctx.token()}`
+      }
+    })
+    return res.data
+  }
+
 
   changeDescription(description) {
     this.description = description
