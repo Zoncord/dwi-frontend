@@ -15,11 +15,11 @@
     </AutoHeightScroll>
     <q-separator/>
     <AddComment
-        class="achievement__blog__post__add-comment q-mx-lg q-my-md"
-        :parent-post="parent"
-        @addComment="addComment"
-        @cancelReply="cancelReply"
-        ref="addComment"
+      class="achievement__blog__post__add-comment q-mx-lg q-my-md"
+      :parent-post="parent"
+      @addComment="addComment"
+      @cancelReply="cancelReply"
+      ref="addComment"
     />
   </div>
 </template>
@@ -53,9 +53,10 @@ export default {
           post: this.parent.id,
           page: index,
         }
-      }).then(res => {
+      }).then(async res => {
         for (let commentData of res.data.results) {
-          this.comments.push(new this.$Comment(this, commentData))
+          commentData['ctx'] = this
+          this.comments.push(await this.$Comment.build(commentData))
         }
         return res
       })
@@ -66,13 +67,13 @@ export default {
     deleteComment(id) {
       this.comments.splice(id, 1)
     },
-    reply(user){
-      if (user.generalInfo.name){
+    reply(user) {
+      if (user.generalInfo.name) {
         this.$refs.addComment.reply(user)
         this.$refs.addComment.focus()
       }
     },
-    cancelReply(){
+    cancelReply() {
 
     }
   },

@@ -36,9 +36,10 @@ export default {
         headers: {
           Authorization: `Token ${this.token()}`
         }
-      }).then(res => {
+      }).then(async res => {
         for (let postData of res.data.results) {
-          this.posts.push(new this.$Post(postData))
+          postData['ctx'] = this
+          this.posts.push(await this.$Post.build(postData))
         }
         return res
       })

@@ -1,7 +1,7 @@
 <template>
   <div class="achievement__blog__post q-card q-mb-md">
     <div class="achievement__blog__post__to-achievement" v-if="toAchievement">
-      <ToAchievement class="q-mx-lg" :achievement="achievement"/>
+      <ToAchievement class="q-mx-lg" v-if="achievement" :achievement="achievement"/>
       <q-separator/>
     </div>
     <div class="q-mx-lg q-mt-md">
@@ -144,7 +144,7 @@ export default {
         this.post.decreaseLikes()
       } else {
         await this.$axios.post(this.$dwiApi + 'rating/post/', {
-            user: this.$userUrl,
+            user: this.$user.url,
             post: this.post.url
           },
           {
@@ -161,14 +161,13 @@ export default {
     await this.getUserData()
     await this.getAchievementData()
     await this.getIsLiked()
-    this.achievement = await this.$Achievement.builder({ctx: this, url: this.post.achievement})
+    this.achievement = await this.$Achievement.build({ctx: this, url: this.post.achievement})
   },
   data() {
     return {
-      allCommentsHeight: 0,
       isLiked: false,
       owner: new this.$User({}),
-      achievement: new this.$Achievement(this, {}),
+      achievement: null,
     }
   },
 }

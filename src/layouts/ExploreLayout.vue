@@ -35,9 +35,11 @@ export default {
         headers: {
           Authorization: `Token ${this.token()}`
         }
-      }).then(res => {
+      }).then(async res => {
         for (let achievementData of res.data.results) {
-          this.achievements.push(new this.$Achievement(this, achievementData))
+          achievementData['ctx'] = this
+
+          this.achievements.push(await this.$Achievement.build(achievementData))
         }
         return res
       })

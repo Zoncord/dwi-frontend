@@ -12,8 +12,6 @@ export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios
-
-  app.config.globalProperties.$zoncordApi = process.env.ZONCORD_API_URL
   app.config.globalProperties.$dwiApi =  process.env.DWI_API_URL
 
 })

@@ -1,9 +1,9 @@
 import {boot} from 'quasar/wrappers'
 import User from "src/js/Classes/User";
+import axios from "axios";
 
 export default boot(async ({app, router, store}) => {
-  let axios = app.config.globalProperties.$axios
-  let enterRedirectLink = `${process.env.ZONCORD_API_URL}o/authorize/?response_type=code&client_id=cTGQ0iGxACKy6VXtV9nvHLldfSQtFl1OXiwPgbTR&redirect_uri=https://dwi.zoncord.tech/auth/`
+  let enterRedirectLink = `${process.env.ZONCORD_URL}o/authorize/?response_type=code&client_id=cTGQ0iGxACKy6VXtV9nvHLldfSQtFl1OXiwPgbTR&redirect_uri=https://dwi.zoncord.tech/auth/`
   app.config.globalProperties.$enterRedirect = enterRedirectLink
   await axios.get(process.env.DWI_API_URL + 'users/profile/', {
     headers: {
@@ -23,5 +23,4 @@ export default boot(async ({app, router, store}) => {
         window.location.href = enterRedirectLink
       }
     })
-
 })

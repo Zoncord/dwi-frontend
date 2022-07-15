@@ -3,14 +3,16 @@ import axios from "axios";
 
 export default class Achievement extends GeneralInformation {
   constructor(ctx, props) {
-    props['ctx'] = ctx
+    if (props){
+      props['ctx'] = ctx
+    }
     super(props);
     this.tags = props.tags
     this.category = props.category
     this.days = props.days_since_the_last_incident
   }
 
-  static async builder(data) {
+  static async build(data) {
     let props = data
     if (data.title && data.description && !data.id) {
       props = await Achievement.createBE(data.ctx, data)
@@ -21,7 +23,6 @@ export default class Achievement extends GeneralInformation {
   }
 
   static async getBE(ctx, data) {
-    console.log(data)
     let res
     if (data.url) {
       res = await axios.get(data.url, {
@@ -55,8 +56,40 @@ export default class Achievement extends GeneralInformation {
     return res.data
   }
 
+  /*deleteBE function */
+  async deleteBE() {
+    await axios.delete(`${this.ctx.$dwiApi}achievements/achievement/${this.id}`, {
+      headers: {
+        Authorization: `Token ${this.ctx.token()}`
+      }
+    })
+  }
+
+  /* changeBE function */
+  async changeBE() {
+    await axios.put(`${this.ctx.$dwiApi}achievements/achievement/${this.id}`, {
+      title: this.title,
+      description: this.description,
+      tags: this.tags.map(tag => {
+        return tag.url
+      }),
+      category: this.category,
+    }, {
+      headers: {
+        Authorization: `Token ${this.ctx.token()}`
+      }
+    })
+  }
+
   increaseLikes() {
     this.likes++
+    axios.post(this.ctx.$dwiApi + `rating/achievement/`, {
+      achievement: this.url
+    }, {
+      headers: {
+        Authorization: 'Token ' + this.ctx.token()
+      }
+    })
   }
 
   decreaseLikes() {

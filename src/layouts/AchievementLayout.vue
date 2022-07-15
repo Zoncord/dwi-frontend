@@ -1,5 +1,5 @@
 <template>
-  <div class="achievement flex row justify-between q-mt-md">
+  <div class="achievement flex row justify-between q-mt-md" v-if="achievement">
     <nav class="achievement__navigation" :class="{
       'col-3': $q.screen.gt.sm,
       'pr-8': $q.screen.gt.sm,
@@ -98,22 +98,10 @@ export default {
         console.log(err)
       })
     },
-    getAchievement() {
-      this.$axios.get(this.$dwiApi + 'achievements/achievement/' + this.$route.params.id).then(res => {
-        this.achievement = new this.$Achievement(res.data)
-      })
-    },
     handleAchievementLike() {
       this.isLiked = !this.isLiked
       if (this.isLiked) {
         this.achievement.increaseLikes()
-        this.$axios.post(this.$dwiApi + `rating/achievement/`, {
-          achievement: this.achievement.url
-        }, {
-          headers: {
-            Authorization: 'Token ' + this.token()
-          }
-        })
       } else {
         this.achievement.decreaseLikes()
         this.$axios.get(this.$dwiApi + `rating/achievement/?user=${this.$user.id}&achievement=${this.$route.params.id}`, {
@@ -140,28 +128,25 @@ export default {
           ordering: '-date_time_of_creation',
           page: index,
         }
-      }).then(res => {
+      }).then(async res => {
         for (let postData of res.data.results) {
-          this.posts.push(new this.$Post(postData))
+          this.posts.push(await this.$Post.build(postData))
         }
         return res
       })
     },
   },
-  async setup() {
-    console.log(this.$route.params)
-    let achievement = await this.$Achievement.builder(this, {id: this.$route.params.id,})
-    return {
-      achievement: achievement,
-    }
+  mounted(){
+    (async () => {
+      this.achievement = await this.$Achievement.build({ctx: this, id: this.$route.params.id})
+    })()
   },
   data() {
-    console.log('asd')
     this.getIsLiked()
     return {
       posts: [],
       isLiked: null,
-
+      achievement: null,
     }
   },
 }

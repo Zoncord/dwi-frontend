@@ -8,7 +8,14 @@ export default class User extends BaseInformation {
     this.followers = props.followers_count
     this.generalInfo = new GeneralUserInformation(props.general_user_information)
   }
-  changeDescription(description){
+
+  /* build function */
+  static async build(data) {
+    let props = await User.getBE(data.ctx, data.url)
+    return new User(props)
+  }
+
+  changeDescription(description) {
     this.description = description
   }
 
