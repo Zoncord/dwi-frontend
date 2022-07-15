@@ -15,7 +15,7 @@
           v-if="replying"
         >
           <p class="add-comment__reply-name-wrapper__name">
-            {{`${this.$t('to')} ${this.$user.generalInfo.name}` }}
+            {{ `${this.$t('to')} ${this.$user.generalInfo.name}` }}
           </p>
           <q-icon name="close" class="add-comment__reply-name-wrapper__close"/>
         </div>
@@ -54,17 +54,15 @@ export default {
   methods: {
     ...mapGetters("mainStore", ["token"]),
     async addComment() {
-      if (!this.replying){
-        let comment = await this.$Comment.build({ctx: this, text: this.commentText, post: this.parentPost.url})
-        this.$emit('addComment', comment)
-
-      }
-      else{
-        let reply = await this.$Reply.build({ctx: this, text: this.commentText, comment: this.comment})
-        this.$emit('addComment', reply)
-      }
+      let comment = await this.$Comment.build({
+        ctx: this,
+        text: this.commentText,
+        parent: this.parentPost ? this.parentPost.url : this.comment
+      })
+      this.$emit('addComment', comment)
       this.commentText = ''
-
+      this.replying = false
+      this.comment = null
     },
     async reply(comment) {
       this.replying = true
@@ -72,6 +70,7 @@ export default {
     },
     cancelReply() {
       this.replying = false
+      this.comment = null
     },
     focus() {
       this.$refs.commentInput.focus()

@@ -10,15 +10,15 @@ export default class Comment extends BaseComment {
 
   updateInfo(props) {
     super.updateInfo(props);
-    this.post = props.post
+    this.parent = props.post ? props.post : props.comment
   }
 
   static async build(data) {
     let props = data
     if (data.url && !data.id) {
       props = await Comment.getBE(data.ctx, data.url)
-    } else if (data.text && data.post && !data.id) {
-      props = await Comment.createBE(data.ctx, data.text, data.post)
+    } else if (data.text && data.parent && !data.id) {
+      props = await Comment.createBE(data.ctx, data.text, data.parent)
     }
     return new Comment(data.ctx, props)
   }
@@ -51,7 +51,8 @@ export default class Comment extends BaseComment {
   async changeBE() {
     await axios.put(`${this.ctx.$dwiApi}blog/comment/${this.id}`, {
       text: this.text,
-      post: this.post,
+      post: this.parent,
+      comment: this.parent,
     }, {
       headers: {
         Authorization: `Token ${this.ctx.token()}`

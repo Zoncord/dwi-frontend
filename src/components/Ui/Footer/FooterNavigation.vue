@@ -81,13 +81,15 @@ footer {
   width: 33.33%;
   display: block;
 
+  .q-tab__indicator {
+    display: none;
+  }
   .nav-footer__wrapper__tabs__tab__content {
     padding: 0;
+    margin: 5px 0 0 0  !important;
     justify-content: normal;
     color: #494949;
     align-self: auto;
-    margin-top: 10px;
-    margin-bottom: 5px;
     min-width: auto;
     .q-tab__icon {
       font-size: 30px;
