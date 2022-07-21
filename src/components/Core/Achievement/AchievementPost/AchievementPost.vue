@@ -20,7 +20,7 @@
             class="achievement__blog__post__user-logo"
             :owner="owner"
           />
-          <UserName :name="owner.generalInfo.name"/>
+          <UserName font-size="30px" :name="owner.generalInfo.name"/>
         </router-link>
 
         <nav class="achievement__blog__controls flex items-center ">

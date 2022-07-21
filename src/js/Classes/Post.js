@@ -5,6 +5,7 @@ export default class Post extends TimeObject {
   constructor(props) {
     super(props ? props : {})
     this.achievement = props.achievement
+    this.type = 'post'
   }
 
   /* build function */

@@ -4,6 +4,7 @@ export default class BaseComment extends TimeObject {
   constructor(props) {
     super(props ? props : {});
     this.updateInfo(props)
+    this.type = 'comment'
   }
 
   updateInfo(props) {

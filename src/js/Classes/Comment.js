@@ -1,5 +1,6 @@
 import BaseComment from "src/js/ParenClasses/BaseComment";
 import axios from "axios";
+import User from "src/js/Classes/User";
 
 export default class Comment extends BaseComment {
   constructor(ctx, props) {
@@ -10,17 +11,26 @@ export default class Comment extends BaseComment {
 
   updateInfo(props) {
     super.updateInfo(props);
-    this.parent = props.post ? props.post : props.comment
+    this.owner = props.owner
+    this.parent = props.parent
+    this.answers = props.answers
   }
 
   static async build(data) {
     let props = data
+    let ctx = data.ctx
     if (data.url && !data.id) {
-      props = await Comment.getBE(data.ctx, data.url)
+      props = await Comment.getBE(ctx, data.url)
     } else if (data.text && data.parent && !data.id) {
-      props = await Comment.createBE(data.ctx, data.text, data.parent)
+      props = await Comment.createBE(ctx, data.text, data.parent)
     }
-    return new Comment(data.ctx, props)
+    let parent
+     if (props['parent_comment']) {
+      parent = await Comment.build({ctx: ctx, url: props['parent_comment']})
+    }
+    props.owner = await User.build({ctx: ctx, url: props.owner ? props.owner : props.author})
+    props.parent = parent
+    return new Comment(ctx, props)
   }
 
   changeText(newText) {
@@ -36,16 +46,22 @@ export default class Comment extends BaseComment {
     return res.data
   }
 
-  static async createBE(ctx, text, post) {
-    let res = await axios.post(`${ctx.$dwiApi}blog/comment/`, {
+  static async createBE(ctx, text, parent) {
+    let reqData = {
       text: text,
-      post: post,
-    }, {
+    }
+    if (parent.type === 'post') {
+      reqData['post'] = parent.url
+    } else if (parent.type === 'comment') {
+      reqData['parent_comment'] = parent.url
+    }
+
+    let req = await axios.post(`${ctx.$dwiApi}blog/comment/`, reqData, {
       headers: {
         Authorization: `Token ${ctx.token()}`
       }
     })
-    return res.data
+    return req.data
   }
 
   async changeBE() {

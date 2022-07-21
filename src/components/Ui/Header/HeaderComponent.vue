@@ -108,6 +108,9 @@ header {
 
 .header-elem {
   margin-right: 40px;
+  .q-tab__content{
+    min-height: 55px;
+  }
 }
 
 @media(max-width: 1024px) {

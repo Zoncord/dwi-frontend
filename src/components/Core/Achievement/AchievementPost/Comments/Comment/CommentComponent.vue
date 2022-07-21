@@ -2,17 +2,26 @@
   <div class="comment-wrapper">
     <div class="comment-wrapper__content flex justify-between q-py-md q-px-lg">
       <div class="comment-wrapper__content__comment">
-        <router-link :to="'/profile/' + owner.id" class="comment__user-data flex items-end">
-          <UserImage class="comment__user-data__user-image" :owner="owner"/>
-          <UserName class="comment__user-data__user-name" :name="owner.generalInfo.name"/>
-        </router-link>
+        <div class="flex items-end">
+          <router-link :to="'/profile/' + comment.owner.id" class="comment__user-data flex items-end">
+            <UserImage class="comment__user-data__user-image" :owner="comment.owner"/>
+            <UserName class="comment__user-data__user-name" :name="comment.owner.generalInfo.name"/>
+          </router-link>
+          <div class="reply_text_wrapper flex text-end" v-if="comment.parent && comment.parent.type === 'comment'">
+            <p class="name_size q-mx-sm">to</p>
+            <router-link :to="'/profile/' + comment.parent.owner.id" >
+              <UserName font-size="25px" :name="comment.parent.owner.generalInfo.name"/>
+            </router-link>
+          </div>
+        </div>
+
 
         <DateComponent class="q-my-sm" :parent="comment"/>
         <EditableText
           v-model="commentText"
           class="comment-wrapper__content__comment__user-text"
           @finishEditing="changeComment"
-          v-if="this.comment.owner === this.$user.url"
+          v-if="this.comment.owner.url === this.$user.url"
         />
         <p
           class="comment-wrapper__content__comment__user-text"
@@ -32,7 +41,7 @@
             name="close"
             class="comment-wrapper__content__navigation__btns__btn"
             @click="deleteComment"
-            v-if="comment.owner === this.$user.url"
+            v-if="comment.owner.url === this.$user.url"
           />
         </div>
       </nav>
@@ -71,15 +80,15 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    async getOwnerData() {
-      await this.$axios.get(this.comment.owner, {
-        headers: {
-          Authorization: `Token ${this.token()}`
-        }
-      }).then(res => {
-        this.owner = new this.$User(res.data)
-      })
-    },
+    // async getOwnerData() {
+    //   await this.$axios.get(this.comment.owner, {
+    //     headers: {
+    //       Authorization: `Token ${this.token()}`
+    //     }
+    //   }).then(res => {
+    //     this.owner = new this.$User(res.data)
+    //   })
+    // },
     changeComment() {
       this.comment.changeBE()
     },
@@ -92,9 +101,7 @@ export default {
     }
   },
   data() {
-    this.getOwnerData()
     return {
-      owner: new this.$User({}),
       commentText: this.comment.text,
     }
   },
@@ -102,7 +109,7 @@ export default {
     commentText() {
       this.comment.changeText(this.commentText)
     },
-  }
+  },
 }
 </script>
 
@@ -140,5 +147,8 @@ export default {
       color: $highlight;
     }
   }
+}
+.name_size{
+  font-size: 25px;
 }
 </style>

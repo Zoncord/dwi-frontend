@@ -22,6 +22,7 @@ export default class User extends BaseInformation {
         Authorization: `Token ${ctx.token()}`
       }
     })
+    res.ctx = ctx
     return res.data
   }
 

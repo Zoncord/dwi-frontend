@@ -44,6 +44,16 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
+    async getReplies(commentUrl) {
+
+      let comment = await this.$Comment.build({ctx: this, url: commentUrl})
+
+      this.comments.push(comment)
+      for (let i in comment.answers) {
+
+        await this.getReplies(comment.answers[i])
+      }
+    },
     async getComments(index) {
       return await this.$axios.get(`${this.$dwiApi}blog/comment`, {
         headers: {
@@ -54,9 +64,12 @@ export default {
           page: index,
         }
       }).then(async res => {
-        for (let commentData of res.data.results) {
-          commentData['ctx'] = this
-          this.comments.push(await this.$Comment.build(commentData))
+        let commentsData = Object.values(res.data.results)
+        // console.log(commentsData)
+        for (let commentId in commentsData) {
+          commentsData[commentId]['ctx'] = this
+          // this.comments.push(await this.$Comment.build(commentsData[commentId]))
+          await this.getReplies(commentsData[commentId].url)
         }
         return res
       })
@@ -68,8 +81,8 @@ export default {
       this.comments.splice(id, 1)
     },
     reply(comment) {
-        this.$refs.addComment.reply(comment)
-        this.$refs.addComment.focus()
+      this.$refs.addComment.reply(comment)
+      this.$refs.addComment.focus()
     },
     cancelReply() {
 

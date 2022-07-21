@@ -57,7 +57,7 @@ export default {
       let comment = await this.$Comment.build({
         ctx: this,
         text: this.commentText,
-        parent: this.parentPost ? this.parentPost.url : this.comment
+        parent: this.comment ? this.comment : this.parentPost
       })
       this.$emit('addComment', comment)
       this.commentText = ''
