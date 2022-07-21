@@ -15,7 +15,7 @@
           v-if="replying"
         >
           <p class="add-comment__reply-name-wrapper__name">
-            {{ `${this.$t('to')} ${this.$user.generalInfo.name}` }}
+            {{ `${this.$t('to')} ${this.comment.owner.generalInfo.name}` }}
           </p>
           <q-icon name="close" class="add-comment__reply-name-wrapper__close"/>
         </div>

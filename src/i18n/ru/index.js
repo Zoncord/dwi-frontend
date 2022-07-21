@@ -92,6 +92,7 @@ export default {
     edit: 'Редактировать',
     delete: 'Удалить',
     reset: 'Обнулить',
+    edet: 'edet',
   },
   to: 'Для',
 }

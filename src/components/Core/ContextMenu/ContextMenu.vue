@@ -11,7 +11,7 @@
         clickable
         @click="this.reply"
       >
-        <q-item-section>{{ $t('contextMenu.reply') }}</q-item-section>
+        <q-item-section class="q-mr-sm">{{ $t('contextMenu.reply') }}</q-item-section>
         <q-icon name="reply"/>
       </q-item>
       <q-item
@@ -20,7 +20,7 @@
         clickable
         @click="this.reset"
       >
-        <q-item-section>{{ $t('contextMenu.reset') }}</q-item-section>
+        <q-item-section class="q-mr-sm">{{ $t('contextMenu.reset') }}</q-item-section>
         <q-icon name="refresh"/>
       </q-item>
 
@@ -30,7 +30,7 @@
         clickable
         @click="this.edit"
       >
-        <q-item-section class="flex items-center no-wrap">{{ $t('contextMenu.edit') }}</q-item-section>
+        <q-item-section class="q-mr-sm">{{ $t('contextMenu.edit') }}</q-item-section>
         <q-icon name="edit"/>
       </q-item>
 
@@ -40,7 +40,7 @@
         clickable
         @click="this.delete"
       >
-        <q-item-section>{{ $t('contextMenu.delete') }}</q-item-section>
+        <q-item-section class="q-mr-sm">{{ $t('contextMenu.delete') }}</q-item-section>
         <q-icon name="clear"/>
       </q-item>
     </q-list>
@@ -67,18 +67,10 @@ export default {
         persistent: true,
       }).onOk(() => {
         if (this.type === 'achievement') {
-          this.$axios.delete(`${this.$dwiApi}achievements/achievement/${this.parent.id}/`, {
-            headers: {
-              Authorization: `Token ${this.token()}`
-            },
-          })
+          this.parent.deleteBE()
           this.$emit('deleteAchievement')
         } else if (this.type === 'post') {
-          this.$axios.delete(`${this.$dwiApi}blog/post/${this.parent.id}/`, {
-            headers: {
-              Authorization: `Token ${this.token()}`
-            },
-          })
+          this.parent.deleteBE()
           this.$emit('deletePost')
         } else if (this.type === 'comment') {
           this.parent.deleteBE()
@@ -112,11 +104,12 @@ export default {
       })
       this.parent.resetDays()
     },
-    reply(){
-
+    reply() {
+      this.$parent.reply(this.parent)
     }
   },
   data() {
+    console.log(this.$parent)
     let items
     if (this.parent instanceof this.$Achievement) {
       this.type = 'achievement'
@@ -146,7 +139,7 @@ export default {
 </style>
 
 <style lang="scss">
-.date-card-menu {
-  width: 100px !important;
-}
+//.date-card-menu {
+//  width: 100px !important;
+//}
 </style>

@@ -14,6 +14,7 @@ export default boot(({app}) => {
     fallbackLocale: {
       'ru': ['en-US'],
       'ru-RU': ['en-US'],
+      'cs-CZ': ['en-US'],
     },
     pluralizationRules: {
       'ru-RU': russianPluralization,

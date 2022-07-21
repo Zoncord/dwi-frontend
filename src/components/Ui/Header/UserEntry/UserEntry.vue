@@ -1,6 +1,6 @@
 <template>
   <div class="user-entry flex items-center justify-center">
-    <UserName class="user-entry__user-name" :name="this.$user.generalInfo.name"/>
+    <UserName font-size="20px" class="user-entry__user-name" :name="this.$user.generalInfo.name"/>
     <UserImage class="user-entry__user-image" :owner="this.$user"/>
     <UserMenu/>
   </div>
