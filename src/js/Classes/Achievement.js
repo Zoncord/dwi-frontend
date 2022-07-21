@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default class Achievement extends GeneralInformation {
   constructor(ctx, props) {
-    if (props){
+    if (props) {
       props['ctx'] = ctx
     }
     super(props);
@@ -98,5 +98,13 @@ export default class Achievement extends GeneralInformation {
 
   resetDays() {
     this.days = 0
+    axios.post(`${this.ctx.$dwiApi}achievements/incident/`, {
+        achievement: `${this.ctx.$dwiApi}achievements/achievement/${this.id}/`,
+      },
+      {
+        headers: {
+          Authorization: `Token ${this.ctx.token()}`
+        }
+      })
   }
 }

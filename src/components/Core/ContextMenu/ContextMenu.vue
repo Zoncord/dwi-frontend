@@ -92,17 +92,10 @@ export default {
         cancel: true,
         persistent: true,
       }).onOk(async () => {
-        await this.$axios.post(`${this.$dwiApi}achievements/incident/`, {
-            achievement: `${this.$dwiApi}achievements/achievement/${this.parent.id}/`,
-          },
-          {
-            headers: {
-              Authorization: `Token ${this.token()}`
-            }
-          })
-
+      console.log(this.parent)
+        this.parent.resetDays()
       })
-      this.parent.resetDays()
+
     },
     reply() {
       this.$parent.reply(this.parent)
