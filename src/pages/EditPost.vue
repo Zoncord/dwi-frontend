@@ -4,6 +4,7 @@
       @finish="finish"
       :stages-count="1"
       v-model="activeTab"
+      v-if="post"
     >
       <template v-slot:Title>
         <h5 class="edit-post__title q-my-xl">{{ $t('post.edit') }}</h5>
@@ -44,27 +45,27 @@ export default {
       })
       this.$router.go(-1)
     },
-    getAchievementsInformation() {
-      this.$axios.get(`${this.$dwiApi}blog/post/${this.$route.params.postId}`, {
-        headers: {
-          Authorization: `Token ${this.token()}`
-        }
-      }).then(res => {
-        this.title = res.data.title
-        this.description = res.data.description
-      })
-    },
   },
   mounted() {
-    this.getAchievementsInformation()
+    (async () => {
+      this.post = await this.$Post.build({ctx: this, id: this.$route.params.postId})
+      console.log(this.post)
+    })()
   },
   data() {
     return {
       activeTab: 1,
       title: '',
       description: '',
+      post: null,
     }
-  }
+  },
+  watch: {
+    'post.title': function(){
+      this.title = this.post.title
+      this.description = this.post.description
+    }
+  },
 }
 </script>
 

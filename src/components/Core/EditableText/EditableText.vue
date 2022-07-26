@@ -52,6 +52,9 @@ export default {
     }
   },
   methods: {
+    startEditing() {
+      this.isEditing = true
+    },
     finishEditing() {
       this.isEditing = false
       this.$emit('finishEditing')

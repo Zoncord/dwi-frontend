@@ -53,6 +53,10 @@ export default {
         }
       }).then(res => {
         this.owner = new this.$User(res.data)
+      }).catch(err => {
+        if (err.response){
+          this.$router.push('/404')
+        }
       })
     }
   },

@@ -23,6 +23,7 @@
             class="q-mr-md"
             name-class="search-recommendation__section__content__user-info__username"
             :name="owner.generalInfo.name"
+            font-size="18px"
           />
           <UserImage class="search__advice-list__user-image" :owner="owner"/>
         </router-link>

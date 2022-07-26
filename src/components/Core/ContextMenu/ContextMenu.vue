@@ -3,6 +3,7 @@
     touch-position
     context-menu
     class="date-card-menu flex justify-center"
+    ref="contextMenu"
   >
     <q-list class="date-card-menu__items">
       <q-item
@@ -16,7 +17,7 @@
       </q-item>
       <q-item
         class="date-card-menu__items__item items-center"
-        v-if="this.items.includes('reset')"
+        v-if="this.items.includes('reset') && (this.parent.owner.url === this.$user.url || this.parent.owner === this.$user.url)"
         clickable
         @click="this.reset"
       >
@@ -26,7 +27,7 @@
 
       <q-item
         class="date-card-menu__items__item items-center"
-        v-if="this.items.includes('edit')"
+        v-if="this.items.includes('edit') && (this.parent.owner.url === this.$user.url || this.parent.owner === this.$user.url)"
         clickable
         @click="this.edit"
       >
@@ -36,7 +37,7 @@
 
       <q-item
         class="date-card-menu__items__item items-center"
-        v-if="this.items.includes('delete')"
+        v-if="this.items.includes('delete') && (this.parent.owner.url === this.$user.url || this.parent.owner === this.$user.url)"
         clickable
         @click="this.delete"
       >
@@ -83,6 +84,9 @@ export default {
         this.$router.push(`/achievement/edit/${this.parent.id}`)
       } else if (this.type === 'post') {
         this.$router.push(`/post/edit/${this.parent.id}`)
+      } else if (this.type === 'comment') {
+        this.$parent.startEditing()
+        this.$refs.contextMenu.hide()
       }
     },
     reset() {
@@ -92,7 +96,6 @@ export default {
         cancel: true,
         persistent: true,
       }).onOk(async () => {
-      console.log(this.parent)
         this.parent.resetDays()
       })
 
@@ -102,7 +105,6 @@ export default {
     }
   },
   data() {
-    console.log(this.$parent)
     let items
     if (this.parent instanceof this.$Achievement) {
       this.type = 'achievement'
@@ -112,7 +114,7 @@ export default {
       items = ['edit', 'delete']
     } else if (this.parent instanceof this.$Comment) {
       this.type = 'comment'
-      items = ['reply', 'delete']
+      items = ['reply', 'edit', 'delete']
     }
     return {
       items: items,

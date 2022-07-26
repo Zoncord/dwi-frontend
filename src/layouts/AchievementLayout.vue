@@ -130,6 +130,7 @@ export default {
         }
       }).then(async res => {
         for (let postData of res.data.results) {
+          postData.ctx = this
           this.posts.push(await this.$Post.build(postData))
         }
         return res

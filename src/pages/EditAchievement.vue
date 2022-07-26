@@ -4,6 +4,7 @@
       :stages-count="1"
       @finish="finish"
       v-model="activeTab"
+      v-if="achievement"
     >
       <template v-slot:Title>
         <h5 class="create-post__title q-my-xl">{{ $t('achievement.edit') }}</h5>
@@ -44,25 +45,34 @@ export default {
       })
       this.$router.go(-1)
     },
-    getAchievementsInformation() {
-      this.$axios.get(`${this.$dwiApi}achievements/achievement/${this.$route.params.achievementId}`,  {
-        headers: {
-          Authorization: `Token ${this.token()}`
-        }
-      }).then(res => {
-        this.title = res.data.title
-        this.description = res.data.description
-      })
-    },
+    // getAchievementsInformation() {
+    //   this.$axios.get(`${this.$dwiApi}achievements/achievement/${this.$route.params.achievementId}`,  {
+    //     headers: {
+    //       Authorization: `Token ${this.token()}`
+    //     }
+    //   }).then(res => {
+    //     this.title = res.data.title
+    //     this.description = res.data.description
+    //   })
+    // },
   },
   mounted() {
-    this.getAchievementsInformation()
+    (async () => {
+      this.achievement = await this.$Achievement.build({ctx: this, id: this.$route.params.achievementId})
+    })()
   },
   data() {
     return {
       activeTab: 1,
       title: '',
       description: '',
+      achievement: null,
+    }
+  },
+  watch: {
+    'achievement.title': function(){
+      this.title = this.achievement.title
+      this.description = this.achievement.description
     }
   }
 }

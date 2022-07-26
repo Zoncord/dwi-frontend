@@ -22,6 +22,7 @@
           class="comment-wrapper__content__comment__user-text"
           @finishEditing="changeComment"
           v-if="this.comment.owner.url === this.$user.url"
+          ref="editableText"
         />
         <p
           class="comment-wrapper__content__comment__user-text"
@@ -80,15 +81,9 @@ export default {
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    // async getOwnerData() {
-    //   await this.$axios.get(this.comment.owner, {
-    //     headers: {
-    //       Authorization: `Token ${this.token()}`
-    //     }
-    //   }).then(res => {
-    //     this.owner = new this.$User(res.data)
-    //   })
-    // },
+    startEditing(){
+      this.$refs.editableText.startEditing()
+    },
     changeComment() {
       this.comment.changeBE()
     },

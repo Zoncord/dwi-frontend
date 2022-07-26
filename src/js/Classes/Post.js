@@ -11,21 +11,31 @@ export default class Post extends TimeObject {
   /* build function */
   static async build(data) {
     let props = data
-    if (data.url && !data.id) {
-      props = await Post.getBE(data.ctx, data.url)
-    } else if (data.text && data.achievement && !data.id) {
+    if (data.url || data.id) {
+      props = await Post.getBE(data.ctx, data)
+    } else if (data.text && data.achievement) {
       props = await Post.createBE(data.ctx, data.text, data.achievement)
     }
     return new Post(props)
   }
 
   /* getBE function */
-  static async getBE(ctx, url) {
-    let res = await axios.get(url, {
-      headers: {
-        Authorization: `Token ${ctx.token()}`
-      }
-    })
+  static async getBE(ctx, data) {
+    let res
+    if (data.id){
+      res = await axios.get(`${ctx.$dwiApi}blog/post/${data.id}/`, {
+        headers: {
+          Authorization: `Token ${ctx.token()}`
+        }
+      })
+    }
+    else if (data.url){
+      res = await axios.get(data.url, {
+        headers: {
+          Authorization: `Token ${ctx.token()}`
+        }
+      })
+    }
     return res.data
   }
 

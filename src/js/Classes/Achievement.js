@@ -29,11 +29,19 @@ export default class Achievement extends GeneralInformation {
         headers: {
           Authorization: `Token ${ctx.token()}`
         }
+      }).catch(err => {
+        if (err.response && err.response.status === 404){
+          ctx.$router.push('/404')
+        }
       })
     } else if (data.id) {
       res = await axios.get(`${ctx.$dwiApi}achievements/achievement/${data.id}`, {
         headers: {
           Authorization: `Token ${ctx.token()}`
+        }
+      }).catch(err => {
+        if (err.response && err.response.status === 404){
+          ctx.$router.push('/404')
         }
       })
     }

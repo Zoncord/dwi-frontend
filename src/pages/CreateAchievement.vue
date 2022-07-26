@@ -68,7 +68,7 @@ export default {
           title: this.category,
         }, {
           headers: {
-            Authorization: `Token ${this.userToken()}`
+            Authorization: `Token ${this.token()}`
           }
         }).then(res => {
           categoryUrl = res.data.url
