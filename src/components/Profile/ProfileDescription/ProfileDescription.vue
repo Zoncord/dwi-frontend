@@ -136,7 +136,7 @@ export default {
     getIsSubscribed() {
       this.$axios.get(this.$dwiApi + `rating/user/`, {
         params: {
-          user: this.$userId,
+          user: this.$user.id,
           evaluated_user: this.owner.id,
         },
         headers: {

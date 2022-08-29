@@ -15,7 +15,6 @@
           </div>
         </div>
 
-
         <DateComponent class="q-my-sm" :parent="comment"/>
         <EditableText
           v-model="commentText"
