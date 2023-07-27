@@ -3,7 +3,7 @@ import User from "src/js/Classes/User";
 import axios from "axios";
 
 export default boot(async ({app, router, store}) => {
-  let enterRedirectLink = `${process.env.ZONCORD_URL}o/authorize/?response_type=code&client_id=${process.env.USER_ID}&redirect_uri=${process.env.LETSENCRYPT_HOST}/auth/`
+  let enterRedirectLink = `${process.env.ZONCORD_URL}o/authorize/?response_type=code&client_id=${process.env.USER_ID}&redirect_uri=https://${process.env.LETSENCRYPT_HOST}/auth/`
   app.config.globalProperties.$enterRedirect = enterRedirectLink
   await axios.get(process.env.DWI_API_URL + 'users/profile/', {
     headers: {
