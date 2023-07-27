@@ -4,8 +4,8 @@
     <div
       class="ui__content"
       :class="{
-          'p-t-55': header,
-          'p-b-67': $q.screen.lt.md && footer,
+          'pt56': header,
+          'pb67': $q.screen.lt.md && footer,
       }"
     >
       <q-scroll-area class="ui__scroll">
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import HeaderComponent from "components/Main/Header/HeaderComponent";
-import FooterNavigation from "components/Ui/FooterNavigation/FooterNavigation";
+import HeaderComponent from "components/Ui/Header/HeaderComponent";
+import FooterNavigation from "components/Ui/Footer/FooterNavigation";
 
 export default {
   name: "UI",

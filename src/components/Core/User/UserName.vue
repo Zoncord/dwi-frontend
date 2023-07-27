@@ -1,6 +1,6 @@
 <template>
   <div class="user-name">
-    <p :class="nameClass" v-if="name">
+    <p :class="nameClass" v-if="name" :style="{'font-size': fontSize}">
       {{ name }}
     </p>
 
@@ -21,7 +21,10 @@ export default {
     nameClass: {},
     skeletonScale: {
       default: 1
-    }
+    },
+    fontSize: {
+      default: '25px'
+    },
   },
   data(){
     return {

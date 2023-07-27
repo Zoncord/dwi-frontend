@@ -3,10 +3,10 @@
     <InfiniteScroll class="" :on-load-request="getAchievements">
       <div class="date-cards-wrapper">
         <DateCard
-          v-for="achievement in achievements"
+          v-for="(achievement, id) in achievements"
           :key="achievement"
-          :url="achievement.url"
-          :owner-url="achievement.ownerUrl"
+          :achievement="achievement"
+          @deleteAchievement="deleteAchievement(id)"
         />
       </div>
     </InfiniteScroll>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import DateCard from "components/Core/Cards/DateCard/DateCard";
+import DateCard from "components/Core/Achievement/AchievementCard";
 import {mapGetters} from "vuex";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
@@ -27,7 +27,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getAchievements(index) {
-      await this.$axios.get(this.$dwiApi + 'achievements/achievement', {
+      return await this.$axios.get(this.$dwiApi + 'achievements/achievement', {
         params: {
           ordering: '-date_time_of_creation',
           page: index
@@ -35,14 +35,17 @@ export default {
         headers: {
           Authorization: `Token ${this.token()}`
         }
-      }).then(res => {
-        for (let achievement of res.data.results) {
-          this.achievements.push({
-            url: achievement.url,
-            ownerUrl: achievement.owners[0],
-          })
+      }).then(async res => {
+        for (let achievementData of res.data.results) {
+          achievementData['ctx'] = this
+
+          this.achievements.push(await this.$Achievement.build(achievementData))
         }
+        return res
       })
+    },
+    deleteAchievement(id){
+      this.achievements.splice(id, 1)
     }
   },
   data() {

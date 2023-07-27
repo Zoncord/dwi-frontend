@@ -1,10 +1,11 @@
 <template>
   <p
     v-if="!isEditing"
-    class="editable-text"
+    class="editable-text flex"
     @click="isEditing = true"
   >
-    {{ text ? text : this.$t('noDescription') }}
+    <slot name="nullDescription" v-if="!text || text.length === 0"/>
+    <span v-else>{{ text }}</span>
     <q-icon
       :class="{
       'editable-text__edit-icon-hover': $q.screen.gt.sm
@@ -24,6 +25,7 @@
     :input-class="`editable-text__wrapper__input ${inputClass}`"
     @keydown="inputHandler"
     bottom-slots
+    :maxlength="maxLength"
   >
     <template v-slot:counter class="text-input__chars-counter">
       <p class="text-input__chars-counter">
@@ -50,6 +52,9 @@ export default {
     }
   },
   methods: {
+    startEditing() {
+      this.isEditing = true
+    },
     finishEditing() {
       this.isEditing = false
       this.$emit('finishEditing')
@@ -86,6 +91,7 @@ export default {
   white-space: pre-line;
   line-height: 15px;
   min-height: 15px;
+  word-break: break-word;
 
   .editable-text__edit-icon-hover {
     opacity: 0;
@@ -99,6 +105,7 @@ export default {
 
 .editable-text__input__ready-icon {
   font-size: 30px;
+
   &:hover {
     color: $highlight;
     cursor: pointer;

@@ -47,7 +47,6 @@ const routes = [
     path: '/create-post',
     component: () => import('pages/CreatePost.vue'),
   },
-
   {
     path: '/test',
     component: () => import('pages/Test.vue'),

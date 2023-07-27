@@ -21,6 +21,7 @@ export default {
   profile: {
     followers: 'follower | followers'
   },
+  comment: 'Comment',
   subscribeButton: {
     subscribe: 'Subscribe',
     unsubscribe: 'Unsubscribe',
@@ -40,6 +41,11 @@ export default {
     at: 'at',
     description: 'Description',
     addNewPost: 'Add new post',
+    edit: 'Edit Achievement',
+  },
+  post: {
+    toAchievement: 'Back to the achievement',
+    edit: 'Edit Post',
   },
   progressFormBar: {
     cancel: 'Cancel',
@@ -71,6 +77,7 @@ export default {
       delete: {
         achievement: 'Your achievement and all posts in it will be deleted',
         post: 'Your post will be deleted',
+        comment: 'Your comment will be deleted',
       }
     },
     variant: {
@@ -78,6 +85,12 @@ export default {
       no: 'no',
     }
   },
-  // description: 'Description'
-  noDescription: 'This person has not description'
+  noDescription: 'This person has not description',
+  contextMenu: {
+    reply: 'Reply',
+    edit: 'Edit',
+    delete: 'Delete',
+    reset: 'Reset',
+  },
+  to: 'to',
 }

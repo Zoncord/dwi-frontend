@@ -3,10 +3,11 @@
     <div class="q-mt-md">
       <InfiniteScroll :on-load-request="getPosts">
         <AchievementPost
-          v-for="post in posts"
+          v-for="(post, id) in posts"
           :key="post"
-          :url="post.url"
-          :owner-url="post.ownerUrl"
+          :post="post"
+          :to-achievement="true"
+          @deletePost="deletePost(id)"
         />
       </InfiniteScroll>
     </div>
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-import AchievementPost from "components/Acievement/AchievementPost";
+import AchievementPost from "components/Core/Achievement/AchievementPost/AchievementPost";
 import {mapGetters} from "vuex";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
@@ -27,7 +28,7 @@ export default {
   methods: {
     ...mapGetters('mainStore', ['token']),
     async getPosts(index) {
-      await this.$axios.get(this.$dwiApi + 'blog/post', {
+      return await this.$axios.get(this.$dwiApi + 'blog/post', {
         params: {
           ordering: '-date_of_creation',
           page: index,
@@ -35,15 +36,17 @@ export default {
         headers: {
           Authorization: `Token ${this.token()}`
         }
-      }).then(res => {
-        for (let post of res.data.results) {
-          this.posts.push({
-            url: post.url,
-            ownerUrl: post.author,
-          })
+      }).then(async res => {
+        for (let postData of res.data.results) {
+          postData['ctx'] = this
+          this.posts.push(await this.$Post.build(postData))
         }
+        return res
       })
     },
+    deletePost(id){
+      this.posts.splice(id, 1)
+    }
   },
   data() {
     return {

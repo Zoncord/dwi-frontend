@@ -1,45 +1,41 @@
 <template>
   <UI :limiter="false" :footer="false">
-    <q-form
-      @validation-success="finish()"
-      @submit.prevent=""
-      class="create-post flex column text-center"
+    <ProgressForm
+      @finish="finish"
+      :stages-count="1"
+      v-model="activeTab"
+      v-if="post"
     >
-      <h5 class="create-post__title q-my-xl">Edit Post</h5>
-      <q-tab-panels v-model="activeTab">
-        <q-tab-panel :name="1" class="limiter create-post__fist-stage">
-          <TitleInput v-model="title" class="create-post__title-input"/>
-          <TextInput v-model="description"/>
-        </q-tab-panel>
-      </q-tab-panels>
-      <ProgressFormBar
-        @finish="finish()"
-        :active-stage="activeTab"
-        :stages-count="1"
-      />
-    </q-form>
+      <template v-slot:Title>
+        <h5 class="edit-post__title q-my-xl">{{ $t('post.edit') }}</h5>
+      </template>
+      <template v-slot:Stage1>
+        <TitleInput v-model="title" class="edit-post__title-input"/>
+        <TextInput v-model="description"/>
+      </template>
+    </ProgressForm>
   </UI>
 </template>
 
 <script>
-import TitleInput from "components/Core/Form/TitleInput";
-import TextInput from "components/Core/Form/TextInput";
-import ProgressFormBar from "components/CreateAchievement/ProgressFormBar";
+import TitleInput from "components/Core/Inputs/TitleInput";
+import TextInput from "components/Core/Inputs/TextInput";
 import {mapGetters} from "vuex";
 import UI from "components/Ui/UI";
+import ProgressForm from "components/Core/Forms/ProgressForm/ProgressForm";
 
 export default {
   name: "EditPost",
   components: {
     TitleInput,
     TextInput,
-    ProgressFormBar,
     UI,
+    ProgressForm,
   },
   methods: {
     ...mapGetters('mainStore', ['token']),
     async finish() {
-      await this.$axios.patch( `${this.$dwiApi}blog/post/${this.$route.params.postId}`, {
+      await this.$axios.patch(`${this.$dwiApi}blog/post/${this.$route.params.postId}`, {
         title: this.title,
         description: this.description,
       }, {
@@ -49,27 +45,27 @@ export default {
       })
       this.$router.go(-1)
     },
-    getAchievementsInformation() {
-      this.$axios.get(`${this.$dwiApi}blog/post/${this.$route.params.postId}`,  {
-        headers: {
-          Authorization: `Token ${this.token()}`
-        }
-      }).then(res => {
-        this.title = res.data.title
-        this.description = res.data.description
-      })
-    },
   },
   mounted() {
-    this.getAchievementsInformation()
+    (async () => {
+      this.post = await this.$Post.build({ctx: this, id: this.$route.params.postId})
+      console.log(this.post)
+    })()
   },
   data() {
     return {
       activeTab: 1,
       title: '',
       description: '',
+      post: null,
     }
-  }
+  },
+  watch: {
+    'post.title': function(){
+      this.title = this.post.title
+      this.description = this.post.description
+    }
+  },
 }
 </script>
 

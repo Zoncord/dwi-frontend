@@ -1,26 +1,25 @@
 <template>
   <q-layout>
     <ProfileDescription
-      :owner-url="userUrl"
+      :owner="owner"
     />
-      <InfiniteScroll :on-load-request="getAchievements">
-        <div class="profile__cards-wrapper">
-          <AddCard v-if="isUserPage"/>
-          <DateCard
-            v-for="dateCard in achievements"
-            :key="dateCard"
-            :owner-url="dateCard.owners[0]"
-            :url="dateCard.url"
-          />
-        </div>
-      </InfiniteScroll>
+    <InfiniteScroll :on-load-request="getAchievements">
+      <div class="profile__cards-wrapper">
+        <AddCard v-if="this.$.vnode.key.toString() === this.$user.id.toString()"/>
+        <DateCard
+          v-for="achievement in achievements"
+          :key="achievement"
+          :achievement="achievement"
+        />
+      </div>
+    </InfiniteScroll>
   </q-layout>
 </template>
 
 <script>
-import ProfileDescription from "components/Profile/ProfileDescription";
-import AddCard from "components/Core/Cards/AddCard";
-import DateCard from "components/Core/Cards/DateCard/DateCard";
+import ProfileDescription from "components/Profile/ProfileDescription/ProfileDescription";
+import AddCard from "components/Core/Achievement/AddAchievement/AddAchievement";
+import DateCard from "components/Core/Achievement/AchievementCard";
 import {mapGetters} from "vuex";
 import InfiniteScroll from "components/Core/InfiniteScroll/InfiniteScroll";
 
@@ -32,47 +31,40 @@ export default {
     DateCard,
     InfiniteScroll,
   },
-  props: {
-    userId: {
-      required: true,
-    }
-  },
   methods: {
     ...mapGetters('mainStore', ['token']),
-    async getAchievements(index){
-      await this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
+    async getAchievements(index) {
+      return await this.$axios.get(this.$dwiApi + 'achievements/achievement/', {
         params: {
-          owners: this.userId,
+          owners: this.$.vnode.key,
           page: index,
         }
       }).then(res => {
-        this.achievements = res.data.results
+        for (let achievementData of res.data.results) {
+          this.achievements.push(new this.$Achievement(this, achievementData))
+        }
+        return res
       })
     },
-    getUserData(){
-      this.$axios.get(this.$dwiApi + 'users/user/' + this.userId, {
+    getUser() {
+      this.$axios.get(`${this.$dwiApi}users/user/${this.$.vnode.key}`, {
         headers: {
           Authorization: `Token ${this.token()}`
         }
       }).then(res => {
-        this.userName = res.data.general_user_information.first_name + ' ' + res.data.general_user_information.last_name
-        this.userUrl = res.data.url
-        this.followersCount = res.data.followers_count
-        this.profileDescription = res.data.description
+        this.owner = new this.$User(res.data)
+      }).catch(err => {
+        if (err.response){
+          this.$router.push('/404')
+        }
       })
     }
   },
   data() {
-    this.getUserData()
+    this.getUser()
     return {
-      userName: null,
-      userImage: null,
-      userUrl: null,
-      isUserPage: this.userId.toString() === this.$userId.toString(),
-      isSubscribed: false,
-      achievements: null,
-      followersCount: null,
-      profileDescription: null,
+      owner: new this.$User({}),
+      achievements: [],
     }
   },
 }
