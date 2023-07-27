@@ -12,11 +12,11 @@ services:
     env_file:
       - ./.env
     networks:
-      - zoncorddeploy_static_media_network
+      - deploy-system_static_media_network
     command: nginx
 
 
 
 networks:
-  zoncorddeploy_static_media_network:
+  deploy-system_static_media_network:
     external: true
